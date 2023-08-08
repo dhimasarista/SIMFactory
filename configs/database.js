@@ -1,26 +1,17 @@
 const mysql = require('mysql2');
+const dbConfig = require("./config");
 
+const config = dbConfig.development;
 // Create database pool
 const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  port: 3306,
-  user: 'root',
-  password: '',
-  database: 'simfactory',
-  waitForConnections: true,
-  connectionLimit: 10, // Adjust the number of connections as per your requirements
-  queueLimit: 0,
+  host: config.host,
+  port: config.port,
+  user: config.user,
+  password: config.password,
+  database: config.database,
+  waitForConnections: config.waitForConnections,
+  connectionLimit: config.connectionLimit, // Adjust the number of connections as per your requirements
+  queueLimit: config.queueLimit,
 });
 
-module.exports = {
-  development: {
-    host: "localhost",
-    port: 3306,
-    user: "dev_user",
-    password: "vancouver",
-    database: "simfactory",
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-  }
-};
+module.exports = pool;
