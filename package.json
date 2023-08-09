@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "check_db": "node database/create_db"
+    "check_db": "node database/create_db",
+    "dev": "nodemon app",
+    "start": "node app"
   },
   "author": "dhimasarista",
   "license": "ISC",
