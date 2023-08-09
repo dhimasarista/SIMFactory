@@ -1,4 +1,5 @@
 const { red, qm } = require("../utils/logging");
+const bcrypt = require('bcrypt');
 
 // Default Admin
 const adminUsername = "admin";
@@ -14,10 +15,11 @@ module.exports = admin = (pool) => {
 
     // Create an 'admin' table if it doesn't exist
     connection.query(`
-      CREATE TABLE IF NOT EXISTS admin (
+      CREATE TABLE IF NOT EXISTS admins (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
-        password VARCHAR(255) NOT NULL
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP
       )`, (error, results) => {
       if (error) {
         console.log(red,`${qm} Error creating admin table: ${error}`);
@@ -27,7 +29,7 @@ module.exports = admin = (pool) => {
       }
 
       // Check if the admin credentials already exist in the 'admin' table
-      connection.query(`SELECT * FROM admin WHERE username = ?`, [adminUsername], (error, results) => {
+      connection.query(`SELECT * FROM admin WHERE username = ?`, [adminUsername], async (error, results) => {
         if (error) {
           console.log(red,`${qm} Error Executing SQL Query: ${error}`);
           connection.release();
@@ -36,7 +38,8 @@ module.exports = admin = (pool) => {
 
         // If admin credentials don't exist, insert them into the 'admin' table
         if (!results.length) {
-          connection.query(`INSERT INTO admin (username, password) VALUES (?, ?)`, [adminUsername, adminPassword], (error) => {
+          const hashedPassword = await bcrypt.hash(adminPassword, 10);
+          connection.query(`INSERT INTO admin (username, password) VALUES (?, ?)`, [adminUsername, hashedPassword], (error) => {
             if (error) {
               console.log(red,`${qm} Error connecting to the database: ${error}`);
             }
