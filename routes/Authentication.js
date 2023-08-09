@@ -27,6 +27,7 @@ class Login{
             try{
                 const [results] = await pool.query("SELECT * FROM admins WHERE username = ?", [username]);
                 const user = results[0];
+                // Bug
                 const passwordMatch = await bcrypt.compare(password, user.password);
 
                 if (!user && !bcrypt.compare(password, user.password)) {
