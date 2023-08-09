@@ -1,24 +1,23 @@
+// Import Modules
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const path = require('path');
-
-// Routes
-const IndexRoute = require("./routes/IndexRoute");
-const ProdControl = require("./routes/ProdControl")
-const {Login, Logout} = require("./routes/AuthRoutes");
-
-//  DB Config
+const Index = require("./routes/Index");
+const { ProductionControl } = require("./routes/Production");
+const { Employee } = require("./routes/HumanResource");
+const { Login, Logout } = require("./routes/Authentication");
 const pool = require("./configs/database");
-const promisePool = pool.promise();
-// Models
 const admin = require("./models/admin");
 const { blue, symbol } = require("./utils/logging");
 
 // Create an Express app
 const app = express();
-admin(pool);
+const promisePool = pool.promise();
 
 console.clear();
+// Models
+admin(pool);
+
 // Middlewares
 app.set('view engine', 'ejs'); // Set view engine to EJS
 app.set('views', path.join(__dirname, 'views')); // Set the path to the "views" folder
@@ -29,18 +28,19 @@ app.use(cookieParser()); // Use the cookie-parser
 app.use((req, res, next) => {
   const user = req.cookies.user;
   if (!user && req.originalUrl !== "/login") {
-    return res.redirect("/login");
+    return res.redirect("/login");  
   }
 
   next();
-})
+});
+
 // Routes
-new IndexRoute(app).get();
-new ProdControl(app).get();
+new Index(app).get();
+new ProductionControl(app).get();
+new Employee(app).get();
 new Login(app).get();
 new Login(app).post(promisePool);
 new Logout(app).get();
-
 
 // Start the server
 const port = 3000;
