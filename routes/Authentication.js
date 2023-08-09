@@ -29,7 +29,10 @@ class Login{
                 const user = results[0];
                 const passwordMatch = await bcrypt.compare(password, user.password);
 
-
+                if (!user && !bcrypt.compare(password, user.password)) {
+                    req.flash('error', 'Username atau Password salah!');
+                    return res.render("login");
+                }
                 res.cookie("user", user.username, {maxAge: 3600000}); // 1 Jam
                 res.redirect("/");
 
