@@ -1,5 +1,6 @@
 const { red, qm } = require("../utils/logging");
-// Admin credentials (change these to your desired values)
+
+// Default Admin
 const adminUsername = "admin";
 const adminPassword = "vancouver";
 
