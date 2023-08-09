@@ -7,7 +7,8 @@ const { ProductionControl } = require("./routes/Production");
 const { Employee } = require("./routes/HumanResource");
 const { Login, Logout } = require("./routes/Authentication");
 const pool = require("./configs/database");
-const admin = require("./models/admin");
+const admins = require("./models/admins");
+const employees = require("./models/employees");
 const { blue, symbol } = require("./utils/logging");
 
 // Create an Express app
@@ -16,7 +17,8 @@ const promisePool = pool.promise();
 
 console.clear();
 // Models
-admin(pool);
+admins(pool);
+employees(pool);
 
 // Middlewares
 app.set('view engine', 'ejs'); // Set view engine to EJS

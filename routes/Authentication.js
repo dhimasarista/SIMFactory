@@ -25,7 +25,7 @@ class Login{
             const { username, password } = req.body;
 
             try{
-                const [results] = await pool.query("SELECT * FROM admin WHERE username = ? AND password = ?", [username, password]);
+                const [results] = await pool.query("SELECT * FROM admins WHERE username = ? AND password = ?", [username, password]);
                 const user = results[0];
 
                 if(!user){
