@@ -1,10 +1,10 @@
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const path = require('path');
-const cookieParser = require("cookie-parser");
 
 // Routes
 const IndexRoute = require("./routes/IndexRoute");
-const ProdMonitoringRoute = require("./routes/ProdMonitoring")
+const ProdControl = require("./routes/ProdControl")
 const {Login, Logout} = require("./routes/AuthRoutes");
 
 //  DB Config
@@ -19,7 +19,6 @@ const app = express();
 admin(pool);
 
 console.clear();
-
 // Middlewares
 app.set('view engine', 'ejs'); // Set view engine to EJS
 app.set('views', path.join(__dirname, 'views')); // Set the path to the "views" folder
@@ -37,7 +36,7 @@ app.use((req, res, next) => {
 })
 // Routes
 new IndexRoute(app).get();
-new ProdMonitoringRoute(app).prodMonitoringRoute();
+new ProdControl(app).get();
 new Login(app).get();
 new Login(app).post(promisePool);
 new Logout(app).get();
