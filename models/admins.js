@@ -22,14 +22,14 @@ module.exports = admin = (pool) => {
         created_at TIMESTAMP
       )`, (error, results) => {
       if (error) {
-        console.log(red,`${qm} Error creating admin table: ${error}`);
+        console.log(red,`${qm} Error creating admins table: ${error}`);
         connection.release();
         process.exit(1);
         return;
       }
 
       // Check if the admin credentials already exist in the 'admin' table
-      connection.query(`SELECT * FROM admin WHERE username = ?`, [adminUsername], async (error, results) => {
+      connection.query(`SELECT * FROM admins WHERE username = ?`, [adminUsername], async (error, results) => {
         if (error) {
           console.log(red,`${qm} Error Executing SQL Query: ${error}`);
           connection.release();
@@ -39,7 +39,7 @@ module.exports = admin = (pool) => {
         // If admin credentials don't exist, insert them into the 'admin' table
         if (!results.length) {
           const hashedPassword = await bcrypt.hash(adminPassword, 10);
-          connection.query(`INSERT INTO admin (username, password) VALUES (?, ?)`, [adminUsername, hashedPassword], (error) => {
+          connection.query(`INSERT INTO admins (username, password) VALUES (?, ?)`, [adminUsername, hashedPassword], (error) => {
             if (error) {
               console.log(red,`${qm} Error connecting to the database: ${error}`);
             }

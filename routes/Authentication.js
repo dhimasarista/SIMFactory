@@ -1,6 +1,6 @@
 const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
-require("../utils/logging");
+const bcrypt = require("bcrypt");
 
 class Login{
     constructor(app){
@@ -25,15 +25,15 @@ class Login{
             const { username, password } = req.body;
 
             try{
-                const [results] = await pool.query("SELECT * FROM admins WHERE username = ? AND password = ?", [username, password]);
+                const [results] = await pool.query("SELECT * FROM admins WHERE username = ?", [username]);
                 const user = results[0];
+                const passwordMatch = await bcrypt.compare(password, user.password);
 
-                if(!user){
+                if (!passwordMatch) {
                     return res.render("login", {
                         errors: [{message: "Username atau Password salah!"}]
                     })
                 }
-
                 res.cookie("user", user.username, {maxAge: 3600000}); // 1 Jam
                 res.redirect("/");
 
