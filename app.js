@@ -5,12 +5,13 @@ const session = require('express-session');
 const flash = require('express-flash');
 const path = require('path');
 const Index = require("./routes/Index");
-const { ProductionControl } = require("./routes/Production");
-const { Employee } = require("./routes/HumanResource");
-const { Login, Logout } = require("./routes/Authentication");
 const pool = require("./configs/database");
 const admins = require("./models/admins");
 const employees = require("./models/employees");
+const secretCode = require("./utils/secret_code")
+const { ProductionControl } = require("./routes/Production");
+const { Employee } = require("./routes/HumanResource");
+const { Login, Logout } = require("./routes/Authentication");
 const { blue, symbol } = require("./utils/logging");
 
 // Create an Express app
@@ -23,6 +24,12 @@ admins(pool);
 employees(pool);
 
 // Middlewares
+app.use(session({
+  secret: secretCode,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash());
 app.set('view engine', 'ejs'); // Set view engine to EJS
 app.set('views', path.join(__dirname, 'views')); // Set the path to the "views" folder
 app.use(express.static(path.join(__dirname, 'public'))); // Serve static files from the "public" folder
