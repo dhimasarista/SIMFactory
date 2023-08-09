@@ -23,3 +23,6 @@ const employee = (pool) => {
         )
     })
 }
+
+
+module.exports = employee;
