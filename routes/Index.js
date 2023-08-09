@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 
-module.exports = class IndexRoute{
+module.exports = class Index{
     constructor(app){
         this.app = app;
     }

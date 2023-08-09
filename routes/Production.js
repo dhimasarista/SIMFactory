@@ -1,4 +1,4 @@
-module.exports = class {
+class ProductionControl{
     constructor(app){
         this.app = app;
     }
@@ -10,4 +10,8 @@ module.exports = class {
             res.render("prod_control", {path: path, user});
         });
     }
+}
+
+module.exports = {
+    ProductionControl
 }
