@@ -3,11 +3,11 @@ module.exports = class {
         this.app = app;
     }
 
-    prodMonitoringRoute(){
-        this.app.get("/prod/monitoring",(req, res) => {
+    get(){
+        this.app.get("/production/control",(req, res) => {
             const user = req.cookies.user;
             const path = req.path;
-            res.render("prod_monitoring", {path: path, user});
+            res.render("prod_control", {path: path, user});
         });
     }
 }
