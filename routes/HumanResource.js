@@ -1,3 +1,5 @@
+const { promisify } = require('util');
+const { green, symbol } = require('../utils/logging');
 class Employee {
     constructor(app){
         this.app = app;
@@ -19,12 +21,40 @@ class Department{
     }
 
     get(){
-        this.app.get("/hr/department", (req, res) => {
+        this.app.get("/hr/department",  async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
             // Rendering views: hr_department.ejs
-            res.render("hr_department", {user: user, path})
+            res.render("hr_department", {user: user, path});
+
+            try {
+                const results = await queryAsync('SELECT * FROM departments ORDER BY created_at DESC');
+                res.json(results);
+            } catch (error) {
+                
+            }
         })
+    }
+
+    post(){
+        this.app.post("hr/department", async (req, res) => {
+            const queryAsync = promisify(pool.query).bind(pool);
+            const { departmentId, departmentName } = req.body;
+
+            const data = {
+                id: departmentId,
+                name: departmentName
+            }
+
+            try {
+                const query = await queryAsync("INSERT INTO `departments` SET ? ", data);
+                console.log(green, `${symbol} Department: ${departmentName} Succesfully Added`);
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+                res.end();
+            }
+        });
     }
 }
 

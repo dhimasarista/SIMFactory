@@ -48,6 +48,43 @@
     <!-- /.col -->
 </div>
 <script>
+    (() => {
+        fetch("http://localhost:3000/hr/department")
+        .then(response => response.json())
+        .then( data => {
+            document.getElementById
+        })
+    })
+    function saveData() {
+        let id = Math.floor(Math.random() * 9999);
+        let departmentName = document.getElementById("departmentName").value;
+
+        if (name === "") {
+            return; // Membatalkan proses insert ke database
+        }
+
+        let formData = FormData();
+        formData.append("id", id);
+        formData.append("departmentName", departmentName);
+
+        fetch("http://localhost:3000/hr/department", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(`Sukses Mengirim Data ${result}`);
+            clearForm(); // Mengosongkan formulir setelah pengiriman berhasil
+        })
+        .catch(error => {
+            alert(`Gagal Mengirim Data: ${error}`);
+        });
+
+    }
+    function clearForm() {
+        document.getElementById("departmentName").value = "";
+    }
+
     const newButton = document.getElementById('newButton');
     const departmentTable = document.getElementById('departmentTable');
     const departmentForm = document.getElementById('departmentForm');
@@ -62,22 +99,20 @@
     addDepartmentForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Simulate a successful submission
         const departmentName = document.getElementById('departmentName').value;
-        const newDepartment = {
-            id: '093837',
-            name: departmentName,
-            totalEmployees: 0
-        };
 
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><a href="#">${newDepartment.name}</a></td>
-            <td>${newDepartment.totalEmployees}</td>
-        `;
-        tbody.appendChild(row);
+        if (departmentName.trim() !== "") {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><a href="#">${departmentName}</a></td>
+                <td>0</td>
+            `;
+            tbody.appendChild(row);
 
-        departmentForm.style.display = 'none';
-        departmentTable.style.display = 'table';
+            departmentForm.style.display = 'none';
+            departmentTable.style.display = 'table';
+
+            saveData();
+        }
     });
 </script>
