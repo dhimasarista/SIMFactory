@@ -30,32 +30,31 @@ class Department{
             queryAsync = promisify(pool.query).bind(pool);
             try {
                 const results = await queryAsync('SELECT * FROM departments ORDER BY created_at DESC');
-                res.json(results);
+                // Rendering views: hr_department.ejs
+                res.render("hr_department", {user: user, path, department: results});
             } catch (error) {
                 console.log(error);
             }
-            // Rendering views: hr_department.ejs
-            res.render("hr_department", {user: user, path});
 
         })
     }
 
     post(pool){
-        this.app.post("hr/department", async (req, res) => {
-            const { departmentId, departmentName } = req.body;
+        this.app.post("/hr/department", async (req, res) => {
+            const { id, name } = req.body;
 
             const data = {
-                id: departmentId,
-                name: departmentName
+                id: id,
+                name: name
             }
 
             try {
                 const query = await queryAsync("INSERT INTO `departments` SET ? ", data);
-                console.log(green, `${symbol} Department: ${departmentName} Succesfully Added`);
+                res.json({data: query});
+                console.log(green, `${symbol} Department: ${name} Succesfully Added`);
             } catch (error) {
                 console.error('Query Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
-                res.end();
             }
         });
     }

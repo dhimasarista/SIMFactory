@@ -22,7 +22,11 @@
                                 <th>Total Employees</th>
                             </tr>
                         </thead>
-                        <tbody id="departmentTable">
+                        <tbody id="departmentTableBody">
+                            <% department.forEach(function(department) { %>
+                                <tr><td><a href="#"><%- department.name %></a></td>
+                                <td><%- department.id %></td></tr>
+                              <% }); %>
                         </tbody>
                     </table>
                 </div>
@@ -32,7 +36,7 @@
                 <form id="addDepartmentForm">
                     <div class="form-group">
                         <label for="departmentName">Name</label>
-                        <input type="text" class="form-control" id="departmentName" name="departmentName">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -47,54 +51,54 @@
     (() => {
         fetch("http://localhost:3000/hr/department")
         .then(response => response.json())
-        .then( data => {
+        .then(data => {
+            const departmentTableBody = document.getElementById("departmentTableBody");
             data.forEach((item) => {
-                let row = document.createElement("tr");
+                const row = document.createElement("tr");
                 row.innerHTML = `
-                    <td><a href="#">${data.name}</a></td>
-                    <td>89384</td>
+                    <td><a href="#">${item.name}</a></td>
+                    <td>${item.id}</td>
                 `;
-
-                let departmentTable = document.getElementById("departmentTable");
-                departmentTable.appendChild(row);
+                departmentTableBody.appendChild(row);
             })
         })
-    })
+    })();
+
     function saveData() {
-        let id = Math.floor(Math.random() * 9999);
-        let departmentName = document.getElementById("departmentName").value;
+        const id = Math.floor(Math.random() * 999);
+        const name = document.getElementById("name").value;
 
         if (name === "") {
-            return; // Membatalkan proses insert ke database
+            alert("Nama tidak boleh kosong");
+            return; // Cancel database insertion process
         }
 
-        let formData = FormData();
-        formData.append("id", id);
-        formData.append("departmentName", departmentName);
+        const data = {
+            id: id,
+            name: name
+        };
 
         fetch("http://localhost:3000/hr/department", {
             method: "POST",
-            body: formData
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
         })
         .then(response => response.json())
         .then(result => {
-            alert(`Sukses Mengirim Data ${result}`);
-            clearForm(); // Mengosongkan formulir setelah pengiriman berhasil
+            location.reload();
         })
         .catch(error => {
-            alert(`Gagal Mengirim Data: ${error}`);
+            alert(`Failed to Send Data: ${error}`);
         });
-
-    }
-    function clearForm() {
-        document.getElementById("departmentName").value = "";
     }
 
+    
     const newButton = document.getElementById('newButton');
     const departmentTable = document.getElementById('departmentTable');
     const departmentForm = document.getElementById('departmentForm');
     const addDepartmentForm = document.getElementById('addDepartmentForm');
-    const tbody = document.querySelector('#departmentTable tbody');
 
     newButton.addEventListener('click', () => {
         departmentTable.style.display = 'none';
@@ -104,20 +108,9 @@
     addDepartmentForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const departmentName = document.getElementById('departmentName').value;
-
-        if (departmentName.trim() !== "") {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><a href="#">${departmentName}</a></td>
-                <td>0</td>
-            `;
-            tbody.appendChild(row);
-
-            departmentForm.style.display = 'none';
-            departmentTable.style.display = 'table';
-
-            saveData();
-        }
+        saveData();
+        departmentForm.style.display = 'none';
+        departmentTable.style.display = 'table';
+        document.getElementById("departmentName").value = "";
     });
 </script>
