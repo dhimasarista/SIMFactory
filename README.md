@@ -15,3 +15,12 @@
 3. Check Database: ```npm run check_db``` and all tables will automatically created by ```models/```
 3. Run the application with the command ```npm start``` or ```npm run dev``` with nodemon.
 4. Access the application through the browser by opening http://localhost:3000.
+
+
+
+### Aturan penamaan file, variabel/fungsi dan class
+- v/f: calonProgrammer
+- class: CalonProgrammer
+- file-class: Programmer.js
+- file biasa: programmer.js / calon_programmer.js
+ 
