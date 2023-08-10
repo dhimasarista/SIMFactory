@@ -8,7 +8,7 @@ const Index = require("./routes/Index");
 const pool = require("./configs/database");
 const secretCode = require("./utils/secret_code")
 const { ProductionControl } = require("./routes/Production");
-const { Employee } = require("./routes/HumanResource");
+const { Employee, Department } = require("./routes/HumanResource");
 const { Login, Logout } = require("./routes/Authentication");
 const { blue, symbol } = require("./utils/logging");
 const dhim = require("./utils/dhim_codehub");
@@ -49,6 +49,7 @@ app.use((req, res, next) => {
 new Index(app).get();
 new ProductionControl(app).get();
 new Employee(app).get();
+new Department(app).get();
 new Login(app).get();
 new Login(app).post(promisePool);
 new Logout(app).get();
