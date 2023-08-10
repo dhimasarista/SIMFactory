@@ -7,6 +7,9 @@
                     <button type="button" class="btn btn-secondary" id="newButton">
                         New
                     </button>
+                    <button type="button" class="btn btn-secondary" id="departmentButton" style="display: none;"> 
+                        Departments
+                    </button>
                     <button type="button" class="btn btn-secondary">
                         Print
                     </button>
@@ -96,6 +99,7 @@
 
     
     const newButton = document.getElementById('newButton');
+    const departmentButton= document.getElementById('departmentButton');
     const departmentTable = document.getElementById('departmentTable');
     const departmentForm = document.getElementById('departmentForm');
     const addDepartmentForm = document.getElementById('addDepartmentForm');
@@ -103,14 +107,20 @@
     newButton.addEventListener('click', () => {
         departmentTable.style.display = 'none';
         departmentForm.style.display = 'block';
+        departmentButton.style.display = "inline";
+        newButton.style.display = "none";
     });
+    departmentButton.addEventListener("click", () => {
+        departmentForm.style.display = 'none';
+        departmentTable.style.display = 'table';
+        departmentButton.style.display = "none";
+        newButton.style.display = "inline";
+    }) 
 
     addDepartmentForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         saveData();
-        departmentForm.style.display = 'none';
-        departmentTable.style.display = 'table';
         document.getElementById("departmentName").value = "";
     });
 </script>

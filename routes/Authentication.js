@@ -1,6 +1,8 @@
 const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
+const pool = require("../configs/database");
+const promisePool = pool.promise();
 
 class Login{
     constructor(app){
@@ -13,7 +15,7 @@ class Login{
        });
     }
 
-    post(pool){
+    post(){
         this.app.post("/login",
         check('username').notEmpty().withMessage('Username harus diisi.'),
         check('password').notEmpty().withMessage('Password harus diisi.'),
@@ -28,7 +30,7 @@ class Login{
 
             try {
                 // Mengambil data dari Tabel Admins dan menyimpannya dalam bentuk Array of Object
-                const [results] = await pool.query("SELECT * FROM admins WHERE username = ?", [username]);
+                const [results] = await promisePool.query("SELECT * FROM admins WHERE username = ?", [username]);
                 // Menyimpannya ke variabel user dalam bentuk objek
                 const user = results[0];
                 

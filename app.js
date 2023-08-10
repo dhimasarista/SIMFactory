@@ -5,7 +5,6 @@ const session = require('express-session');
 const flash = require('express-flash');
 const path = require('path');
 const Index = require("./routes/Index");
-const pool = require("./configs/database");
 const secretCode = require("./utils/secret_code")
 const { ProductionControl } = require("./routes/Production");
 const { Employee, Department } = require("./routes/HumanResource");
@@ -15,7 +14,6 @@ const dhim = require("./utils/dhim_codehub");
 
 // Create an Express app
 const app = express();
-const promisePool = pool.promise();
 
 console.clear();
 console.log(dhim);
@@ -49,10 +47,10 @@ app.use((req, res, next) => {
 new Index(app).get();
 new ProductionControl(app).get();
 new Employee(app).get();
-new Department(app).get(pool);
-new Department(app).post(pool);
+new Department(app).get();
+new Department(app).post();
 new Login(app).get();
-new Login(app).post(promisePool);
+new Login(app).post();
 new Logout(app).get();
 
 // Start the server

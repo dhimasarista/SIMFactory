@@ -1,6 +1,7 @@
 const { promisify } = require('util');
 const { green, symbol } = require('../utils/logging');
-let queryAsync;
+const pool = require("../configs/database");
+const queryAsync = promisify(pool.query).bind(pool);;
 
 class Employee {
     constructor(app){
@@ -9,12 +10,22 @@ class Employee {
 
     // Halaman HumanResource/Employee
     get(){
-        this.app.get("/hr/employee", (req, res) => {
+        this.app.get("/hr/employee", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
             // Rendering views: hr_employee.ejs
+
+            const results = await queryAsync("SELECT * FROM employees ORDER BY created_at DESC");
             res.render("hr_employee", {user:user, path});
         });
+    }
+
+    post(){
+        this.app.post("/hr/employee", (req, res) => {
+            const { data } = req.body;
+
+
+        })
     }
 }
 class Department{
@@ -23,11 +34,10 @@ class Department{
         this.app = app;
     }
 
-    get(pool){
+    get(){
         this.app.get("/hr/department",  async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
-            queryAsync = promisify(pool.query).bind(pool);
             try {
                 const results = await queryAsync('SELECT * FROM departments ORDER BY created_at DESC');
                 // Rendering views: hr_department.ejs
@@ -39,7 +49,7 @@ class Department{
         })
     }
 
-    post(pool){
+    post(){
         this.app.post("/hr/department", async (req, res) => {
             const { id, name } = req.body;
 
