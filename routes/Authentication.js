@@ -44,7 +44,6 @@ class Login{
                 const passwordMatch = await bcrypt.compare(password, user.password);
                 // Jika passowrd benar
                 if (passwordMatch) {
-                    console.log(req.body);
                     // user akan disimpan di cookie
                     res.cookie("user", user.username, { maxAge: 3600000 }); // 1 Jam
                     console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
