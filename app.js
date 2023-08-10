@@ -50,6 +50,7 @@ new Index(app).get();
 new ProductionControl(app).get();
 new Employee(app).get();
 new Department(app).get();
+new Department(app).post();
 new Login(app).get();
 new Login(app).post(promisePool);
 new Logout(app).get();

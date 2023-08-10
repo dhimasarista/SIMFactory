@@ -23,10 +23,6 @@
                             </tr>
                         </thead>
                         <tbody id="departmentTable">
-                            <tr>
-                                <td><a href="#">Warehouse</a></td>
-                                <td>89384</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -52,7 +48,16 @@
         fetch("http://localhost:3000/hr/department")
         .then(response => response.json())
         .then( data => {
-            document.getElementById
+            data.forEach((item) => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><a href="#">${data.name}</a></td>
+                    <td>89384</td>
+                `;
+
+                let departmentTable = document.getElementById("departmentTable");
+                departmentTable.appendChild(row);
+            })
         })
     })
     function saveData() {
