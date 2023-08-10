@@ -19,10 +19,10 @@ const employee = (pool) => {
                     process.exit(1);
                     return;
                   }
-            }
-        )
+                }  
+                );
+        connection.release();
+        process.exit();
     })
 }
-
-
 module.exports = employee;

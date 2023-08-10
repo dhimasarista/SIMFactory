@@ -6,23 +6,19 @@ const flash = require('express-flash');
 const path = require('path');
 const Index = require("./routes/Index");
 const pool = require("./configs/database");
-const admins = require("./models/admins");
-const employees = require("./models/employees");
 const secretCode = require("./utils/secret_code")
 const { ProductionControl } = require("./routes/Production");
 const { Employee } = require("./routes/HumanResource");
 const { Login, Logout } = require("./routes/Authentication");
 const { blue, symbol } = require("./utils/logging");
+const dhim = require("./utils/dhim_codehub");
 
 // Create an Express app
 const app = express();
 const promisePool = pool.promise();
 
 console.clear();
-// Models
-admins(pool);
-employees(pool);
-
+console.log(dhim);
 // Middlewares
 app.use(session({
   secret: secretCode,

@@ -13,7 +13,6 @@ const connection = mysql.createConnection({
 
   // Create the database if it doesn't exist
   connection.query(`CREATE DATABASE IF NOT EXISTS simfactory`, (error, results) => {
-    let box = [];
     if (error) {
       console.error(`Error creating database: ${error.message}`);
       connection.end(() => {
@@ -23,7 +22,7 @@ const connection = mysql.createConnection({
     }
 
     // Contoh penggunaan
-    const animation = loadingAnimation(symbol, "Checking Database");
+    const animation = loadingAnimation(`${symbol} Checking Database`);
     if (results && results.warningStatus === 0) {
       setTimeout(() => {
         clearInterval(animation);
