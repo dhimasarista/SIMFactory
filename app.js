@@ -19,6 +19,7 @@ const promisePool = pool.promise();
 
 console.clear();
 console.log(dhim);
+
 // Middlewares
 app.use(session({
   secret: secretCode,

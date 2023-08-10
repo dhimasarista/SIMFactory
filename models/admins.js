@@ -48,5 +48,6 @@ module.exports = admin = (pool) => {
       });
     });
     connection.release();
+    process.exit();
   });
 };
