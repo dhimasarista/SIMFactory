@@ -38,6 +38,22 @@ class Employee {
                 console.error('Query Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
             }
+        });
+    }
+
+    delete(){
+        this.app.delete("/hr/employee/:id", async (req, res) => {
+            const idToDelete = req.params.id;
+            const query = `DELETE FROM employees  WHERE employees.id = ?`;
+
+            try {
+                const deleteData = await queryAsync(query, [idToDelete]);
+                res.json({data: deleteData});
+                res.sendStatus(204); // Send a "No Content" status to indicate successful deletion
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
         })
     }
 }
@@ -68,7 +84,6 @@ class Department{
                 // Rest API Version: res.json(results);
                 // MVC Version:
                 const results = await queryAsync(query);
-                console.log(results);
                 res.render("hr_department", {user: user, path, departments: results});
             } catch (error) {
                 console.log(error);
