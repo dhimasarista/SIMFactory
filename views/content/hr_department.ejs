@@ -1,0 +1,126 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 class="card-title">Departments</h3>
+                <span style="margin-left: auto;">
+                    <button type="button" class="btn btn-secondary" id="newButton">
+                        New
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="departmentButton" style="display: none;"> 
+                        Departments
+                    </button>
+                    <button type="button" class="btn btn-secondary">
+                        Print
+                    </button>
+                </span>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0" id="departmentTable">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Total Employees</th>
+                            </tr>
+                        </thead>
+                        <tbody id="departmentTableBody">
+                            <% department.forEach(function(department) { %>
+                                <tr><td><a href="#"><%- department.name %></a></td>
+                                <td><%- department.id %></td></tr>
+                              <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <div class="card-body" id="departmentForm" style="display: none;">
+                <form id="addDepartmentForm">
+                    <div class="form-group">
+                        <label for="departmentName">Name</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+<script>
+    (() => {
+        fetch("http://localhost:3000/hr/department")
+        .then(response => response.json())
+        .then(data => {
+            const departmentTableBody = document.getElementById("departmentTableBody");
+            data.forEach((item) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><a href="#">${item.name}</a></td>
+                    <td>${item.id}</td>
+                `;
+                departmentTableBody.appendChild(row);
+            })
+        })
+    })();
+
+    function saveData() {
+        const id = Math.floor(Math.random() * 999);
+        const name = document.getElementById("name").value;
+
+        if (name === "") {
+            alert("Nama tidak boleh kosong");
+            return; // Cancel database insertion process
+        }
+
+        const data = {
+            id: id,
+            name: name
+        };
+
+        fetch("http://localhost:3000/hr/department", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            location.reload();
+        })
+        .catch(error => {
+            alert(`Failed to Send Data: ${error}`);
+        });
+    }
+
+    
+    const newButton = document.getElementById('newButton');
+    const departmentButton= document.getElementById('departmentButton');
+    const departmentTable = document.getElementById('departmentTable');
+    const departmentForm = document.getElementById('departmentForm');
+    const addDepartmentForm = document.getElementById('addDepartmentForm');
+
+    newButton.addEventListener('click', () => {
+        departmentTable.style.display = 'none';
+        departmentForm.style.display = 'block';
+        departmentButton.style.display = "inline";
+        newButton.style.display = "none";
+    });
+    departmentButton.addEventListener("click", () => {
+        departmentForm.style.display = 'none';
+        departmentTable.style.display = 'table';
+        departmentButton.style.display = "none";
+        newButton.style.display = "inline";
+    }) 
+
+    addDepartmentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        saveData();
+        document.getElementById("departmentName").value = "";
+    });
+</script>
