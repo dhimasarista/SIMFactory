@@ -26,9 +26,11 @@
                             </tr>
                         </thead>
                         <tbody id="departmentTableBody">
-                            <% department.forEach(function(department) { %>
-                                <tr><td><a href="#"><%- department.name %></a></td>
-                                <td><%- department.id %></td></tr>
+                            <% departments.forEach(function(data) { %>
+                                <tr>
+                                    <td><a href="#"><%- data.name %></a></td>
+                                    <td><%- data %></td>
+                                </tr>
                               <% }); %>
                         </tbody>
                     </table>

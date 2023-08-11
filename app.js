@@ -47,6 +47,7 @@ app.use((req, res, next) => {
 new Index(app).get();
 new ProductionControl(app).get();
 new Employee(app).get();
+new Employee(app).post();
 new Department(app).get();
 new Department(app).post();
 new Login(app).get();

@@ -15,16 +15,29 @@ class Employee {
             const path = req.path;
             // Rendering views: hr_employee.ejs
 
-            const results = await queryAsync("SELECT * FROM employees ORDER BY created_at DESC");
-            res.render("hr_employee", {user:user, path});
+            const employees = await queryAsync("SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id ORDER BY created_at DESC");
+            const departments = await queryAsync("SELECT * FROM departments");
+            res.render("hr_employee", {user, path, employees, departments});
         });
     }
 
     post(){
-        this.app.post("/hr/employee", (req, res) => {
-            const { data } = req.body;
+        this.app.post("/hr/employee", async (req, res) => {
+            const { id, name, department_id } = req.body;
+            const data = {
+                id: id,
+                name: name,
+                department_id: department_id
+            }
 
-
+            try {
+                const results = await queryAsync("INSERT INTO employees SET ?", data);
+                res.json({data: results});
+                console.log(green, `${symbol} Employee: ${name} Succesfully Added`);
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
         })
     }
 }
@@ -40,8 +53,9 @@ class Department{
             const path = req.path;
             try {
                 const results = await queryAsync('SELECT * FROM departments ORDER BY created_at DESC');
-                // Rendering views: hr_department.ejs
-                res.render("hr_department", {user: user, path, department: results});
+                // Rest API Version: res.json(results);
+                // MVC Version:
+                res.render("hr_department", {user: user, path, departments: results});
             } catch (error) {
                 console.log(error);
             }
