@@ -23,4 +23,3 @@
 - class: CalonProgrammer
 - file-class: Programmer.js
 - file biasa: programmer.js / calon_programmer.js
- 
