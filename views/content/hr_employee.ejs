@@ -77,17 +77,19 @@
     <!-- /.col -->
  </div>
  <script>
+    
+    let table = new DataTable('#employee');
   const saveData = () => {
     const id = Math.floor(Math.random() * 999);
     const name = document.getElementById("name").value;
     const department = document.getElementById("departments").value;
 
     if(name === ""){
-      alert("Masukkan Nama terlebih dahulu");
+      Swal.fire("Empty", "Please fill in all the fields.", "info");
       return;
     }
     if(department === 'Select First'){
-      alert("Masukkan Departemennya juga");
+      Swal.fire("Empty", "Please choose the departments", "info");
       return;
     }
     const data = {
@@ -104,10 +106,21 @@
     })
     .then(response => response.json())
     .then(data => {
-      location.reload();
+      Swal.fire({
+          title: "Success",
+          text: "Data saved successfully!",
+          icon: "success",
+          confirmButtonText: "OK"
+      }).then((result) => {
+          // Jika tombol OK ditekan
+          if (result.isConfirmed) {
+              // Reload halaman
+              location.reload();
+          }
+      });
     })
     .catch(error => {
-      alert("Error: ", error);
+      Swal.fire("Error", "Something wrong happen!", "error");
     })
   }
   const newButton = document.getElementById('newButton');
@@ -136,8 +149,4 @@
 
       saveData();
   });
-
-  // (() => {
-  //   fetch("")
-  // })
 </script>

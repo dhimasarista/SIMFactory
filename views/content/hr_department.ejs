@@ -53,28 +53,14 @@
     <!-- /.col -->
 </div>
 <script>
-    (() => {
-        fetch("http://localhost:3000/hr/department")
-        .then(response => response.json())
-        .then(data => {
-            const departmentTableBody = document.getElementById("departmentTableBody");
-            data.forEach((item) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td><a href="#">${item.name}</a></td>
-                    <td>${item.id}</td>
-                `;
-                departmentTableBody.appendChild(row);
-            })
-        })
-    })();
+
 
     function saveData() {
         const id = Math.floor(Math.random() * 999);
         const name = document.getElementById("name").value;
 
         if (name === "") {
-            alert("Nama tidak boleh kosong");
+            Swal.fire("Empty", "Please fill in all the fields.", "info");
             return; // Cancel database insertion process
         }
 
@@ -92,10 +78,21 @@
         })
         .then(response => response.json())
         .then(result => {
-            location.reload();
+            Swal.fire({
+                title: "Success",
+                text: "Data saved successfully!",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then((result) => {
+                // Jika tombol OK ditekan
+                if (result.isConfirmed) {
+                    // Reload halaman
+                    location.reload();
+                }
+            });
         })
         .catch(error => {
-            alert(`Failed to Send Data: ${error}`);
+            Swal.fire("Error", "Something wrong happen!", "error");
         });
     }
 
