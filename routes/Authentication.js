@@ -30,7 +30,7 @@ class Login{
 
             try {
                 // Mengambil data dari Tabel Admins dan menyimpannya dalam bentuk Array of Object
-                const [results] = await promisePool.query("SELECT * FROM admins WHERE username = ?", [username]);
+                const [results] = await promisePool .query("SELECT * FROM admins WHERE username = ?", [username]);
                 // Menyimpannya ke variabel user dalam bentuk objek
                 const user = results[0];
                 

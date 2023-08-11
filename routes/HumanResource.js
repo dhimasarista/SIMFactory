@@ -48,8 +48,9 @@ class Employee {
 
             try {
                 const deleteData = await queryAsync(query, [idToDelete]);
-                res.json({data: deleteData});
+                // res.json({data: deleteData});
                 res.sendStatus(204); // Send a "No Content" status to indicate successful deletion
+                console.log(green, `${symbol} Employee: ${idToDelete} Succesfully Deleted`);
             } catch (error) {
                 console.error('Query Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });

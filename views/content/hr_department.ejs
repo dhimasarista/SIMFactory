@@ -16,9 +16,9 @@
                 </span>
             </div>
             <!-- /.card-header -->
-            <div class="card-body p-0" id="departmentTable">
+            <div class="card-body p-0 my-2 mx-4" id="departmentTable">
                 <div class="table-responsive">
-                    <table class="table m-0">
+                    <table class="table m-0" id="department">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -53,8 +53,7 @@
     <!-- /.col -->
 </div>
 <script>
-
-
+    let table = new DataTable('#department');
     function saveData() {
         const id = Math.floor(Math.random() * 999);
         const name = document.getElementById("name").value;

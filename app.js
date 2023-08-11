@@ -48,6 +48,7 @@ new Index(app).get();
 new ProductionControl(app).get();
 new Employee(app).get();
 new Employee(app).post();
+new Employee(app).delete();
 new Department(app).get();
 new Department(app).post();
 new Login(app).get();
