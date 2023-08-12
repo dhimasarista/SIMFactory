@@ -1,0 +1,60 @@
+<div class="container mt-4">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#adminListTab">Administrator List</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#adminCrudTab">Administrator CRUD</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content mt-4">
+        <!-- Administrator List Tab -->
+        <div id="adminListTab" class="tab-pane fade show active">
+            
+            <ul id="adminList" class="list-group">
+                <!-- Example administrator item -->
+                <!-- <li class="list-group-item">Administrator - <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li> -->
+            </ul>
+        </div>
+
+        <!-- Administrator CRUD Tab -->
+        <div id="adminCrudTab" class="tab-pane fade">
+            <h3>Administrator CRUD</h3>
+            <!-- Form for adding administrators -->
+            <form id="addAdminForm">
+                <input type="text" id="adminName" class="form-control" placeholder="Administrator Name">
+                <select id="adminRole" class="form-control mt-2">
+                    <option value="admin">Administrator</option>
+                    <option value="editor">Editor</option>
+                    <option value="viewer">Viewer</option>
+                </select>
+                <button type="submit" class="btn btn-primary mt-3">Add Administrator</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to add administrator
+    $('#addAdminForm').submit(function(event) {
+        event.preventDefault();
+        const adminName = $('#adminName').val();
+        const adminRole = $('#adminRole').val();
+        
+        // Add administrator item to the list
+        $('#adminList').append(`<li class="list-group-item">${adminRole} - ${adminName} - <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li>`);
+        
+        // Clear input fields
+        $('#adminName').val('');
+        $('#adminRole').val('admin');
+    });
+
+    // Function to remove administrator
+    function removeAdmin(element) {
+        // Remove the administrator item from the list
+        $(element).closest('li').remove();
+    }
+</script>

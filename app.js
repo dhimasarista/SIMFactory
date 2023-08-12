@@ -7,6 +7,7 @@ const path = require('path');
 const Index = require("./routes/Index");
 const secretCode = require("./utils/secret_code")
 const { ProductionControl } = require("./routes/Production");
+const Administrator = require("./routes/Administrator");
 const { Employee, Department } = require("./routes/HumanResource");
 const { Login, Logout } = require("./routes/Authentication");
 const { blue, symbol } = require("./utils/logging");
@@ -54,6 +55,7 @@ new Department(app).post();
 new Login(app).get();
 new Login(app).post();
 new Logout(app).get();
+new Administrator(app).get();
 
 // Start the server
 const port = 3000;

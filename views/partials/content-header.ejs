@@ -11,8 +11,10 @@
                      Warehouse
                <% } else if (path.startsWith("/hr/")) { %>
                      Human Resource
-               <% } else { %>
-                     404
+               <% } else if(path.startsWith("/administrator")) { %>
+                     Administrator
+               <% } else {  %>
+                  404
                <% } %>
             </h1>
          </div>
@@ -29,8 +31,10 @@
                         Warehouse
                   <% } else if (path.startsWith("/hr/")) { %>
                         Human Resource
-                  <% } else { %>
-                        404
+                  <% } else if(path.startsWith("/administrator")) { %>
+                        Administrator
+                  <% } else {  %>
+                     404
                   <% } %>
                </li>
             </ol>
