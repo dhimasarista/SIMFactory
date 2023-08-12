@@ -23,9 +23,12 @@ class Employee {
 
     post(){
         this.app.post("/hr/employee", async (req, res) => {
-            const { id, name, department_id } = req.body;
+            const { name, department_id } = req.body;
+            const resultMaxIdEmployee = await queryAsync("SELECT MAX(id) as maxId FROM employees");
+            const currentMaxId = resultMaxIdEmployee[0].maxId || "2000"; // Jike belum ada, mulai dari 00999
+            const newId = parseInt(currentMaxId) + 1;
             const data = {
-                id: id,
+                id: newId,
                 name: name,
                 department_id: department_id
             }
@@ -95,10 +98,13 @@ class Department{
 
     post(){
         this.app.post("/hr/department", async (req, res) => {
-            const { id, name } = req.body;
+            const { name } = req.body;
+            const resultMaxIdDepart = await queryAsync("SELECT MAX(id) as maxId FROM departments")
+            const maxIdDepart = resultMaxIdDepart[0].maxId || "99";
+            const newIdDepart = parseInt(maxIdDepart + 1);
 
             const data = {
-                id: id,
+                id: newIdDepart,
                 name: name
             }
 

@@ -1,4 +1,5 @@
-window.onload = function() {
+
+    window.onload = function() {
     if (window.location.pathname === '/login') {
       // Mengalihkan kembali ke root path saat tombol reload ditekan
       window.location.href = '/';
@@ -92,3 +93,15 @@ $(function () {
   })
 
 // lgtm [js/unused-local-variable]
+function toPascalCase(text) {
+  var words = text.toLowerCase().split(' ');
+  for (var i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toLocaleUpperCase() + words[i].slice(1);
+  }
+  return words.join(' ');
+}
+
+    const tdElements  = document.querySelectorAll("td");
+    tdElements.forEach((td) => {
+        td.textContent = toPascalCase(td.textContent);
+    })

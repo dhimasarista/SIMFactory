@@ -78,7 +78,7 @@
  </div>
  <script>
     
-    let table = new DataTable('#employee');
+  let table = new DataTable('#employee');
   const saveData = () => {
     const id = Math.floor(Math.random() * 999);
     const name = document.getElementById("name").value;
@@ -93,7 +93,6 @@
       return;
     }
     const data = {
-      id: id,
       name: name,
       department_id: department
     }
