@@ -1,6 +1,7 @@
 const admins = require("../models/admins");
 const department = require("../models/departments");
 const employees = require("../models/employees");
+const users = require("../models/users");
 const loadingAnimation = require("../utils/loading");
 const {magenta, qm, symbol } = require("../utils/logging");
 const mysql = require('mysql2');
@@ -16,9 +17,8 @@ const connection = mysql.createConnection({
 admins(connection);
 department(connection);
 employees(connection);
-const animation = loadingAnimation(`${symbol} Checking Tables`);
+users(connection);
 setTimeout(() => {
-    clearInterval(animation);
-    console.log(magenta, `\n${qm} Checking tables finished`);
+    console.log(magenta, `${symbol} Checking tables finished`);
     process.exit(0);
   }, 5000);

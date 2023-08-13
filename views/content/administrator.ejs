@@ -2,59 +2,80 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#adminListTab">Administrator List</a>
+            <a class="nav-link active" data-toggle="tab" href="#userListTab">User List</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#adminCrudTab">Administrator CRUD</a>
+            <a class="nav-link" data-toggle="tab" href="#addUser">Add User</a>
         </li>
     </ul>
 
     <!-- Tab panes -->
     <div class="tab-content mt-4">
         <!-- Administrator List Tab -->
-        <div id="adminListTab" class="tab-pane fade show active">
-            
-            <ul id="adminList" class="list-group">
+        <div id="userListTab" class="tab-pane fade show active">
+            <ul id="userList" class="list-group">
                 <!-- Example administrator item -->
+                <% userList.forEach((data) => { %>
+                    <li class="list-group-item"><%- data.username %> <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li>
+                <% }); %>
                 <!-- <li class="list-group-item">Administrator - <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li> -->
             </ul>
         </div>
 
         <!-- Administrator CRUD Tab -->
-        <div id="adminCrudTab" class="tab-pane fade">
-            <h3>Administrator CRUD</h3>
+        <div id="addUser" class="tab-pane fade">
+            <h3>Add User by Employees ID</h3>
             <!-- Form for adding administrators -->
-            <form id="addAdminForm">
-                <input type="text" id="adminName" class="form-control" placeholder="Administrator Name">
-                <select id="adminRole" class="form-control mt-2">
-                    <option value="admin">Administrator</option>
-                    <option value="editor">Editor</option>
-                    <option value="viewer">Viewer</option>
-                </select>
-                <button type="submit" class="btn btn-primary mt-3">Add Administrator</button>
+            <form id="addEmployeeForm" action="#">
+                <div style="display: inline-flex;"><input type="text" id="employeeInput" class="form-control" placeholder="Employee ID" style="width: 50%;" name="employeeId" onkeydown="disableEnter(event)">
+                    <button type="button" class="btn btn-primary ml-2" onclick="searchData()">Check Employee</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    // Function to add administrator
-    $('#addAdminForm').submit(function(event) {
-        event.preventDefault();
-        const adminName = $('#adminName').val();
-        const adminRole = $('#adminRole').val();
-        
-        // Add administrator item to the list
-        $('#adminList').append(`<li class="list-group-item">${adminRole} - ${adminName} - <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li>`);
-        
-        // Clear input fields
-        $('#adminName').val('');
-        $('#adminRole').val('admin');
-    });
+    const employeeInput = document.getElementById('employeeInput');
+    const searchData = () => {
+        const inputNumber = parseInt(employeeInput.value);
 
-    // Function to remove administrator
-    function removeAdmin(element) {
-        // Remove the administrator item from the list
-        $(element).closest('li').remove();
+        if (isNaN(inputNumber)) {
+            Swal.fire({
+                title: "Warning!",
+                text: "Please Input in Number.",
+                icon: "warning",
+                confirmButtonText: "OK",
+            });
+        } else {
+            fetch(`/employee/${inputNumber}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length === 0) {
+                        Swal.fire({
+                        title: "Not Found!",
+                        text: "Theres nothing dude",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                    });
+                    }
+                    Swal.fire({
+                        title: "Success",
+                        text: data[0].name,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error fetching search results:', error);
+                });
+        }
     }
+
+    const disableEnter = (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+    }
+
 </script>

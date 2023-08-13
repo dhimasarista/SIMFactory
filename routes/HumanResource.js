@@ -1,7 +1,7 @@
 const { promisify } = require('util');
 const { green, symbol } = require('../utils/logging');
 const pool = require("../configs/database");
-const queryAsync = promisify(pool.query).bind(pool);;
+const queryAsync = promisify(pool.query).bind(pool);
 
 class Employee {
     constructor(app){

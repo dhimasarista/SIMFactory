@@ -1,4 +1,4 @@
-const { red, qm, magenta, symbol } = require("../utils/logging");
+const { red, qm, magenta, symbol, green } = require("../utils/logging");
 
 const employee = (connection) => {
     // Create an "employees" table if it doesn't exist
@@ -16,6 +16,8 @@ const employee = (connection) => {
                 process.exit(1);
                 return;
             }
+            const notError = (error == null) ? "Ok" : "Not Ok";
+            console.log(green, `${symbol} Employees Table: ${notError}`);
         });
 };
 

@@ -1,4 +1,4 @@
-const { red, qm, magenta, symbol } = require("../utils/logging");
+const { red, qm, magenta, symbol, green } = require("../utils/logging");
 const bcrypt = require('bcrypt');
 
 // Default Admin
@@ -21,6 +21,8 @@ module.exports = admin = (connection) => {
       process.exit(1);
       return;
     }
+    const notError = (error == null) ? "Ok" : "Not Ok";
+    console.log(green, `${symbol} Admins Table: ${notError}`);
 
     // Check if the admin credentials already exist in the 'admin' table
     connection.query(`SELECT * FROM admins WHERE username = ?`, [adminUsername], async (error, results) => {

@@ -1,4 +1,4 @@
-const { red, qm, magenta, symbol } = require("../utils/logging");
+const { red, qm, symbol, green } = require("../utils/logging");
 const department = (connection) => {
     // Create a "departments" table if it doesn't exist
     connection.query(`
@@ -13,6 +13,8 @@ const department = (connection) => {
                 process.exit(1);
                 return;
             }
+            const notError = (error == null) ? "Ok" : "Not Ok";
+            console.log(green, `${symbol} Departments Table: ${notError}`);
         });
     };
 
