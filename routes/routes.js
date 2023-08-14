@@ -19,6 +19,7 @@ const setupRoutes = (app) => {
   new Administrator(app).searchEmployeeById(); // Mencari employee dengan id
   new Administrator(app).getEmployeeById(); // Kemudian menampilkan hasil pencarian
   new Administrator(app).addUser(); // Jika ada, Tambahkan sebagai user
+  new Administrator(app).deleteUser(); // Menghapus user
 };
 
 module.exports = setupRoutes;

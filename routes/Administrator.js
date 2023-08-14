@@ -82,6 +82,19 @@ class Administrator{
             }
         })
     }
+    deleteUser(){
+        this.app.delete("/administrator/:id", async (req, res) => {
+            const id = parseInt(req.params.id);
+            const query = `DELETE FROM users WHERE id = ?`;
+            try {
+                const results = await queryAsync(query, id);
+                res.status(200).send(results);
+            } catch(error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+    }
 }
 
 module.exports = Administrator;
