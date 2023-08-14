@@ -21,4 +21,4 @@
 ### Aturan penamaan file, variabel/fungsi dan class
 - v/f: calonProgrammer | calonProgrammer.js
 - class: CalonProgrammer | CalonProgrammer.js
-- ejs/html: calon_programmer.ejs
+- ejs/html: calon_programmer.ejs | content-header.ejs
