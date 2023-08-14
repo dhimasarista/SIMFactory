@@ -67,7 +67,12 @@
 </div>
 <script>
     let table = new DataTable('#department', {
+        deferRender: true, // This option defers rendering of the table until required
+        processing: true,  // Show a processing indicator while waiting for data
         sort: false
+    });
+    table.on('xhr', function () {
+        dataTable.rows().invalidate().draw();
     });
     function saveData() {
         const id = Math.floor(Math.random() * 999);
