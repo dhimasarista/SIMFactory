@@ -19,7 +19,6 @@
 
 
 ### Aturan penamaan file, variabel/fungsi dan class
-- v/f: calonProgrammer
-- class: CalonProgrammer
-- file-class: Programmer.js
-- file biasa: programmer.js / calon_programmer.js
+- v/f: calonProgrammer | calonProgrammer.js
+- class: CalonProgrammer | CalonProgrammer.js
+- ejs/html: calon_programmer.ejs
