@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "mocha",
-    "check_db": "node database/create_db && node database/create_models",
+    "check_db": "node database/createDatabase && node database/createModels",
     "dev": "nodemon app",
     "start": "node app"
   },
@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
-    "chai": "^4.3.7",
+    "chai-http": "^4.4.0",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "ejs": "^3.1.9",
@@ -21,7 +21,9 @@
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
     "express-validator": "^7.0.1",
-    "mysql2": "^3.5.2",
-    "pidusage": "^3.0.2"
+    "mysql2": "^3.5.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7"
   }
 }

@@ -1,3 +1,6 @@
+const escapeHTML = (html) => {
+  return document.createElement('div').appendChild(document.createTextNode(html)).parentNode.innerHTML;
+}
 $.widget.bridge('uibutton', $.ui.button);
 window.onload = function() {
   if (window.location.pathname === '/login') {

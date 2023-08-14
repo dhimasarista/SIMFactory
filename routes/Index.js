@@ -21,8 +21,8 @@ module.exports = class Index{
             // (MVC) Rendering views: index.ejs
             res.render("index", {
                 errors: [],
-                user,
-                path,
+                user: user,
+                path: path,
                 totalEmployees: totalEmployees[0].total,
             });
         });

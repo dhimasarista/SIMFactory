@@ -1,7 +1,6 @@
 const { promisify } = require('util');
-const { green, symbol, red, qm } = require('../utils/logging');
+const { red, qm } = require('../utils/logging');
 const pool = require("../configs/database");
-const { parse } = require('path');
 const queryAsync = promisify(pool.query).bind(pool);
 
 class Administrator{
@@ -9,6 +8,7 @@ class Administrator{
         this.app = app;
     }
 
+    // MVC
     get(){
         this.app.get("/administrator", async (req, res) => {
             const user = req.cookies.user;
@@ -17,15 +17,18 @@ class Administrator{
             try {
                 const query = `SELECT * FROM users ORDER BY created_at DESC`
                 const results = await queryAsync(query);
-
-                res.render("administrator", {user, path, userList: results});
+                res.render("administrator", {
+                    user: user, 
+                    path: path, 
+                    userList: results});
             } catch (error) {
                 console.log(red, `${qm} Query Error: ${error}`);
             }
 
         });
     }
-    employeeData() {
+    // Rest API
+    getEmployeeById() {
         this.app.get("/administrator/:id", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
@@ -43,8 +46,8 @@ class Administrator{
         });
     }
     
-    // Mencari employee by id
-    searchEmployee() {
+    // Rest API
+    searchEmployeeById() {
         this.app.get("/employee/:id", async(req, res) => {
             // Mengambil parameter id di URL kemudian diparsing ke integer
             const employeeId = parseInt(req.params.id);
@@ -60,6 +63,7 @@ class Administrator{
         });
     }
 
+    // Rest API
     addUser(){
         this.app.post("/administrator", async (req, res) => {
             const { id, department_id, username } = req.body;
@@ -71,7 +75,7 @@ class Administrator{
             const query = `INSERT INTO users SET ?`;
             try {
                 const results = await queryAsync(query, data);
-                res.json({data: results});
+                res.status(200).send(results);
             } catch (error) {
                 console.error('Query Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });

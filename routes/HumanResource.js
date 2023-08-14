@@ -35,7 +35,7 @@ class Employee {
 
             try {
                 const results = await queryAsync("INSERT INTO employees SET ?", data);
-                res.json({data: results});
+                res.status(200).send(results);
                 console.log(green, `${symbol} Employee: ${name} Succesfully Added`);
             } catch (error) {
                 console.error('Query Error:', error);
@@ -50,9 +50,8 @@ class Employee {
             const query = `DELETE FROM employees  WHERE employees.id = ?`;
 
             try {
-                const deleteData = await queryAsync(query, [idToDelete]);
-                // res.json({data: deleteData});
-                res.sendStatus(204); // Send a "No Content" status to indicate successful deletion
+                const results = await queryAsync(query, [idToDelete]);
+                res.status(200).send(results);
                 console.log(green, `${symbol} Employee: ${idToDelete} Succesfully Deleted`);
             } catch (error) {
                 console.error('Query Error:', error);
@@ -109,8 +108,9 @@ class Department{
             }
 
             try {
-                const query = await queryAsync("INSERT INTO `departments` SET ? ", data);
-                res.json({data: query});
+                const query = "INSERT INTO `departments` SET ? ";
+                const results = await resultsAsync(query, data);
+                res.status(200).send(results);
                 console.log(green, `${symbol} Department: ${name} Succesfully Added`);
             } catch (error) {
                 console.error('Query Error:', error);
