@@ -58,6 +58,7 @@ new Logout(app).get();
 new Administrator(app).get();
 new Administrator(app).searchEmployee();
 new Administrator(app).employeeData();
+new Administrator(app).addUser();
 
 // Start the server
 const port = 3000;

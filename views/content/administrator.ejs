@@ -16,7 +16,8 @@
             <ul id="userList" class="list-group">
                 <!-- Example administrator item -->
                 <% userList.forEach((data) => { %>
-                    <li class="list-group-item"><%- data.username %> <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li>
+                    <li class="list-group-item"><%- data.username %></li>
+                    <!-- <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a> -->
                 <% }); %>
                 <!-- <li class="list-group-item">Administrator - <a href="#" class="text-danger ml-2" onclick="removeAdmin(this)">Remove</a></li> -->
             </ul>
@@ -85,8 +86,8 @@
                             // Display employee data in the modal
                             const modalBody = document.getElementById('employeeModalBody');
                             modalBody.innerHTML = `
-                                <p><strong>Name:</strong> ${employeeData.name}</p>
-                                <p><strong>Position:</strong> ${employeeData.department_name}</p>
+                                <div><strong>Name:</strong> <span id="username" data-employee-name="${employeeData.name}">${employeeData.name}</span</div>
+                                <div><strong>Position:</strong> <span id="department" data-department-id="${employeeData.department_id}">${employeeData.department_name}</span</div>
                             `;
 
                             // Show the modal
@@ -103,6 +104,41 @@
         if (event.key === "Enter") {
             event.preventDefault();
         }
+    }
+
+    const addUser = () => {
+        // Mengambil ID employee dari hasil input pencarian
+        const id = document.getElementById("employeeInput").value;
+        // Mengambil nilai dari elemen dengan ID "username"
+        const usernameElement = document.getElementById("username");
+        const usernameValue = usernameElement.dataset.employeeName;
+        // Mengambil nilai dari elemen dengan ID "department"
+        const departmentElement = document.getElementById("department");
+        const departmentValue = departmentElement.dataset.departmentId;
+
+        const data = {
+            id: id,
+            username: usernameValue,
+            department_id: departmentValue
+        }
+        fetch("/administrator", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            Swal.fire({
+                title: "Success Adding User",
+                text: `User Added: ${data}`,
+                icon: "success",
+                confirmButtonText: "OK",
+            }).then(() => {
+                location.reload();
+            })
+        });
     }
 
 </script>

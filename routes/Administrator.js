@@ -1,6 +1,7 @@
 const { promisify } = require('util');
 const { green, symbol, red, qm } = require('../utils/logging');
 const pool = require("../configs/database");
+const { parse } = require('path');
 const queryAsync = promisify(pool.query).bind(pool);
 
 class Administrator{
@@ -57,6 +58,25 @@ class Administrator{
                 res.status(500).json({ error: 'Internal Server Error' });
             }
         });
+    }
+
+    addUser(){
+        this.app.post("/administrator", async (req, res) => {
+            const { id, department_id, username } = req.body;
+            const data = {
+                id: id,
+                username: username,
+                department_id: department_id
+            }
+            const query = `INSERT INTO users SET ?`;
+            try {
+                const results = await queryAsync(query, data);
+                res.json({data: results});
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        })
     }
 }
 
