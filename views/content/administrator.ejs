@@ -32,46 +32,73 @@
                 </div>
             </form>
         </div>
+        <div class="modal fade" id="employeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="employeeModalLabel">Employee Information</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="employeeModalBody">
+                        <!-- Employee data will be displayed here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="addUser()">Add User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
     const employeeInput = document.getElementById('employeeInput');
     const searchData = () => {
-        const inputNumber = parseInt(employeeInput.value);
+    const inputNumber = parseInt(employeeInput.value);
 
-        if (isNaN(inputNumber)) {
-            Swal.fire({
-                title: "Warning!",
-                text: "Please Input in Number.",
-                icon: "warning",
-                confirmButtonText: "OK",
-            });
-        } else {
-            fetch(`/employee/${inputNumber}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.length === 0) {
-                        Swal.fire({
+    if (isNaN(inputNumber)) {
+        Swal.fire({
+            title: "Warning!",
+            text: "Please Input in Number.",
+            icon: "warning",
+            confirmButtonText: "OK",
+        });
+    } else {
+        fetch(`/employee/${inputNumber}`)
+            .then((response) => response.json())
+            .then((searchData) => {
+                if (searchData.length === 0) {
+                    Swal.fire({
                         title: "Not Found!",
                         text: "Theres nothing dude",
                         icon: "error",
                         confirmButtonText: "OK",
                     });
-                    }
-                    Swal.fire({
-                        title: "Success",
-                        text: data[0].name,
-                        icon: "success",
-                        confirmButtonText: "OK",
-                    });
-                })
-                .catch((error) => {
-                    console.error('Error fetching search results:', error);
-                });
+                } else {
+                    const employeeId = searchData[0].id;
+                    fetch(`/administrator/${employeeId}`)
+                        .then((response) => response.json())
+                        .then((employeeData) => {
+                            // Display employee data in the modal
+                            const modalBody = document.getElementById('employeeModalBody');
+                            modalBody.innerHTML = `
+                                <p><strong>Name:</strong> ${employeeData.name}</p>
+                                <p><strong>Position:</strong> ${employeeData.department_name}</p>
+                            `;
+
+                            // Show the modal
+                            $('#employeeModal').modal('show');
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching search results:', error);
+            });
         }
     }
-
     const disableEnter = (event) => {
         if (event.key === "Enter") {
             event.preventDefault();

@@ -24,28 +24,33 @@ class Administrator{
 
         });
     }
-
-    post(){
-        const { username } = req.body;
-        const id = Math.floor(Math.random() * 99999999);
-
-        const data = {
-            id: id,
-            username: username
-        }
-        this.app.post("/administrator", async (req, res) => {
-            const query = `INSERT INTO users SET ?`;
-        })
+    employeeData() {
+        this.app.get("/administrator/:id", async (req, res) => {
+            const user = req.cookies.user;
+            const path = req.path;
+            const id = req.params.id; // Change "term" to "id"
+    
+            try {
+                // Perbaiki sintaks SQL dan queryAsync
+                const query = `SELECT employees.*, departments.name AS department_name FROM employees INNER JOIN departments ON employees.department_id = departments.id WHERE employees.id = ?`;
+                const results = await queryAsync(query, [id]);
+                res.json(results[0]);
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
     }
+    
     // Mencari employee by id
-    searchEmployee(){
+    searchEmployee() {
         this.app.get("/employee/:id", async(req, res) => {
-            // Mengambil paramater id di url kemudian di parsing ke integer
+            // Mengambil parameter id di URL kemudian diparsing ke integer
             const employeeId = parseInt(req.params.id);
             const query = `SELECT * FROM employees WHERE id = ?`;
             try {
                 const results = await queryAsync(query, [employeeId]); // Array of object
-                // Data dikirimkan dalam bentuk json
+                // Data dikirimkan dalam bentuk JSON
                 res.json(results);
             } catch (error) {
                 console.error('Query Error:', error);
