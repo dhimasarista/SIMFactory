@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Serve static files d
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json()); // Parsing Permintaan JSON
 app.use(cookieParser()); // Menggunakan cookie-parser
-app.use(cacheMiddleware); // Caching secara global
+// app.use(cacheMiddleware); // Caching secara global
 userAuthorization(app);
 
 // Routes
