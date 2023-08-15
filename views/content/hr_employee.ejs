@@ -17,7 +17,12 @@
      </div>
        <!-- /.card-header -->
        <div class="card-body" id="employeeTable">
-         <table id="employee" class="table table-bordered table-hover">
+        <div class="d-flex justify-content-center loading-placeholder">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+         <table id="employee" class="table table-bordered table-hover" style="display: none;">
            <thead>
            <tr>
              <th>ID Employee</th>
@@ -49,7 +54,6 @@
               </tr>
             <% }); %>
           </tbody>
-           </tfoot>
          </table>
        </div>
        <div class="card-body" id="employeeForm" style="display: none;">
@@ -78,7 +82,13 @@
  </div>
  <script>
     
-  let table = new DataTable('#employee');
+  let table = new DataTable('#employee',{
+    deferLoading: 10,
+    initComplete: function(settings, json) {
+        $('.loading-placeholder').remove(); // Menghilangkan animasi loading setelah tabel siap
+        $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
+    }
+  });
   const saveData = () => {
     const id = Math.floor(Math.random() * 999);
     const name = document.getElementById("name").value;

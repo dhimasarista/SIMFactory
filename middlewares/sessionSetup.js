@@ -1,5 +1,5 @@
 const session = require('express-session');
-const secretCode = require("../utils/secret_code");
+const secretCode = require("../utils/secretCode");
 
 const sessionSetup = (app) => {
     app.use(session({

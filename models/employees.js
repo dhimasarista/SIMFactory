@@ -21,8 +21,8 @@ const employee = (connection) => {
             criminal_history BOOL,
             employmeny_contract BLOB,
             department_id INT,
-            FOREIGN KEY (department_id) REFERENCES departments(id)
-            created_at TIMESTAMP,
+            FOREIGN KEY (department_id) REFERENCES departments(id),
+            created_at TIMESTAMP
         )`, (error, results) => {
             if (error) {
                 console.log(red, `${qm} Error creating employees table: ${error}`);
