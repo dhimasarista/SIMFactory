@@ -8,6 +8,7 @@ const dhim = require("./utils/dhim");
 const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
+const cacheMiddleware = require("./middlewares/caching");
 
 // Create an Express app
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Serve static files d
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json()); // Parsing Permintaan JSON
 app.use(cookieParser()); // Menggunakan cookie-parser
+app.use(cacheMiddleware); // Caching secara global
 userAuthorization(app);
 
 // Routes
