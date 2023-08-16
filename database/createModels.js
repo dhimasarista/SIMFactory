@@ -21,4 +21,4 @@ users(connection);
 setTimeout(() => {
     console.log(magenta, `${symbol} Checking tables finished`);
     process.exit(0);
-  }, 5000);
+  }, 1000);

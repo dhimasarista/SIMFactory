@@ -5,6 +5,7 @@ const users = (connection) => {
     CREATE TABLE IF NOT EXISTS users(
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
         department_id INT,
         created_at TIMESTAMP,
         FOREIGN KEY (department_id) REFERENCES departments(id)

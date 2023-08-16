@@ -2,6 +2,7 @@ const { promisify } = require('util');
 const { red, qm } = require('../utils/logging');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
+const bcrypt = require('bcrypt');
 
 class Administrator{
     constructor(app){
@@ -16,11 +17,13 @@ class Administrator{
 
             try {
                 const query = `SELECT * FROM users ORDER BY created_at DESC`
-                const results = await queryAsync(query);
+                const results = await queryAsync(query); // Array of Object
                 res.render("administrator", {
                     user: user, 
                     path: path, 
-                    userList: results});
+                    userList: results,
+                    // password: await bcrypt.compare(results.id, results.password)
+                    });
             } catch (error) {
                 console.log(red, `${qm} Query Error: ${error}`);
             }
@@ -66,10 +69,11 @@ class Administrator{
     // Rest API
     addUser(){
         this.app.post("/administrator", async (req, res) => {
-            const { id, department_id, username } = req.body;
+            const { id, department_id, username, password } = req.body;
             const data = {
                 id: id,
                 username: username,
+                password: await bcrypt.hash(id, 10),
                 department_id: department_id
             }
             const query = `INSERT INTO users SET ?`;
