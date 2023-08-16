@@ -22,7 +22,6 @@ class Administrator{
                     user: user, 
                     path: path, 
                     userList: results,
-                    // password: await bcrypt.compare(results.id, results.password)
                     });
             } catch (error) {
                 console.log(red, `${qm} Query Error: ${error}`);
@@ -85,6 +84,9 @@ class Administrator{
                 res.status(500).json({ error: 'Internal Server Error' });
             }
         })
+    }
+    editUser(){
+        
     }
     deleteUser(){
         this.app.delete("/administrator/:id", async (req, res) => {
