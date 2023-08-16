@@ -30,24 +30,29 @@ class Login{
 
             try {
                 // Mengambil data dari Tabel Admins dan menyimpannya dalam bentuk Array of Object
-                const [results] = await promisePool .query("SELECT * FROM admins WHERE username = ?", [username]);
+                const [adminResults] = await promisePool.query("SELECT * FROM admins WHERE username = ?", [username]);
                 // Menyimpannya ke variabel user dalam bentuk objek
-                const user = results[0];
+                const admin = adminResults[0];
+
+                const [userResults] = await promisePool.query("SELECT * FROM users WHERE id = ?", [username]);
+                const user = userResults[0];
                 
-                // Jika nilai user diatas kosong (tidak ditemukan oleh results)
-                if (!user) {
+                // Jika nilai admin diatas kosong (tidak ditemukan oleh results)
+                if (!admin && !user) {
                     // Maka akan menampilkan username atau password salah
                     return res.render("login", {
                         errors: [{message: "Username salah!"}]
                     });
                 }
-                
+
+                const passwordChecking = (admin == undefined) ? user.password: admin.password;
+                const cookiesChecking = (admin == undefined) ? user.username: admin.username;
                 // Unhasing password dengan komparator bcrypt 
-                const passwordMatch = await bcrypt.compare(password, user.password);
+                const passwordMatch = await bcrypt.compare(password, passwordChecking);
                 // Jika passowrd benar
                 if (passwordMatch) {
                     // user akan disimpan di cookie
-                    res.cookie("user", user.username, { maxAge: 3600000 }); // 1 Jam
+                    res.cookie("user", cookiesChecking , { maxAge: 3600000 }); // 1 Jam
                     console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
                     // Lalu di alihkan ke halaman utama

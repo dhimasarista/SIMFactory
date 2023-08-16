@@ -86,7 +86,28 @@ class Administrator{
         })
     }
     editUser(){
-        
+        this.app.put("/administrator/:id", async (req, res) => {
+            const id = req.params.id;
+            const idToNumber = Number(id);
+            try {
+                const query = `SELECT * FROM users WHERE id = ?`;
+                const result = await queryAsync(query, [id]);
+                
+                const { username, password } = req.body;
+                console.log(password);
+                const data = {
+                    username: username == undefined ? result[0].username : username,
+                    password: password == "" ? result[0].password : await bcrypt.hash(password, 10)
+                }
+
+                const queryUpdate = `UPDATE users SET ? WHERE id = ?`;
+                await queryAsync(queryUpdate, [data, idToNumber]);
+                res.status(200).send(queryUpdate);
+            } catch(error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        })
     }
     deleteUser(){
         this.app.delete("/administrator/:id", async (req, res) => {
