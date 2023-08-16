@@ -31,7 +31,7 @@ class Administrator{
     }
     // Rest API
     getEmployeeById() {
-        this.app.get("/administrator/:id", async (req, res) => {
+        this.app.get("/administrator/employee/:id", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
             const id = req.params.id; // Change "term" to "id"
@@ -50,7 +50,7 @@ class Administrator{
     
     // Rest API
     searchEmployeeById() {
-        this.app.get("/employee/:id", async(req, res) => {
+        this.app.get("/administrator/search-employee/:id", async(req, res) => {
             // Mengambil parameter id di URL kemudian diparsing ke integer
             const employeeId = parseInt(req.params.id);
             const query = `SELECT * FROM employees WHERE id = ?`;
@@ -94,7 +94,6 @@ class Administrator{
                 const result = await queryAsync(query, [id]);
                 
                 const { username, password } = req.body;
-                console.log(password);
                 const data = {
                     username: username == undefined ? result[0].username : username,
                     password: password == "" ? result[0].password : await bcrypt.hash(password, 10)

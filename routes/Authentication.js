@@ -51,12 +51,21 @@ class Login{
                 const passwordMatch = await bcrypt.compare(password, passwordChecking);
                 // Jika passowrd benar
                 if (passwordMatch) {
-                    // user akan disimpan di cookie
-                    res.cookie("user", cookiesChecking , { maxAge: 3600000 }); // 1 Jam
-                    console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
+                    if (admin) {
+                        // user akan disimpan di cookie
+                        res.cookie("user", { username: cookiesChecking, role: "admin"} , { maxAge: 3600000 }); // 1 Jam
+                        console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
-                    // Lalu di alihkan ke halaman utama
-                    return res.redirect("/");
+                        // Lalu di alihkan ke halaman utama
+                        return res.redirect("/administrator");
+                    } else {
+                        // user akan disimpan di cookise
+                        res.cookie("user", { username: cookiesChecking, role: "user"} , { maxAge: 3600000 }); // 1 Jam
+                        console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
+
+                        // Lalu di alihkan ke halaman utama
+                        return res.redirect("/");
+                    }
                 // Jika password salah
                 } else {
                     // Akan tetap berada di halaman login

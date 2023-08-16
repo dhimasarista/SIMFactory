@@ -137,7 +137,8 @@
             confirmButtonText: "OK",
         });
     } else {
-        fetch(`/employee/${inputNumber}`)
+        // searchEmployeeById
+        fetch(`/administrator/search-employee/${inputNumber}`)
             .then((response) => response.json())
             .then((searchData) => {
                 if (searchData.length === 0) {
@@ -149,7 +150,7 @@
                     });
                 } else {
                     const employeeId = searchData[0].id;
-                    fetch(`/administrator/${employeeId}`)
+                    fetch(`/administrator/employee/${employeeId}`)
                         .then((response) => response.json())
                         .then((employeeData) => {
                             // Display employee data in the modal
