@@ -8,7 +8,6 @@ const dhim = require("./utils/dhim");
 const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
-const cacheMiddleware = require("./middlewares/caching");
 
 // Create an Express app
 const app = express();

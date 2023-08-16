@@ -99,7 +99,6 @@ class Department{
                 // Rest API Version: res.json(results);
                 // MVC Version:
                 const results = await queryAsync(query);
-                console.log(results);
                 res.render("hr_department", {user: user, path, departments: results});
             } catch (error) {
                 console.log(error);
@@ -122,7 +121,7 @@ class Department{
 
             try {
                 const query = "INSERT INTO `departments` SET ? ";
-                const results = await resultsAsync(query, data);
+                const results = await queryAsync(query, data);
                 res.status(200).send(results);
                 console.log(green, `${symbol} Department: ${name} Succesfully Added`);
             } catch (error) {

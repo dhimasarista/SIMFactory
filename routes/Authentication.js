@@ -34,7 +34,7 @@ class Login{
                 // Menyimpannya ke variabel user dalam bentuk objek
                 const admin = adminResults[0];
 
-                const [userResults] = await promisePool.query("SELECT * FROM users WHERE id = ?", [username]);
+                const [userResults] = await promisePool.query("SELECT * FROM users WHERE username = ? OR id = ?", [username, username]);
                 const user = userResults[0];
                 
                 // Jika nilai admin diatas kosong (tidak ditemukan oleh results)

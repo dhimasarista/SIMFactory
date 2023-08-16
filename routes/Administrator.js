@@ -16,7 +16,8 @@ class Administrator{
             const path = req.path;
 
             try {
-                const query = `SELECT * FROM users ORDER BY created_at DESC`
+                const query = "SELECT users.*, departments.name AS department_name FROM users JOIN departments ON users.department_id = departments.id ORDER BY created_at DESC";
+    
                 const results = await queryAsync(query); // Array of Object
                 res.render("administrator", {
                     user: user, 
