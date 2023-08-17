@@ -1,0 +1,12 @@
+{
+    "dev": {
+      "driver": "mysql",
+      "host": "localhost",
+      "user": "dev_user",
+      "password": "vancouver",
+      "database": "simfactory",
+      "waitForConnections": true,
+      "connectionLimit": 10,
+      "queueLimit": 0
+    }
+}

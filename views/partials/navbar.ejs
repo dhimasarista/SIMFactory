@@ -36,19 +36,30 @@
       </li> -->
       <li class="nav-item">
          <a class="nav-link" href="#">
-            <%= user %>
+            <%= user.username %>
          </a>
       </li>
-      <li class="nav-item dropdown">
+      <% if (user.role === 'user') { %>
+         <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+               <!-- <a href="#" class="dropdown-item">Profile</a> -->
+               <a href="#" class="dropdown-item">Profile</a>
+               <div class="dropdown-divider"></div>
+               <a href="/logout" class="dropdown-item">Logout</a>
+            </div>
+         </li>
+       <% } else if (user.role === 'admin') { %>
+         <a class="nav-link" href="/logout">
+            Logout
+         </a>
+       <% } %>
+      <!-- <li class="nav-item">
          <a class="nav-link" data-toggle="dropdown" href="#">
-         <i class="far fa-user"></i>
-         </a>
-         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <!-- <a href="#" class="dropdown-item">Profile</a> -->
-            <a href="#" class="dropdown-item">Profile</a>
-            <div class="dropdown-divider"></div>
-            <a href="/logout" class="dropdown-item">Logout</a>
-         </div>
-      </li>
+            <i class="fa fa-cog"></i>
+            </a>
+      </li> -->
    </ul>
 </nav>

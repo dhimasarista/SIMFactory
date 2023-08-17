@@ -2,6 +2,7 @@ const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
 const pool = require("../configs/database");
+const { use } = require("chai");
 const promisePool = pool.promise();
 
 class Login{
@@ -9,12 +10,13 @@ class Login{
         this.app = app;
     }
     // Merender views: login.ejs untuk path /login
-    get(){
+    render(){
        this.app.get("/login", (req,res) => {
             res.render("login", {errors: [{}]});
        });
     }
 
+    // Validasi ke dbms
     post(){
         this.app.post("/login",
         check('username').notEmpty().withMessage('Username harus diisi.'),
@@ -30,28 +32,45 @@ class Login{
 
             try {
                 // Mengambil data dari Tabel Admins dan menyimpannya dalam bentuk Array of Object
-                const [results] = await promisePool.query("SELECT * FROM admins WHERE username = ?", [username]);
+                const [adminResults] = await promisePool.query("SELECT * FROM admins WHERE username = ?", [username]);
                 // Menyimpannya ke variabel user dalam bentuk objek
-                const user = results[0];
+                const admin = adminResults[0];
+
+                const [userResults] = await promisePool.query("SELECT * FROM users WHERE username = ? OR id = ?", [username, username]);
+                const user = userResults[0];
                 
-                // Jika nilai user diatas kosong (tidak ditemukan oleh results)
-                if (!user) {
+                // Jika data tidak cocok disalah satu tabel
+                if (!admin && !user) {
                     // Maka akan menampilkan username atau password salah
                     return res.render("login", {
                         errors: [{message: "Username salah!"}]
                     });
                 }
-                
-                // Unhasing password dengan komparator bcrypt 
-                const passwordMatch = await bcrypt.compare(password, user.password);
-                // Jika passowrd benar
-                if (passwordMatch) {
-                    // user akan disimpan di cookie
-                    res.cookie("user", user.username, { maxAge: 3600000 }); // 1 Jam
-                    console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
-                    // Lalu di alihkan ke halaman utama
-                    return res.redirect("/");
+                // inisiasi password dengan operator ternary
+                const passwordChecking = (admin == undefined) ? user.password: admin.password;
+                const cookiesChecking = (admin == undefined) ? user.username: admin.username;
+                
+                // Memeriksa password apakah cocok dengan username dari tabel
+                const passwordMatch = await bcrypt.compare(password, passwordChecking);
+                // Jika passowrd benar | passwordMatch = true
+                if (passwordMatch) {
+                    // Apakah admin tidak undefined
+                    if (admin) {
+                        // jika iya, akan disimpan di cookie
+                        res.cookie("user", { username: cookiesChecking, role: "admin"} , { maxAge: 3600000 }); // 1 Jam
+                        console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
+
+                        // Lalu di alihkan ke halaman utama
+                        return res.redirect("/administrator");
+                    } else {
+                        // jika users dan admin akan disimpan di cookise
+                        res.cookie("user", { username: cookiesChecking, role: "user", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
+                        console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
+
+                        // Lalu di alihkan ke halaman utama
+                        return res.redirect("/");
+                    }
                 // Jika password salah
                 } else {
                     // Akan tetap berada di halaman login
@@ -78,7 +97,7 @@ class Logout{
     }
 
     // Method Logout: Menghapus cookie user dan mengalihkan ke /login
-    get(){
+    clearAndRedirect(){
       this.app.get("/logout", (req, res) => {
         res.clearCookie('user');
         res.redirect('/login');

@@ -12,15 +12,13 @@
         - <b>Windows</b>: ````sc query mysql```` 
         - <b>Linux</b>: ```systemctl status mysql```
 2. Install all the required modules by running ```npm install```
-3. Check Database: ```npm run check_db``` and all tables will automatically created by ```models/```
+3. Run migrations: ```npm run db-migrate```
 3. Run the application with the command ```npm start``` or ```npm run dev``` with nodemon.
 4. Access the application through the browser by opening http://localhost:3000.
 
 
 
-### Aturan penamaan file, variabel/fungsi dan class
-- v/f: calonProgrammer
-- class: CalonProgrammer
-- file-class: Programmer.js
-- file biasa: programmer.js / calon_programmer.js
- 
+### File Naming Rules, Variable/Function, and Class
+- v/f: calonProgrammer | calonProgrammer.js
+- class: CalonProgrammer | CalonProgrammer.js
+- ejs/html: calon_programmer.ejs | content-header.ejs

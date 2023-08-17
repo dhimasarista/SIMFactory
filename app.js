@@ -1,16 +1,13 @@
 // Import Modules
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const session = require('express-session');
 const flash = require('express-flash');
 const path = require('path');
-const Index = require("./routes/Index");
-const secretCode = require("./utils/secret_code")
-const { ProductionControl } = require("./routes/Production");
-const { Employee, Department } = require("./routes/HumanResource");
-const { Login, Logout } = require("./routes/Authentication");
 const { blue, symbol } = require("./utils/logging");
-const dhim = require("./utils/dhim_codehub");
+const dhim = require("./utils/dhim");
+const setupRoutes = require("./routes/routes");
+const userAuthorization = require("./middlewares/userAuthorization");
+const sessionSetup = require("./middlewares/sessionSetup");
 
 // Create an Express app
 const app = express();
@@ -19,11 +16,7 @@ console.clear();
 console.log(dhim);
 
 // Middlewares
-app.use(session({
-  secret: secretCode,
-  resave: false,
-  saveUninitialized: true
-}));
+sessionSetup(app); // Session
 app.use(flash());
 app.set('view engine', 'ejs'); // Mengatur View Engine ke EJS
 app.set('views', path.join(__dirname, 'views')); // Mengatur path ke folder views
@@ -31,27 +24,19 @@ app.use(express.static(path.join(__dirname, 'public'))); // Serve static files d
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json()); // Parsing Permintaan JSON
 app.use(cookieParser()); // Menggunakan cookie-parser
-app.use((req, res, next) => {
-  // Mengambil user dari cookies
-  const user = req.cookies.user;
-  // Jika tidak ada / belum login
-  if (!user && req.originalUrl !== "/login") {
-    // Maka semua path yang diakses akan dialihkan ke /login
-    return res.redirect("/login");  
-  }
-
-  next();
-});
+userAuthorization(app); // Otorisasi user berdasarkan role: user & admin
+// app.use(cacheMiddleware); // Caching secara global
 
 // Routes
-new Index(app).get();
-new ProductionControl(app).get();
-new Employee(app).get();
-new Department(app).get();
-new Department(app).post();
-new Login(app).get();
-new Login(app).post();
-new Logout(app).get();
+setupRoutes(app);
+
+// Middlewares yang bisa digunakan setelah memanggil routes
+app.use((req, res, next) => {
+  res.status(404).redirect("/error/404"); // Pengalihan jika dia yang dicari tidak ada
+});
+app.use((req, res, next) => {
+  res.status(500).redirect("/error/500"); // Pengalihan jika dia yang dicari tidak ada
+});
 
 // Start the server
 const port = 3000;

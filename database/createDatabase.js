@@ -62,7 +62,7 @@ const createUser = () => {
           console.log(green, `${symbol} User dev_user@localhost created`);
         }
         connection.query(
-          "GRANT ALL PRIVILEGES ON simfactory.* TO 'dev_user'@'localhost'",
+          "GRANT ALL PRIVILEGES ON `simfactory`.* TO 'dev_user'@'localhost' WITH GRANT OPTION;",
           (error, results) => {
             if (error) {
               console.error(`Error granting privileges: ${error.message}`);
