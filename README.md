@@ -12,7 +12,7 @@
         - <b>Windows</b>: ````sc query mysql```` 
         - <b>Linux</b>: ```systemctl status mysql```
 2. Install all the required modules by running ```npm install```
-3. Run migrations: ```npm run db-migrate```
+3. Create/Checking DB and Tables: ```npm run check_db```
 3. Run the application with the command ```npm start``` or ```npm run dev``` with nodemon.
 4. Access the application through the browser by opening http://localhost:3000.
 
