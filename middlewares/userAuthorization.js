@@ -1,10 +1,15 @@
+'use strict'
+
 const userAuthorization = (app) => {
     app.use((req, res, next) => {
         // Mengambil user dari cookies
         const user = req.cookies.user;
+        
         const currentPath = req.originalUrl
+        
         // Jika tidak ada / belum login
         if (!user && currentPath !== "/login") {
+          
           // Maka semua path yang diakses akan dialihkan ke /login
           return res.redirect("/login");  
         }
@@ -31,26 +36,3 @@ const userAuthorization = (app) => {
 }
 
 module.exports = userAuthorization;
-
-// const userAuthorization = (app) => {
-//   app.use((req, res, next) => {
-//       // Mengambil user dari cookies
-//       const user = req.cookies.user;
-//       // Jika tidak ada / belum login
-//       const currentPath = req.originalUrl;
-//       if (!user && currentPath !== "/login") {
-//         // Maka semua path yang diakses akan dialihkan ke /login
-//         return res.redirect("/login");  
-//       }
-
-
-//       // if (isAdmin && currentPath !== "/administrator") {
-//       //   return res.redirect("/administrator");
-//       // }
-//       // if (!isAdmin && currentPath === "/administrator") {
-//       //   return res.redirect("/");
-//       // }
-    
-//       next();
-//     });
-// }

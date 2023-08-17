@@ -10,7 +10,7 @@ class Administrator{
     }
 
     // MVC
-    get(){
+    getAndRender(){
         this.app.get("/administrator", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
@@ -35,10 +35,9 @@ class Administrator{
         this.app.get("/administrator/employee/:id", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
-            const id = req.params.id; // Change "term" to "id"
+            const id = req.params.id;
     
             try {
-                // Perbaiki sintaks SQL dan queryAsync
                 const query = `SELECT employees.*, departments.name AS department_name FROM employees INNER JOIN departments ON employees.department_id = departments.id WHERE employees.id = ?`;
                 const results = await queryAsync(query, [id]);
                 res.json(results[0]);
@@ -56,7 +55,7 @@ class Administrator{
             const employeeId = parseInt(req.params.id);
             const query = `SELECT * FROM employees WHERE id = ?`;
             try {
-                const results = await queryAsync(query, [employeeId]); // Array of object
+                const results = await queryAsync(query, [employeeId]);
                 // Data dikirimkan dalam bentuk JSON
                 res.json(results);
             } catch (error) {

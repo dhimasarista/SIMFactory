@@ -170,6 +170,33 @@
         $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
     }
   });
+  const newButton = document.getElementById('newButton');
+  const employeeButton = document.getElementById("employeeButton");
+  const employeeTable = document.getElementById('employeeTable');
+  const employeeForm = document.getElementById('employeeForm');
+  const addEmployeeForm = document.getElementById('addEmployeeForm');
+  const tbody = document.querySelector('#employee tbody');
+
+  newButton.addEventListener('click', () => {
+      employeeTable.style.display = 'none';
+      employeeForm.style.display = 'block';
+      employeeButton.style.display = "inline";
+      newButton.style.display = "none";
+  });
+
+  employeeButton.addEventListener("click", () => {
+      employeeTable.style.display = 'block';
+      employeeForm.style.display = 'none';
+      employeeEditForm.style.display = "none";
+      newButton.style.display = "inline";
+      employeeButton.style.display = "none";
+  })
+
+  addEmployeeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      saveData();
+  });
   const saveData = () => {
     const id = Math.floor(Math.random() * 999);
     const name = document.getElementById("name").value;
@@ -213,33 +240,7 @@
       Swal.fire("Error", "Something wrong happen!", "error");
     })
   }
-  const newButton = document.getElementById('newButton');
-  const employeeButton = document.getElementById("employeeButton");
-  const employeeTable = document.getElementById('employeeTable');
-  const employeeForm = document.getElementById('employeeForm');
-  const addEmployeeForm = document.getElementById('addEmployeeForm');
-  const tbody = document.querySelector('#employee tbody');
 
-  newButton.addEventListener('click', () => {
-      employeeTable.style.display = 'none';
-      employeeForm.style.display = 'block';
-      employeeButton.style.display = "inline";
-      newButton.style.display = "none";
-  });
-
-  employeeButton.addEventListener("click", () => {
-      employeeTable.style.display = 'block';
-      employeeForm.style.display = 'none';
-      employeeEditForm.style.display = "none";
-      newButton.style.display = "inline";
-      employeeButton.style.display = "none";
-  })
-
-  addEmployeeForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      saveData();
-  });
 
   const deleteData = (id) => {
     Swal.fire({

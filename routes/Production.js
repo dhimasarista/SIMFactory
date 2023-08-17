@@ -3,8 +3,7 @@ class ProductionControl{
         this.app = app;
     }
 
-    // Method halaman Production/ProductionControl
-    get(){
+    getAndRender(){
         this.app.get("/production/control",(req, res) => {
             // Mengambil user dari cookie
             const user = req.cookies.user;

@@ -1,16 +1,15 @@
 const mysql = require('mysql2');
-const dbConfig = require("./config");
+const dbConfig = require("../database.json");
 
-const config = dbConfig.development;
+const config = dbConfig.dev;
 // Create database pool
 const pool = mysql.createPool({
   host: config.host,
-  port: config.port,
   user: config.user,
   password: config.password,
   database: config.database,
   waitForConnections: config.waitForConnections,
-  connectionLimit: config.connectionLimit, // Adjust the number of connections as per your requirements
+  connectionLimit: config.connectionLimit,
   queueLimit: config.queueLimit,
 });
 

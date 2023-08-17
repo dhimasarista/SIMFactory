@@ -10,7 +10,7 @@ class Employee {
     }
 
     // Halaman HumanResource/Employee
-    get(){
+    getAndRender(){
         this.app.get("/hr/employee", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
@@ -22,8 +22,9 @@ class Employee {
                     batchSize: 100,
                     queryAsync: queryAsync,
                     query: employeesQuery
-                })
-                // res.json(employees);
+                });
+                
+                // Fetching departments untuk form new-employee
                 const departments = await queryAsync("SELECT * FROM departments");
                 res.render("hr_employee", {user, path, employees, departments});
             } catch(error) {
@@ -33,7 +34,7 @@ class Employee {
         });
     }
 
-    post(){
+    add(){
         this.app.post("/hr/employee", async (req, res) => {
             const { name, department_id } = req.body;
             const resultMaxIdEmployee = await queryAsync("SELECT MAX(id) as maxId FROM employees");
@@ -78,7 +79,7 @@ class Department{
         this.app = app;
     }
 
-    get(){
+    getAndRender(){
         this.app.get("/hr/department",  async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
@@ -107,7 +108,7 @@ class Department{
         })
     }
 
-    post(){
+    add(){
         this.app.post("/hr/department", async (req, res) => {
             const { name } = req.body;
             const resultMaxIdDepart = await queryAsync("SELECT MAX(id) as maxId FROM departments")

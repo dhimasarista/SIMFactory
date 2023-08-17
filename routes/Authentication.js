@@ -10,12 +10,13 @@ class Login{
         this.app = app;
     }
     // Merender views: login.ejs untuk path /login
-    get(){
+    render(){
        this.app.get("/login", (req,res) => {
             res.render("login", {errors: [{}]});
        });
     }
 
+    // Validasi ke dbms
     post(){
         this.app.post("/login",
         check('username').notEmpty().withMessage('Username harus diisi.'),
@@ -38,7 +39,7 @@ class Login{
                 const [userResults] = await promisePool.query("SELECT * FROM users WHERE username = ? OR id = ?", [username, username]);
                 const user = userResults[0];
                 
-                // Jika nilai admin diatas kosong (tidak ditemukan oleh results)
+                // Jika data tidak cocok disalah satu tabel
                 if (!admin && !user) {
                     // Maka akan menampilkan username atau password salah
                     return res.render("login", {
@@ -46,21 +47,24 @@ class Login{
                     });
                 }
 
+                // inisiasi password dengan operator ternary
                 const passwordChecking = (admin == undefined) ? user.password: admin.password;
                 const cookiesChecking = (admin == undefined) ? user.username: admin.username;
-                // Unhasing password dengan komparator bcrypt 
+                
+                // Memeriksa password apakah cocok dengan username dari tabel
                 const passwordMatch = await bcrypt.compare(password, passwordChecking);
-                // Jika passowrd benar
+                // Jika passowrd benar | passwordMatch = true
                 if (passwordMatch) {
+                    // Apakah admin tidak undefined
                     if (admin) {
-                        // user akan disimpan di cookie
+                        // jika iya, akan disimpan di cookie
                         res.cookie("user", { username: cookiesChecking, role: "admin"} , { maxAge: 3600000 }); // 1 Jam
                         console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
                         // Lalu di alihkan ke halaman utama
                         return res.redirect("/administrator");
                     } else {
-                        // user akan disimpan di cookise
+                        // jika users dan admin akan disimpan di cookise
                         res.cookie("user", { username: cookiesChecking, role: "user", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
                         console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
@@ -93,7 +97,7 @@ class Logout{
     }
 
     // Method Logout: Menghapus cookie user dan mengalihkan ke /login
-    get(){
+    clearAndRedirect(){
       this.app.get("/logout", (req, res) => {
         res.clearCookie('user');
         res.redirect('/login');

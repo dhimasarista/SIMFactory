@@ -1,4 +1,3 @@
-
 class Errors500{
     constructor(app){
         this.app = app;
