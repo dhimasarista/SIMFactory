@@ -21,6 +21,7 @@
                     <table class="table m-0" id="department">
                         <thead>
                             <tr>
+                                <th>Code</th>
                                 <th>Name</th>
                                 <th>Total Employees</th>
                                 <th></th>
@@ -29,6 +30,7 @@
                         <tbody id="departmentTableBody">
                             <% departments.forEach(function(data) { %>
                                 <tr>
+                                    <td><%- data.id %></td>
                                     <td><a href="#"><%- data.name %></a></td>
                                     <td><%- data.total_employees %></td>
                                     <td style="display: flex; justify-content: flex-end;">
