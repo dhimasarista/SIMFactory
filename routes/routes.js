@@ -13,6 +13,7 @@ const setupRoutes = (app) => {
   new Employee(app).delete(); // Menghapus Employee
   new Department(app).getAndRender(); // Halaman Daftar Departments
   new Department(app).add(); // Menambahkan Department
+  new Department(app).delete() // Menghapus Department
   new Login(app).render(); // Halaman autentikasi
   new Login(app).post(); // Melakukan validasi
   new Logout(app).clearAndRedirect(); // Routing logout melalui path /logout

@@ -1,5 +1,5 @@
 const { promisify } = require('util');
-const { green, symbol } = require('../utils/logging');
+const { green, symbol, red } = require('../utils/logging');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const batchingData = require("../utils/batchingData");
@@ -112,8 +112,8 @@ class Department{
         this.app.post("/hr/department", async (req, res) => {
             const { name } = req.body;
             const resultMaxIdDepart = await queryAsync("SELECT MAX(id) as maxId FROM departments")
-            const maxIdDepart = resultMaxIdDepart[0].maxId || "99";
-            const newIdDepart = parseInt(maxIdDepart + 1);
+            const maxIdDepart = resultMaxIdDepart[0].maxId || 900;
+            const newIdDepart = maxIdDepart + 1;
 
             const data = {
                 id: newIdDepart,
@@ -130,6 +130,21 @@ class Department{
                 res.status(500).json({ error: 'Internal Server Error' });
             }
         });
+    }
+    delete(){
+        this.app.delete("/hr/department/:id", async (req, res) => {
+            const id = req.params.id;
+
+            const query = `DELETE FROM departments WHERE id = ?`;
+            try {
+                const results = await queryAsync(query, id);
+                res.status(200).send(results);
+                console.log(red, `${symbol} Department: ${id} Succesfully Deleted`);
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        })
     }
 }
 
