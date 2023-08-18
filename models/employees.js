@@ -2,7 +2,8 @@ const { red, qm, symbol, green } = require("../utils/logging");
 
 const employee = async (queryAsync) => {
     try {
-        await queryAsync(`
+        // Membuat tabel baru jika tidak ada
+        const employeesTable = await queryAsync(`
         CREATE TABLE IF NOT EXISTS employees (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
@@ -24,10 +25,11 @@ const employee = async (queryAsync) => {
             FOREIGN KEY (department_id) REFERENCES departments(id),
             created_at TIMESTAMP
         )`);
-        const notError = (error == null) ? "Ok" : "Not Ok";
-        console.log(green, `${symbol} Employees Table: ${notError}`);
+        const result = (employeesTable !== 0) ? "Already Exist" : "Created";
+        console.log(green, `${symbol} Employees Table: ${result}`);
     } catch(error) {
-        console.log(red, `${qm} Error creating employees table: ${error}`);
+        // Terminasi Program dan Keluar
+        console.log(red, `${qm} Error creating employees table: `, error);
         process.exit(1);
     }
 };

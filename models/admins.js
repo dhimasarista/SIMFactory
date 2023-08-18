@@ -5,38 +5,41 @@ const bcrypt = require('bcrypt');
 const adminUsername = "admin";
 const adminPassword = "vancouver";
 
-// Acquire a connection from the pool and create the table if it doesn't exist
-module.exports = async (queryAsync) => {
+const admins = async (queryAsync) => {
   try {
-    // Create an 'admin' table if it doesn't exist
-    const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS admins (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      username VARCHAR(255) NOT NULL,
-      password VARCHAR(255) NOT NULL,
-      created_at TIMESTAMP
-    )`;
-    
-    await queryAsync(createTableQuery);
+    // Membuat tabel baru jika tidak ada
+    const adminsTable = await queryAsync(`
+      CREATE TABLE IF NOT EXISTS admins (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP
+      )`
+    );
+    const result = (adminsTable !== 0) ? "Already Exist" : "Created";
+    console.log(green, `${symbol} Admins Table: ${result}`);
 
-    // Check if the admin credentials already exist in the 'admin' table
+    // Memeriksa data di tabel admins
     const selectQuery = `SELECT * FROM admins WHERE username = ?`;
     const results = await queryAsync(selectQuery, [adminUsername]);
-
+    
+    // Jika tidak ada, insert
     if (!results.length) {
+      
       const hashedPassword = await bcrypt.hash(adminPassword, 10);
       const insertQuery = `INSERT INTO admins (username, password) VALUES (?, ?)`;
+      
       try {
         await queryAsync(insertQuery, [adminUsername, hashedPassword]);
-        console.log(green, `${symbol} Inserted admin credentials`);
       } catch (error) {
-        console.log(red, `${qm} Error inserting admin credentials: ${error}`);
+        console.log(red, `${qm} Error inserting admin: ${error}`);
       }
-    } else {
-      console.log(green, `${symbol} Admin credentials already exist`);
     }
   } catch (error) {
-    console.log(red, `${qm} Error creating admins table: ${error}`);
+    // Terminasi Program dan Keluar
+    console.log(red, `${qm} Error creating admins table: `, error);
     process.exit(1);
   }
 };
+
+module.exports = admins;
