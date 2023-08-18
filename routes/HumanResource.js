@@ -93,12 +93,9 @@ class Department{
                         FROM employees
                         GROUP BY department_id
                     ) de ON d.id = de.department_id
-                    ORDER BY d.created_at DESC
-                `;
+                `; // ORDER BY d.created_at DESC
+                     
                 // const departmentsEmployees = await queryAsync("SELECT department.name AS department_name, COUNT(employees.id) AS total_employees FROM departments LEFT JOIN employees USING (id) GROUP BY name")
-
-                // Rest API Version: res.json(results);
-                // MVC Version:
                 const results = await queryAsync(query);
                 res.render("hr_department", {user: user, path, departments: results});
             } catch (error) {
