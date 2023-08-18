@@ -1,4 +1,4 @@
-const { red, qm, magenta, symbol, green } = require("../utils/logging");
+const { red, qm, symbol, green } = require("../utils/logging");
 const bcrypt = require('bcrypt');
 
 // Default Admin
@@ -6,42 +6,37 @@ const adminUsername = "admin";
 const adminPassword = "vancouver";
 
 // Acquire a connection from the pool and create the table if it doesn't exist
-module.exports = admin = (connection) => {
-  // Create an 'admin' table if it doesn't exist
-  connection.query(`
+module.exports = async (queryAsync) => {
+  try {
+    // Create an 'admin' table if it doesn't exist
+    const createTableQuery = `
     CREATE TABLE IF NOT EXISTS admins (
       id INT AUTO_INCREMENT PRIMARY KEY,
       username VARCHAR(255) NOT NULL,
       password VARCHAR(255) NOT NULL,
       created_at TIMESTAMP
-    )`, async (error, results) => {
-    if (error) {
-      console.log(red,`${qm} Error creating admins table: ${error}`);
-      connection.end(); // Tutup koneksi setelah selesai
-      process.exit(1);
-      return;
-    }
-    const notError = (error == null) ? "Ok" : "Not Ok";
-    console.log(green, `${symbol} Admins Table: ${notError}`);
+    )`;
+    
+    await queryAsync(createTableQuery);
 
     // Check if the admin credentials already exist in the 'admin' table
-    connection.query(`SELECT * FROM admins WHERE username = ?`, [adminUsername], async (error, results) => {
-      if (error) {
-        console.log(red,`${qm} Error Executing SQL Query: ${error}`);
-        connection.end(); // Tutup koneksi setelah selesai dengan kesalahan
-        return;
-      }
+    const selectQuery = `SELECT * FROM admins WHERE username = ?`;
+    const results = await queryAsync(selectQuery, [adminUsername]);
 
-      // If admin credentials don't exist, insert them into the 'admin' table
-      if (!results.length) {
-        const hashedPassword = await bcrypt.hash(adminPassword, 10);
-        connection.query(`INSERT INTO admins (username, password) VALUES (?, ?)`, [adminUsername, hashedPassword], (error) => {
-          if (error) {
-            console.log(red,`${qm} Error inserting admin credentials: ${error}`);
-          }
-          connection.end(); // Tutup koneksi setelah selesai
-        });
+    if (!results.length) {
+      const hashedPassword = await bcrypt.hash(adminPassword, 10);
+      const insertQuery = `INSERT INTO admins (username, password) VALUES (?, ?)`;
+      try {
+        await queryAsync(insertQuery, [adminUsername, hashedPassword]);
+        console.log(green, `${symbol} Inserted admin credentials`);
+      } catch (error) {
+        console.log(red, `${qm} Error inserting admin credentials: ${error}`);
       }
-    });
-  });
+    } else {
+      console.log(green, `${symbol} Admin credentials already exist`);
+    }
+  } catch (error) {
+    console.log(red, `${qm} Error creating admins table: ${error}`);
+    process.exit(1);
+  }
 };
