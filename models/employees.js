@@ -2,7 +2,7 @@ const { red, qm, symbol, green } = require("../utils/logging");
 
 const employee = async (queryAsync) => {
     try {
-        queryAsync(`
+        await queryAsync(`
         CREATE TABLE IF NOT EXISTS employees (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(255) NOT NULL,
@@ -23,7 +23,7 @@ const employee = async (queryAsync) => {
             department_id INT,
             FOREIGN KEY (department_id) REFERENCES departments(id),
             created_at TIMESTAMP
-        `);
+        )`);
         const notError = (error == null) ? "Ok" : "Not Ok";
         console.log(green, `${symbol} Employees Table: ${notError}`);
     } catch(error) {

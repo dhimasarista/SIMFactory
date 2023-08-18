@@ -7,7 +7,7 @@ const userPassword = "vancouver";
 
 module.exports = async (queryAsync) => {
   try {
-    await queryAsync(`
+    const createTableQuery = `
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
@@ -16,7 +16,8 @@ module.exports = async (queryAsync) => {
         created_at TIMESTAMP,
         FOREIGN KEY (department_id) REFERENCES departments(id)
       )
-    `);
+    `;
+    await queryAsync(createTableQuery);
 
     console.log(green, `${symbol} Users Table: Created or already exists`);
 
@@ -24,7 +25,8 @@ module.exports = async (queryAsync) => {
 
     if (!userResults.length) {
       const hashedPassword = await bcrypt.hash(userPassword, 10);
-      await queryAsync(`INSERT INTO users (username, password) VALUES (?, ?)`, [userUsername, hashedPassword]);
+      const insertQuery = `INSERT INTO users (username, password) VALUES (?, ?)`;
+      await queryAsync(insertQuery, [userUsername, hashedPassword]);
       console.log(green, `${symbol} Inserted user credentials`);
     }
   } catch (error) {
