@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const flash = require('express-flash');
 const path = require('path');
-const { blue, symbol } = require("./utils/logging");
+const { blue, symbol, magenta, qm } = require("./utils/logging");
 const dhim = require("./utils/dhim");
 const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
@@ -27,6 +27,7 @@ if (cluster.isMaster) {
 } else {
   console.clear();
   console.log(dhim);
+  console.log(magenta, `${qm} Starting ${numCPUs} workers...`);
   // Middlewares
   sessionSetup(app); // Session
   app.use(flash());
