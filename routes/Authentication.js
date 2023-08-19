@@ -50,6 +50,8 @@ class Login{
                 // inisiasi password dengan operator ternary
                 const passwordChecking = (admin == undefined) ? user.password: admin.password;
                 const cookiesChecking = (admin == undefined) ? user.username: admin.username;
+                // Menyimpan id
+                const idUser = (admin == undefined) ? user.id : admin.id;
                 
                 // Memeriksa password apakah cocok dengan username dari tabel
                 const passwordMatch = await bcrypt.compare(password, passwordChecking);
@@ -58,14 +60,14 @@ class Login{
                     // Apakah admin tidak undefined
                     if (admin) {
                         // jika iya, akan disimpan di cookie
-                        res.cookie("user", { username: cookiesChecking, role: "admin"} , { maxAge: 3600000 }); // 1 Jam
+                        res.cookie("user", {id: idUser, username: cookiesChecking, role: "admin"} , { maxAge: 3600000 }); // 1 Jam
                         console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
                         // Lalu di alihkan ke halaman utama
                         return res.redirect("/administrator");
                     } else {
-                        // jika users dan admin akan disimpan di cookise
-                        res.cookie("user", { username: cookiesChecking, role: "user", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
+                        // jika users akan disimpan di cookise
+                        res.cookie("user", {id: idUser, username: cookiesChecking, role: "user", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
                         console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
                         // Lalu di alihkan ke halaman utama

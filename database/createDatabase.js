@@ -1,9 +1,8 @@
 const mysql = require('mysql2');
 const loadingAnimation = require('../utils/loading');
-const { red, yellow, symbol, green, blue, qm } = require("../utils/logging");
+const { yellow, symbol, green, blue } = require("../utils/logging");
 
 console.clear();
-// Database connection configuration
 const connection = mysql.createConnection({
   host: 'localhost',
   port: 3306,
@@ -11,7 +10,7 @@ const connection = mysql.createConnection({
   password: '',
 });
 
-  // Create the database if it doesn't exist
+  // Membuat database baru jika tidak ada
   connection.query(`CREATE DATABASE IF NOT EXISTS simfactory`, (error, results) => {
     if (error) {
       console.error(`Error creating database: ${error.message}`);
@@ -21,22 +20,23 @@ const connection = mysql.createConnection({
       return;
     }
 
-    // Contoh penggunaan
     const animation = loadingAnimation(`${symbol} Checking Database`);
     if (results && results.warningStatus === 0) {
       setTimeout(() => {
         clearInterval(animation);
+        // Jika sukses
         console.log(green, `\n${symbol} Database SIMFACTORY created successfully!`);
         createUser();
       }, 3000);
     } else {
       setTimeout(() => {
+        // Jika sudah ada
         clearInterval(animation);
         console.log(yellow, `\n${symbol} Database already exists!`);
         createUser();
-      }, 3000);
+      }, 3000)
     }
-      // Wait for 3 seconds
+      // Terminasi koneksi database
     setTimeout(() => {
       connection.end(() => {
         process.exit(0);

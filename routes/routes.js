@@ -1,7 +1,7 @@
 const { ProductionControl } = require("./Production");
 const { Employee, Department } = require("./HumanResource");
 const { Login, Logout } = require("./Authentication");
-const Administrator = require("./Administrator");
+const { Administrator, Profile} = require("./Administrator");
 const Index = require("./Index");
 const { Errors500, Errors400 } = require("./Erros");
 
@@ -24,6 +24,7 @@ const setupRoutes = (app) => {
   new Administrator(app).addUser(); // Jika ada, Tambahkan sebagai user
   new Administrator(app).editUser(); // Update User berupa username dan password
   new Administrator(app).deleteUser(); // Menghapus user
+  new Profile(app).getAndRender();
   new Errors500(app).error500(); // Error dibagian internal server
   new Errors400(app).error404(); // Error ketika dia yang kamu cari tidak ada
 };

@@ -123,4 +123,34 @@ class Administrator{
     }
 }
 
-module.exports = Administrator;
+class Profile{
+    constructor(app){
+        this.app = app;
+    }
+
+    getAndRender(){
+        this.app.get("/employee/profile/", async (req, res) => {
+            const user = req.cookies.user;
+            const path = req.path;
+            const id = user.id;
+            const query = `SELECT * FROM employees WHERE id = ?`;
+            try {
+                const results = await queryAsync(query, [id]); // Array of Object
+                console.log(results);
+                res.render("profile", { 
+                    user, 
+                    path, 
+                    data: results[0]
+                });
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+    }
+}
+
+module.exports = {
+    Administrator,
+    Profile
+};
