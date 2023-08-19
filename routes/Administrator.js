@@ -100,8 +100,8 @@ class Administrator{
                 }
 
                 const queryUpdate = `UPDATE users SET ? WHERE id = ?`;
-                await queryAsync(queryUpdate, [data, idToNumber]);
-                res.status(200).send(queryUpdate);
+                const results = await queryAsync(queryUpdate, [data, idToNumber]);
+                res.status(200).send(results);
             } catch(error) {
                 console.error('Query Error:', error);
                 res.status(500).json({ error: 'Internal Server Error' });
@@ -136,7 +136,6 @@ class Profile{
             const query = `SELECT * FROM employees WHERE id = ?`;
             try {
                 const results = await queryAsync(query, [id]); // Array of Object
-                console.log(results);
                 res.render("profile", { 
                     user, 
                     path, 
@@ -148,6 +147,35 @@ class Profile{
             }
         });
     }
+
+    updateUser() {
+        this.app.put("/employee/profile/:id", async (req, res) => {
+            const id = req.params.id;
+            const username = req.body.username;
+            const password = req.body.password;
+    
+            const querySelect = `SELECT * FROM users WHERE id = ?`;
+            const queryUpdate = `UPDATE users SET username = ?, password = ? WHERE id = ?`;
+    
+            try {
+                const selectData = await queryAsync(querySelect, [id]);
+    
+                if (!selectData || selectData.length === 0) {
+                    return res.status(404).json({ error: 'User not found' });
+                }
+    
+                const updatedUsername = username || selectData[0].username;
+                const updatedPassword = password ? await bcrypt.hash(password, 10) : selectData[0].password;
+    
+                const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
+                res.status(200).json({ message: 'User updated successfully' });
+            } catch (error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        });
+    }
+    
 }
 
 module.exports = {
