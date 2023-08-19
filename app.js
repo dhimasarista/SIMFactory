@@ -53,7 +53,7 @@ if (cluster.isMaster) {
   setupRoutes(app);
 
   // Start the server
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT;
   app.listen(port, () => {
     console.log(blue, `${symbol} Server started on http://localhost:${port}`);
   });

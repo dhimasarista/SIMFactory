@@ -20,7 +20,7 @@ const employee = async (queryAsync) => {
             portfolio BLOB,
             mcu BOOL,
             criminal_history BOOL,
-            employmeny_contract BLOB,
+            employment_contract BLOB,
             department_id INT,
             FOREIGN KEY (department_id) REFERENCES departments(id),
             created_at TIMESTAMP

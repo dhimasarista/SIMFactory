@@ -34,6 +34,21 @@ class Employee {
         });
     }
 
+    getById(){
+        this.app.get("/hr/employee/:id", async (req, res) => {
+            const id = req.params.id;
+
+            const query = `SELECT * FROM employees WHERE id = ?`;
+            try {
+                const result = await queryAsync(query, [id]);
+                res.json(result[0]);
+            } catch(error) {
+                console.error('Query Error:', error);
+                res.status(500).json({ error: 'Internal Server Error' });
+            }
+        })
+    }
+
     add(){
         this.app.post("/hr/employee", async (req, res) => {
             const { name, department_id } = req.body;

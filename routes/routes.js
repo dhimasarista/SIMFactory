@@ -9,6 +9,7 @@ const setupRoutes = (app) => {
   new Index(app).get(); // Halaman Utama
   new ProductionControl(app).getAndRender(); // Halaman production/control
   new Employee(app).getAndRender(); // Halaman Daftar Employees
+  new Employee(app).getById(); // Mengambil Data Employee berdasarkan ID
   new Employee(app).add(); // Menambahkan Employee
   new Employee(app).delete(); // Menghapus Employee
   new Department(app).getAndRender(); // Halaman Daftar Departments
