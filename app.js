@@ -1,36 +1,45 @@
-// Import Modules
+// Impor Modul
+const dotenv = require('dotenv'); // Hanya menggunakan file .env
 const cookieParser = require("cookie-parser");
 const express = require("express");
-const flash = require('express-flash');
+// const flash = require('express-flash');
 const path = require('path');
+const compression = require('compression');
+
+// Kode lainnya
 const { blue, symbol, magenta, qm } = require("./utils/logging");
 const dhim = require("./utils/dhim");
 const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
-// Cluster Module
+
+// Cluster Modul
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
 
-// Create an Express app
-const app = express();
+const app = express(); // Inisialisasi Aplikasi Express
+dotenv.config(); // Load variabel environment dari file .env
 
 if (cluster.isMaster) {
-  // Fork workers for each CPU core
+  // Fork workers setiap CPU core
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
-
+  // Penanganan Worker
   cluster.on("exit", (worker, code, signal) => {
     console.log(`Worker ${worker.process.pid} died`);
   });
 } else {
+
+  // Logging
   console.clear();
   console.log(dhim);
   console.log(magenta, `${qm} Starting ${numCPUs} workers...`);
+
   // Middlewares
+  app.use(compression()); // Kompresi HTTP Resources yang dikirimkan ke klien
   sessionSetup(app); // Session
-  app.use(flash());
+  // app.use(flash());
   app.set('view engine', 'ejs'); // Mengatur View Engine ke EJS
   app.set('views', path.join(__dirname, 'views')); // Mengatur path ke folder views
   app.use(express.static(path.join(__dirname, 'public'))); // Serve static files dari folder "public" 
@@ -44,7 +53,7 @@ if (cluster.isMaster) {
   setupRoutes(app);
 
   // Start the server
-  const port = 3000;
+  const port = process.env.PORT || 3000;
   app.listen(port, () => {
     console.log(blue, `${symbol} Server started on http://localhost:${port}`);
   });

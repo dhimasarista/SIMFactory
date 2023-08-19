@@ -1,5 +1,5 @@
 {
-    "dev": {
+    "development": {
       "driver": "mysql",
       "host": "localhost",
       "port": 3306,
