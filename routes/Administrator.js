@@ -128,6 +128,8 @@ class Profile{
             const user = req.cookies.user;
             const path = req.path;
             const id = user.id;
+
+            console.log(user);
             const query = `SELECT * FROM employees WHERE id = ?`;
             try {
                 const results = await queryAsync(query, [id]); // Array of Object

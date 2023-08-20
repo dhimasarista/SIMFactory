@@ -69,7 +69,7 @@ class Login{
                         // jika users akan disimpan di cookise
                         res.cookie("user", {id: idUser, username: cookiesChecking, role: "user", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
                         console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
-
+                    
                         // Lalu di alihkan ke halaman utama
                         return res.redirect("/");
                     }
