@@ -1,8 +1,8 @@
 const { promisify } = require('util');
-const { red, qm } = require('../utils/logging');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
+const errorHandling = require('../controllers/errorHandling');
 
 class Administrator{
     constructor(app){
@@ -25,7 +25,7 @@ class Administrator{
                     userList: results,
                     });
             } catch (error) {
-                console.log(red, `${qm} Query Error: ${error}`);
+                errorHandling(res, error);
             }
 
         });
@@ -42,8 +42,7 @@ class Administrator{
                 const results = await queryAsync(query, [id]);
                 res.json(results[0]);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -59,8 +58,7 @@ class Administrator{
                 // Data dikirimkan dalam bentuk JSON
                 res.json(results);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -80,8 +78,7 @@ class Administrator{
                 const results = await queryAsync(query, data);
                 res.status(200).send(results);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         })
     }
@@ -103,8 +100,7 @@ class Administrator{
                 const results = await queryAsync(queryUpdate, [data, idToNumber]);
                 res.status(200).send(results);
             } catch(error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         })
     }
@@ -116,8 +112,7 @@ class Administrator{
                 const results = await queryAsync(query, id);
                 res.status(200).send(results);
             } catch(error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -142,8 +137,7 @@ class Profile{
                     data: results[0]
                 });
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -170,8 +164,7 @@ class Profile{
                 const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
                 res.status(200).json({ message: 'User updated successfully' });
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }

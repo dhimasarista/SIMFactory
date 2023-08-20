@@ -1,10 +1,9 @@
 const { promisify } = require('util');
-const { green, symbol } = require('../utils/logging');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);;
 
 
-module.exports = class Index{
+class Index{
     constructor(app){
         this.app = app;
     }
@@ -15,16 +14,22 @@ module.exports = class Index{
             const user = req.cookies.user;
             const path = req.path;
 
-            // Menghitung total karyawan
-            const totalEmployees = await queryAsync("SELECT COUNT(*) AS total FROM employees"); // Array of Object
-            
-            // (MVC) Rendering views: index.ejs
-            res.render("index", {
-                errors: [],
-                user: user,
-                path: path,
-                totalEmployees: totalEmployees[0].total,
-            });
+            try {
+                // Menghitung total karyawan
+                const totalEmployees = await queryAsync("SELECT COUNT(*) AS total FROM employees"); // Array of Object
+                
+                // (MVC) Rendering views: index.ejs
+                res.render("index", {
+                    errors: [],
+                    user: user,
+                    path: path,
+                    totalEmployees: totalEmployees[0].total,
+                });
+            } catch (error) {
+                errorHandling(res, error);
+            }
         });
     }
 }
+
+module.exports = Index;

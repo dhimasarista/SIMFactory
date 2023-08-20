@@ -28,8 +28,7 @@ class Employee {
                 const departments = await queryAsync("SELECT * FROM departments");
                 res.render("hr_employee", {user, path, employees, departments});
             } catch(error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -43,8 +42,7 @@ class Employee {
                 const result = await queryAsync(query, [id]);
                 res.json(result[0]);
             } catch(error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         })
     }
@@ -66,8 +64,7 @@ class Employee {
                 res.status(200).send(results);
                 console.log(green, `${symbol} Employee: ${name} Succesfully Added`);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -82,8 +79,7 @@ class Employee {
                 res.status(200).send(results);
                 console.log(green, `${symbol} Employee: ${idToDelete} Succesfully Deleted`);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         })
     }
@@ -114,7 +110,7 @@ class Department{
                 const results = await queryAsync(query);
                 res.render("hr_department", {user: user, path, departments: results});
             } catch (error) {
-                console.log(error);
+                errorHandling(res, error);
             }
 
         })
@@ -138,8 +134,7 @@ class Department{
                 res.status(200).send(results);
                 console.log(green, `${symbol} Department: ${name} Succesfully Added`);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         });
     }
@@ -153,8 +148,7 @@ class Department{
                 res.status(200).send(results);
                 console.log(red, `${symbol} Department: ${id} Succesfully Deleted`);
             } catch (error) {
-                console.error('Query Error:', error);
-                res.status(500).json({ error: 'Internal Server Error' });
+                errorHandling(res, error);
             }
         })
     }

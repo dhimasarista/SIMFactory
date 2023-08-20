@@ -19,7 +19,7 @@ const createDepartmentsTable = async (queryAsync) => {
             { name: "production", id: 904 }
         ];
         
-        // Memeriksa ketersedian data
+        // Memeriksa data
         const selectQuery = "SELECT id FROM departments WHERE id = ?";
         defaultDepartments.forEach(async department => {
             try {

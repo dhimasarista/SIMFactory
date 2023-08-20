@@ -1,4 +1,4 @@
-// Impor Modul
+// Import Modules
 const dotenv = require('dotenv'); // Hanya menggunakan file .env
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -6,14 +6,14 @@ const express = require("express");
 const path = require('path');
 const compression = require('compression');
 
-// Kode lainnya
+// Import Kode lainnya
 const { blue, symbol, magenta, qm } = require("./utils/logging");
 const dhim = require("./utils/dhim");
 const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
 
-// Cluster Modul
+// Cluster Module
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
 
