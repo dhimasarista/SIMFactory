@@ -108,3 +108,7 @@ function toPascalCase(text) {
     tdElements.forEach((td) => {
         td.textContent = toPascalCase(td.textContent);
     })
+
+function printContent() {
+  window.print();
+}

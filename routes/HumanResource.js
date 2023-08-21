@@ -138,20 +138,20 @@ class Department{
             }
         });
     }
-    delete(){
-        this.app.delete("/hr/department/:id", async (req, res) => {
-            const id = req.params.id;
+    // delete(){
+    //     this.app.delete("/hr/department/:id", async (req, res) => {
+    //         const id = req.params.id;
 
-            const query = `DELETE FROM departments WHERE id = ?`;
-            try {
-                const results = await queryAsync(query, id);
-                res.status(200).send(results);
-                console.log(red, `${symbol} Department: ${id} Succesfully Deleted`);
-            } catch (error) {
-                errorHandling(res, error);
-            }
-        })
-    }
+    //         const query = `DELETE FROM departments WHERE id = ?`;
+    //         try {
+    //             const results = await queryAsync(query, id);
+    //             res.status(200).send(results);
+    //             console.log(red, `${symbol} Department: ${id} Succesfully Deleted`);
+    //         } catch (error) {
+    //             errorHandling(res, error);
+    //         }
+    //     })
+    // }
 }
 
 module.exports = {

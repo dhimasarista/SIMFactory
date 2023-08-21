@@ -92,8 +92,8 @@ class Administrator{
                 
                 const { username, password } = req.body;
                 const data = {
-                    username: username == undefined ? result[0].username : username,
-                    password: password == "" ? result[0].password : await bcrypt.hash(password, 10)
+                    username: username === undefined || username === "" ? result[0].username : username,
+                    password: password === "" ? result[0].password : await bcrypt.hash(password, 10)
                 }
 
                 const queryUpdate = `UPDATE users SET ? WHERE id = ?`;
@@ -129,7 +129,6 @@ class Profile{
             const path = req.path;
             const id = user.id;
 
-            console.log(user);
             const query = `SELECT * FROM employees WHERE id = ?`;
             try {
                 const results = await queryAsync(query, [id]); // Array of Object

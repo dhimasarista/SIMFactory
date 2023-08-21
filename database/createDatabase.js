@@ -20,6 +20,7 @@ const connection = mysql.createConnection({
       return;
     }
 
+    // Animasi Loading CLI
     const animation = loadingAnimation(`${symbol} Checking Database`);
     if (results && results.warningStatus === 0) {
       setTimeout(() => {
@@ -33,18 +34,21 @@ const connection = mysql.createConnection({
         // Jika sudah ada
         clearInterval(animation);
         console.log(yellow, `\n${symbol} Database already exists!`);
+        // Memanggil fungsi `createUser()`
         createUser();
       }, 3000)
     }
-      // Terminasi koneksi database
+      // Terminasi koneksi database setelah selesai
     setTimeout(() => {
       connection.end(() => {
         process.exit(0);
       });
-    }, 4500);
+    }, 4500); // Setelah 4.5 detik, terminasi program
   });
 
+// Funsi membuat user default
 const createUser = () => {
+  // Menggunakan database `simfactory`
   connection.query('USE simfactory', (error, results) => {
     if (error) {
       console.error(`Error using database: ${error.message}`);
@@ -53,17 +57,21 @@ const createUser = () => {
       });
       return;
     }
+    // Membuat user dengan nama `dev_user` dan password `vancouver`
     connection.query(
       "CREATE USER 'dev_user'@'localhost' IDENTIFIED BY 'vancouver'",
       (error, results) => {
+        // Memeriksa dan menampilkan hasil
         if (error) {
           console.log(blue, `${symbol} User already created`);
         } else {
           console.log(green, `${symbol} User dev_user@localhost created`);
         }
+        // Memberikan akses `dev_user` ke database `simfactory`
         connection.query(
           "GRANT ALL PRIVILEGES ON `simfactory`.* TO 'dev_user'@'localhost' WITH GRANT OPTION;",
           (error, results) => {
+            // Memeriksa dan menampilkan hasil
             if (error) {
               console.error(`Error granting privileges: ${error.message}`);
             }
