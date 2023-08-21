@@ -1,154 +1,174 @@
 <div class="row">
-    <div class="col-12">
+  <div class="col-12">
      <div class="card">
-      <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-         <h3 class="card-title">Employees</h3>
-         <span style="margin-left: auto;">
-            <button type="button" class="btn btn-secondary" id="newButton">
-               New
-            </button>
-            <button type="button" class="btn btn-secondary" id="employeeButton" style="display: none;">
-               Employees
-            </button>
-            <button type="button" class="btn btn-secondary">
-               Print
-            </button>
-         </span></span>
-     </div>
-       <!-- /.card-header -->
-       <div class="card-body " id="employeeTable">
-        <div class="d-flex justify-content-center loading-placeholder">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+           <h3 class="card-title">Employees</h3>
+           <span style="margin-left: auto;">
+           <button type="button" class="btn btn-secondary" id="newButton">
+           New
+           </button>
+           <button type="button" class="btn btn-secondary" id="employeeButton" style="display: none;">
+           Employees
+           </button>
+           <button type="button" class="btn btn-secondary">
+           Print
+           </button>
+           </span></span>
         </div>
-         <div class="table-responsive">
-          <table id="employee" class="table table-bordered table-hover m-0" style="display: none;">
-            <thead>
-            <tr>
-              <th>ID Employee</th>
-              <th>Name</th>
-              <th>Department</th>
-              <th style="width: 20%;">Actions</th>
-            </tr>
-            </thead>
-            <tbody id="employeeTable">
-              <% employees.forEach((data) => { %>
-             <tr>
-                 <td style="text-align: center; width: 15%;"><%- data.id %></td>
-                 <td style="width: 45%;"><%- data.name %></td>
-                 <td style="width: 20%;"><%- data.department_name %></td>
-                 <td style="display: flex; flex-wrap: wrap;  align-items: center; justify-content: center;">
-                   <a href="#" class="mt-1 mr-1 badge badge-secondary"><i> 
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M11 9c0 1.66-1.34 3-3 3s-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3m3 11H2v-2c0-2.21 2.69-4 6-4s6 1.79 6 4m8-6v2h-9v-2m9-4v2h-9V8m9-4v2h-9V4Z"/></svg>
-                   </i></a>
-                   <a href="#" class="mt-1 mr-1 badge badge-warning edit-data" data-id="<%- data.id %>" onclick="editData(parseInt(this.getAttribute('data-id')))"><i>
-                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="currentColor" d="M13 3a1 1 0 0 1 .117 1.993L13 5H5v14h14v-8a1 1 0 0 1 1.993-.117L21 11v8a2 2 0 0 1-1.85 1.995L19 21H5a2 2 0 0 1-1.995-1.85L3 19V5a2 2 0 0 1 1.85-1.995L5 3h8Zm6.243.343a1 1 0 0 1 1.497 1.32l-.083.095l-9.9 9.899a1 1 0 0 1-1.497-1.32l.083-.094l9.9-9.9Z"/></g></svg>
-                   </i></a>                
-                   <a href="#" class="mt-1 mr-1 badge badge-info"><i>
-                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="currentColor" d="M16.9 3a1.1 1.1 0 0 1 1.094.98L18 4.1V7h1a3 3 0 0 1 2.995 2.824L22 10v7a2 2 0 0 1-1.85 1.995L20 19h-2v1.9a1.1 1.1 0 0 1-.98 1.094L16.9 22H7.1a1.1 1.1 0 0 1-1.094-.98L6 20.9V19H4a2 2 0 0 1-1.995-1.85L2 17v-7a3 3 0 0 1 2.824-2.995L5 7h1V4.1a1.1 1.1 0 0 1 .98-1.094L7.1 3h9.8ZM16 16H8v4h8v-4Zm3-7H5a1 1 0 0 0-.993.883L4 10v7h2v-1.9a1.1 1.1 0 0 1 .98-1.094L7.1 14h9.8a1.1 1.1 0 0 1 1.094.98l.006.12V17h2v-7a1 1 0 0 0-1-1Zm-2 1a1 1 0 0 1 .117 1.993L17 12h-2a1 1 0 0 1-.117-1.993L15 10h2Zm-1-5H8v2h8V5Z"/></g></svg>
-                   </i></a>
-                   <a href="#" class="mt-1 mr-1 badge badge-danger" onclick="deleteData(parseInt('<%- data.id %>'))"><i>
-                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
-                   </i></a>
-                 </td>
-               </tr>
-             <% }); %>
-           </tbody>
-          </table>
-         </div>
-       </div>
-
+        <!-- /.card-header -->
+        <div class="card-body " id="employeeTable">
+           <div class="d-flex justify-content-center loading-placeholder">
+              <div class="spinner-border" role="status">
+                 <span class="sr-only">Loading...</span>
+              </div>
+           </div>
+           <div class="table-responsive">
+              <table id="employee" class="table table-bordered table-hover m-0" style="display: none;">
+                 <thead>
+                    <tr>
+                       <th>ID Employee</th>
+                       <th>Name</th>
+                       <th>Department</th>
+                       <th style="width: 20%;">Actions</th>
+                    </tr>
+                 </thead>
+                 <tbody id="employeeTable">
+                    <% employees.forEach((data) => { %>
+                    <tr>
+                       <td style="text-align: center; width: 15%;"><%- data.id %></td>
+                       <td style="width: 45%;"><%- data.name %></td>
+                       <td style="width: 20%;"><%- data.department_name %></td>
+                       <td style="display: flex; flex-wrap: wrap;  align-items: center; justify-content: center;">
+                          <a href="#" class="mt-1 mr-1 badge badge-secondary">
+                             <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                   <path fill="currentColor" d="M11 9c0 1.66-1.34 3-3 3s-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3m3 11H2v-2c0-2.21 2.69-4 6-4s6 1.79 6 4m8-6v2h-9v-2m9-4v2h-9V8m9-4v2h-9V4Z"/>
+                                </svg>
+                             </i>
+                          </a>
+                          <a href="#" class="mt-1 mr-1 badge badge-warning edit-data" data-id="<%- data.id %>" onclick="editData(parseInt(this.getAttribute('data-id')))">
+                             <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                   <g fill="none">
+                                      <path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/>
+                                      <path fill="currentColor" d="M13 3a1 1 0 0 1 .117 1.993L13 5H5v14h14v-8a1 1 0 0 1 1.993-.117L21 11v8a2 2 0 0 1-1.85 1.995L19 21H5a2 2 0 0 1-1.995-1.85L3 19V5a2 2 0 0 1 1.85-1.995L5 3h8Zm6.243.343a1 1 0 0 1 1.497 1.32l-.083.095l-9.9 9.899a1 1 0 0 1-1.497-1.32l.083-.094l9.9-9.9Z"/>
+                                   </g>
+                                </svg>
+                             </i>
+                          </a>
+                          <a href="#" class="mt-1 mr-1 badge badge-info">
+                             <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                   <g fill="none">
+                                      <path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/>
+                                      <path fill="currentColor" d="M16.9 3a1.1 1.1 0 0 1 1.094.98L18 4.1V7h1a3 3 0 0 1 2.995 2.824L22 10v7a2 2 0 0 1-1.85 1.995L20 19h-2v1.9a1.1 1.1 0 0 1-.98 1.094L16.9 22H7.1a1.1 1.1 0 0 1-1.094-.98L6 20.9V19H4a2 2 0 0 1-1.995-1.85L2 17v-7a3 3 0 0 1 2.824-2.995L5 7h1V4.1a1.1 1.1 0 0 1 .98-1.094L7.1 3h9.8ZM16 16H8v4h8v-4Zm3-7H5a1 1 0 0 0-.993.883L4 10v7h2v-1.9a1.1 1.1 0 0 1 .98-1.094L7.1 14h9.8a1.1 1.1 0 0 1 1.094.98l.006.12V17h2v-7a1 1 0 0 0-1-1Zm-2 1a1 1 0 0 1 .117 1.993L17 12h-2a1 1 0 0 1-.117-1.993L15 10h2Zm-1-5H8v2h8V5Z"/>
+                                   </g>
+                                </svg>
+                             </i>
+                          </a>
+                          <a href="#" class="mt-1 mr-1 badge badge-danger" onclick="deleteData(parseInt('<%- data.id %>'))">
+                             <i>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                   <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                                </svg>
+                             </i>
+                          </a>
+                       </td>
+                    </tr>
+                    <% }); %>
+                 </tbody>
+              </table>
+           </div>
+        </div>
         <!-- Form Data karyawan -->
         <div class="card-body" id="employeeFormData" style="display: none;">
-          <form id="employeeForm">
-            <input type="hidden" id="employeeIdForm" name="employeeIdForm">
-            <div class="form-group">
-                <label for="formName">Name</label>
-                <input type="text" class="form-control" id="formName" name="formName">
-            </div>
-            <div class="form-group">
-                <label for="formAddress">Address</label>
-                <input type="text" class="form-control" id="formAddress" name="formAddress">
-            </div>
-            <div class="form-group">
-                <label for="formNumberPhone">Number Phone</label>
-                <input type="text" class="form-control" id="formNumberPhone" name="formNumberPhone">
-            </div>
-            <div class="form-group">
-                <label for="formEmail">Email</label>
-                <input type="email" class="form-control" id="formEmail" name="formEmail">
-            </div>
-            <div class="form-group">
-                <label for="formLastEducation">Last Education</label>
-                <input type="text" class="form-control" id="formLastEducation" name="formLastEducation">
-            </div>
-            <div class="form-group">
-                <label for="formMajor">Major</label>
-                <input type="text" class="form-control" id="formMajor" name="formMajor">
-            </div>
-            <div class="form-group">
-                <label for="formTitle">Title</label>
-                <input type="text" class="form-control" id="formTitle" name="formTitle">
-            </div>
-            <div class="form-group">
-                <label for="formWorkExperience">Work Experience</label>
-                <textarea class="form-control" id="formWorkExperience" name="formWorkExperience"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="formSkills">Skills</label>
-                <textarea class="form-control" id="formSkills" name="formSkills"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="formApplicationLetter">Application Letter</label>
-                <input type="file" class="form-control" id="formApplicationLetter" name="formApplicationLetter">
-            </div>
-            <div class="form-group">
-                <label for="formCV">CV</label>
-                <input type="file" class="form-control" id="formCV" name="formCV">
-            </div>
-            <div class="form-group">
-                <label for="formPortfolio">Portfolio</label>
-                <input type="file" class="form-control" id="formPortfolio" name="formPortfolio">
-            </div>
-            <div class="form-group">
-                <label for="formMCU">MCU</label>
-                <select class="form-control" id="formMCU" name="formMCU">
+           <form id="employeeForm">
+              <input type="hidden" id="employeeIdForm" name="employeeIdForm">
+              <div class="form-group">
+                 <label for="formName">Name</label>
+                 <input type="text" class="form-control" id="formName" name="formName">
+              </div>
+              <div class="form-group">
+                 <label for="formAddress">Address</label>
+                 <input type="text" class="form-control" id="formAddress" name="formAddress">
+              </div>
+              <div class="form-group">
+                 <label for="formNumberPhone">Number Phone</label>
+                 <input type="text" class="form-control" id="formNumberPhone" name="formNumberPhone">
+              </div>
+              <div class="form-group">
+                 <label for="formEmail">Email</label>
+                 <input type="email" class="form-control" id="formEmail" name="formEmail">
+              </div>
+              <div class="form-group">
+                 <label for="formLastEducation">Last Education</label>
+                 <input type="text" class="form-control" id="formLastEducation" name="formLastEducation">
+              </div>
+              <div class="form-group">
+                 <label for="formMajor">Major</label>
+                 <input type="text" class="form-control" id="formMajor" name="formMajor">
+              </div>
+              <div class="form-group">
+                 <label for="formTitle">Title</label>
+                 <input type="text" class="form-control" id="formTitle" name="formTitle">
+              </div>
+              <div class="form-group">
+                 <label for="formWorkExperience">Work Experience</label>
+                 <textarea class="form-control" id="formWorkExperience" name="formWorkExperience"></textarea>
+              </div>
+              <div class="form-group">
+                 <label for="formSkills">Skills</label>
+                 <textarea class="form-control" id="formSkills" name="formSkills"></textarea>
+              </div>
+              <div class="form-group">
+                 <label for="formApplicationLetter">Application Letter</label>
+                 <input type="file" class="form-control" id="formApplicationLetter" name="formApplicationLetter">
+              </div>
+              <div class="form-group">
+                 <label for="formCV">CV</label>
+                 <input type="file" class="form-control" id="formCV" name="formCV">
+              </div>
+              <div class="form-group">
+                 <label for="formPortfolio">Portfolio</label>
+                 <input type="file" class="form-control" id="formPortfolio" name="formPortfolio">
+              </div>
+              <div class="form-group">
+                 <label for="formMCU">MCU</label>
+                 <select class="form-control" id="formMCU" name="formMCU">
                     <option value="1">Yes</option>
                     <option value="0">No</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="formCriminalHistory">Criminal History</label>
-                <select class="form-control" id="formCriminalHistory" name="formCriminalHistory">
+                 </select>
+              </div>
+              <div class="form-group">
+                 <label for="formCriminalHistory">Criminal History</label>
+                 <select class="form-control" id="formCriminalHistory" name="formCriminalHistory">
                     <option value="1">Yes</option>
                     <option value="0">No</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="formEmploymentContract">Employment Contract</label>
-                <input type="file" class="form-control" id="formEmploymentContract" name="formEmploymentContract">
-            </div>
-            <div class="form-group">
-                <label for="formDepartments">Departments: </label>
-                <select name="formDepartments" id="formDepartments">
+                 </select>
+              </div>
+              <div class="form-group">
+                 <label for="formEmploymentContract">Employment Contract</label>
+                 <input type="file" class="form-control" id="formEmploymentContract" name="formEmploymentContract">
+              </div>
+              <div class="form-group">
+                 <label for="formDepartments">Departments: </label>
+                 <select name="formDepartments" id="formDepartments">
                     <option hidden>Select First</option>
                     <% departments.forEach((data) => { %>
-                      <option value="<%= data.id %>"><%= data.name %></option>
+                    <option value="<%= data.id %>"><%= data.name %></option>
                     <% }); %>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">submit</button>
-        </form>
+                 </select>
+              </div>
+              <button type="submit" class="btn btn-primary">submit</button>
+           </form>
         </div>
-       <!-- /.card-body -->
+        <!-- /.card-body -->
      </div>
-       <!-- /.card -->
-    </div>
-    <!-- /.col -->
- </div>
- <script>
-    
+     <!-- /.card -->
+  </div>
+  <!-- /.col -->
+</div>
+<script>
   let table = new DataTable('#employee',{
     deferLoading: 10,
     initComplete: function(settings, json) {
@@ -156,7 +176,7 @@
         $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
     }
   });
-
+  
   // Buttons
   const newButton = document.getElementById('newButton');
   const employeeButton = document.getElementById("employeeButton");
@@ -166,25 +186,25 @@
   const employeeForm = document.getElementById('employeeFormData');
   
   const tbody = document.querySelector('#employee tbody');
-
+  
   newButton.addEventListener('click', () => {
       employeeTable.style.display = 'none';
       employeeForm.style.display = 'block';
       employeeButton.style.display = "inline";
       newButton.style.display = "none";
-
+  
       clearForm();
   });
-
+  
   employeeButton.addEventListener("click", () => {
       employeeTable.style.display = 'block';
       employeeForm.style.display = 'none';
-
+  
       newButton.style.display = "inline";
       employeeButton.style.display = "none";
       clearForm();
   });
-
+  
   editButtons.forEach(button => {
     button.addEventListener("click", (event) => {
       event.preventDefault(); // Menghentikan perilaku default tautan
@@ -192,23 +212,23 @@
       employeeForm.style.display = 'block';
       employeeButton.style.display = "inline";
       newButton.style.display = "none";
-
+  
       const id = parseInt(this.target.getAttribute("data-id"));
       editData(id);
     })
   })
-
+  
   // Event Listener
   // addEmployeeForm.addEventListener('submit', (e) => {
   //     e.preventDefault();
-
+  
   //     saveData();
   // });
   const saveData = () => {
     const id = Math.floor(Math.random() * 999);
     const name = document.getElementById("name").value;
     const department = document.getElementById("departments").value;
-
+  
     if(name === ""){
       Swal.fire("Empty", "Please fill in all the fields.", "info");
       return;
@@ -247,7 +267,7 @@
       Swal.fire("Error", "Something wrong happen!", "error");
     })
   }
-
+  
   const editData = (id) => {
     fetch(`/hr/employee/${id}`)
     .then(response => response.json())
@@ -275,8 +295,8 @@
               break;
           } 
       }
-
-
+  
+  
     });
   }
   
