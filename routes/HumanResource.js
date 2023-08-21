@@ -83,6 +83,18 @@ class Employee {
             }
         })
     }
+
+    // update(){
+    //     this.app.put("/hr/employee/:id", async (req, res) => {
+    //         const idToUpdate = req.params.id;
+    //         const query = `UPDATE users SET ? WHERE id = ?`;
+    //         try {
+    //             const results = await queryAsync(query, [data, idToUpdate])
+    //         } catch(error) {
+                
+    //         }
+    //     });
+    // }
 }
 class Department{
 
