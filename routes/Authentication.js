@@ -2,7 +2,6 @@ const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
 const pool = require("../configs/database");
-const { use } = require("chai");
 const promisePool = pool.promise();
 
 class Login{
@@ -69,7 +68,7 @@ class Login{
                         // jika users akan disimpan di cookise
                         res.cookie("user", {id: idUser, username: cookiesChecking, role: "user", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
                         console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
-                    
+
                         // Lalu di alihkan ke halaman utama
                         return res.redirect("/");
                     }
@@ -78,7 +77,7 @@ class Login{
                     // Akan tetap berada di halaman login
                     return res.render("login", {
                         // Dan menampilkan pesan berikut
-                        errors: [{message: "Password salah!"}]
+                        errors: [{message: "Username atau Password salah!"}]
                     });
                 }
             } catch(error){

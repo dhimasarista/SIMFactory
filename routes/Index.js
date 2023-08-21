@@ -1,7 +1,7 @@
 const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);;
-
+const errorHandling = require('../utils/errorHandling');
 
 class Index{
     constructor(app){

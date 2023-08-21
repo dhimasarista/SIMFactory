@@ -3,7 +3,8 @@ const { green, symbol, red } = require('../utils/logging');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const batchingData = require("../utils/batchingData");
-const getDataEmployee = require('../controllers/getDataEmployee');
+const getDataEmployee = require('../models/query/getDataEmployee');
+const errorHandling = require('../utils/errorHandling');
 
 class Employee {
     constructor(app){

@@ -268,32 +268,32 @@
   }
   
   const editData = (id) => {
-    fetch(`/hr/employee/${id}`)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("formName").value = data.name === null ? "" : data.name;  
-      document.getElementById("formAddress").value = data.address === null ? "" : data.address;
-      document.getElementById("formNumberPhone").value = data.number_phone === null ? "" : data.number_phone;
-      document.getElementById("formEmail").value = data.email === null ? "" : data.email;
-      document.getElementById("formLastEducation").value = data.last_education === null ? "" : data.last_education;
-      document.getElementById("formMajor").value = data.major === null ? "" : data.major;
-      document.getElementById("formTitle").value = data.title === null ? "" : data.title;
-      document.getElementById("formWorkExperience").value = data.work_experience === null ? "" : data.work_experience;
-      document.getElementById("formSkills").value = data.skills === null ? "" : data.skills;
-      document.getElementById("formApplicationLetter").value = data.application_letter ;
-      document.getElementById("formCV").value = data.CV;
-      document.getElementById("formPortfolio").value = data.portfolio;
-      document.getElementById("formMCU").value = data.mcu === null ? "0" : data.mcu;
-      document.getElementById("formCriminalHistory").value = data.criminal_history === null ? "0" : data.criminal_history;
-      document.getElementById("formEmploymentContract").value = data.employment_contract;
-      const departmentId = data.department_id.toString();
-      const formDepartments = document.getElementById("formDepartments");
-      for (let index = 0; index < formDepartments.options.length; index++) {
-          if (formDepartments.options[index].value === departmentId) {
-              formDepartments.selectedIndex = index;
-              break;
-          } 
-      }
+     fetch(`/hr/employee/${id}`)
+     .then(response => response.json())
+     .then(data => {
+        document.getElementById("formName").value = data.name === null ? "" : data.name;  
+        document.getElementById("formAddress").value = data.address === null ? "" : data.address;
+        document.getElementById("formNumberPhone").value = data.number_phone === null ? "" : data.number_phone;
+        document.getElementById("formEmail").value = data.email === null ? "" : data.email;
+        document.getElementById("formLastEducation").value = data.last_education === null ? "" : data.last_education;
+        document.getElementById("formMajor").value = data.major === null ? "" : data.major;
+        document.getElementById("formTitle").value = data.title === null ? "" : data.title;
+        document.getElementById("formWorkExperience").value = data.work_experience === null ? "" : data.work_experience;
+        document.getElementById("formSkills").value = data.skills === null ? "" : data.skills;
+        document.getElementById("formApplicationLetter").value = data.application_letter ;
+        document.getElementById("formCV").value = data.CV;
+        document.getElementById("formPortfolio").value = data.portfolio;
+        document.getElementById("formMCU").value = data.mcu === null ? "0" : data.mcu;
+        document.getElementById("formCriminalHistory").value = data.criminal_history === null ? "0" : data.criminal_history;
+        document.getElementById("formEmploymentContract").value = data.employment_contract;
+        const departmentId = data.department_id.toString();
+        const formDepartments = document.getElementById("formDepartments");
+        for (let index = 0; index < formDepartments.options.length; index++) {
+            if (formDepartments.options[index].value === departmentId) {
+                formDepartments.selectedIndex = index;
+                break;
+            } 
+        }
   
   
     });

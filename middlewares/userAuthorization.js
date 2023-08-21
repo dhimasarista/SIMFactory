@@ -17,6 +17,8 @@ const userAuthorization = (app) => {
           const isProduction = user && user.department === 904;
           const isWarehouse = user && user.department === 903;
           const isHumanResource = user && user.department === 902;
+          // const isEngineering = user && user.department === 901;
+          // const isIT = user && user.department === 905;
           
           // Pengecualian untuk path /logout
           if (currentPath === "/logout") {
@@ -26,8 +28,10 @@ const userAuthorization = (app) => {
           // Redirect admin ke path /administrator
           if (isAdmin) {
             if (currentPath.startsWith("/administrator")) {
-              return next();
+              // Membatalkan eksekusi kode selanjutnya di scope ini
+              return next(); // Dan, lanjutkan ke middlware berikutnya
             }
+            // Jika `administrator` mengakses path lain
             return res.redirect("/administrator");
           }
           
@@ -36,8 +40,9 @@ const userAuthorization = (app) => {
             // Alihkan ke halaman utama
             return res.redirect("/");
           }
+
           
-          // Redirect users based on their department
+          // Redirect users ke path yang diizinkan
           if (user) {
             if (isProduction && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse"))) {
               return res.redirect("/");

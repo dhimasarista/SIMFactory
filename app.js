@@ -15,6 +15,7 @@ const sessionSetup = require("./middlewares/sessionSetup");
 
 // Cluster Module
 const cluster = require("cluster");
+const { unMatchedRoutes, internalServer } = require('./middlewares/error');
 const numCPUs = require("os").cpus().length;
 
 const app = express(); // Inisialisasi Aplikasi Express
@@ -51,6 +52,10 @@ if (cluster.isMaster) {
 
   // Routes
   setupRoutes(app);
+
+  // Middleware untuk menangani error
+  unMatchedRoutes(app); // 404
+  internalServer(app); // 500
 
   // Start the server
   const port = process.env.PORT;

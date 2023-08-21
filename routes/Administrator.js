@@ -2,8 +2,8 @@ const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
-const errorHandling = require('../controllers/errorHandling');
-const getDataEmployee = require('../controllers/getDataEmployee');
+const errorHandling = require('../utils/errorHandling');
+const getDataEmployee = require("../models/query/getDataEmployee");
 
 class Administrator{
     constructor(app){
@@ -67,7 +67,7 @@ class Administrator{
     // Rest API
     addUser(){
         this.app.post("/administrator", async (req, res) => {
-            const { id, department_id, username } = req.body;
+            const { id, department_id, username, password } = req.body;
             const data = {
                 id: id,
                 username: username,
@@ -93,8 +93,8 @@ class Administrator{
                 
                 const { username, password } = req.body;
                 const data = {
-                    username: username === undefined || username === "" ? result[0].username : username,
-                    password: password === "" ? result[0].password : await bcrypt.hash(password, 10)
+                    username: username == undefined ? result[0].username : username,
+                    password: password == "" ? result[0].password : await bcrypt.hash(password, 10)
                 }
 
                 const queryUpdate = `UPDATE users SET ? WHERE id = ?`;
@@ -154,17 +154,16 @@ class Profile{
             const queryUpdate = `UPDATE users SET username = ?, password = ? WHERE id = ?`;
     
             try {
-                const selectData = await queryAsync(querySelect, [id]); // Array of Object
+                const selectData = await queryAsync(querySelect, [id]);
     
                 if (!selectData || selectData.length === 0) {
                     return res.status(404).json({ error: 'User not found' });
                 }
     
-                const updatedUsername = username === "" ? selectData[0].username : username;
-                const updatedPassword = password === "" ? selectData[0].password : await bcrypt.hash(password, 10);
-                // Mengirim data terbaru ke db
-                await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
-                res.cookie("user", {id: id, username: updatedUsername, role: "user", department: selectData[0].department_id} , { maxAge: 3600000 }); // 1 Jam
+                const updatedUsername = username || selectData[0].username;
+                const updatedPassword = password ? await bcrypt.hash(password, 10) : selectData[0].password;
+    
+                const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
                 res.status(200).json({ message: 'User updated successfully' });
             } catch (error) {
                 errorHandling(res, error);

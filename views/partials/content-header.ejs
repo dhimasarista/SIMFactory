@@ -13,6 +13,10 @@
                      Human Resource
                <% } else if(path.startsWith("/administrator")) { %>
                      Administrator
+               <% } else if(path.startsWith("/employee")) {  %>
+                  Employee
+               <% } else if(path.startsWith("/engineering")) {  %>
+                  Engineering
                <% } else {  %>
                   Error
                <% } %>
@@ -33,6 +37,10 @@
                         Human Resource
                   <% } else if(path.startsWith("/administrator")) { %>
                         Administrator
+                  <% } else if(path.startsWith("/employee")) {  %>
+                     Employee
+                  <% } else if(path.startsWith("/engineering")) {  %>
+                     Engineering
                   <% } else {  %>
                      Error
                   <% } %>

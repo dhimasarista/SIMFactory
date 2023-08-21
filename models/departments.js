@@ -16,7 +16,8 @@ const createDepartmentsTable = async (queryAsync) => {
             { name: "engineering", id: 901 },
             { name: "human resource", id: 902 },
             { name: "warehouse", id: 903 },
-            { name: "production", id: 904 }
+            { name: "production", id: 904 },
+            { name: "IT", id: 905 }
         ];
         
         // Memeriksa data
