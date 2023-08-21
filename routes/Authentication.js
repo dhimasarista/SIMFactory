@@ -78,7 +78,7 @@ class Login{
                     // Akan tetap berada di halaman login
                     return res.render("login", {
                         // Dan menampilkan pesan berikut
-                        errors: [{message: "Username atau Password salah!"}]
+                        errors: [{message: "Password salah!"}]
                     });
                 }
             } catch(error){

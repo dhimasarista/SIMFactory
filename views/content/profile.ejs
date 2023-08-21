@@ -62,13 +62,15 @@
             username: newUsername,
             password: newPassword
         };
-
-        if (newPassword === "") {
+        if (newPassword === "" && newUsername === "") {
             Swal.fire({
-                title: "Warning!",
-                text: "Password is Empty.",
+                title: "Password is Empty!",
+                text: "it will be canceled.",
                 icon: "warning",
                 confirmButtonText: "OK",
+            }).then(() => {
+                // Menghilangkan modal dan backdrop
+                $("#editModal").modal('hide');
             });
             return;
         }
