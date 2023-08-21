@@ -3,6 +3,7 @@ const { green, symbol, red } = require('../utils/logging');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const batchingData = require("../utils/batchingData");
+const getDataEmployee = require('../controllers/getDataEmployee');
 
 class Employee {
     constructor(app){
@@ -16,7 +17,7 @@ class Employee {
             const path = req.path;
             // Rendering views: hr_employee.ejs
 
-            const employeesQuery = "SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id ORDER BY created_at DESC";
+            const employeesQuery = getDataEmployee();
             try {
                 let employees = await batchingData({
                     batchSize: 100,

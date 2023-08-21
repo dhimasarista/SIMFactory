@@ -3,6 +3,7 @@ const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
 const errorHandling = require('../controllers/errorHandling');
+const getDataEmployee = require('../controllers/getDataEmployee');
 
 class Administrator{
     constructor(app){
@@ -129,7 +130,7 @@ class Profile{
             const path = req.path;
             const id = user.id;
 
-            const query = `SELECT * FROM employees WHERE id = ?`;
+            const query = getDataEmployee() + " WHERE employees.id = ?";
             try {
                 const results = await queryAsync(query, [id]); // Array of Object
                 res.render("profile", { 
