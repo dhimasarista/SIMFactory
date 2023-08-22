@@ -112,3 +112,20 @@ function toPascalCase(text) {
 function printContent() {
   window.print();
 }
+
+// Konversi nilai buffer (BLOB) ke gambar
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+          // const imageElement = document.getElementById('photo-profile');
+          // if (data.image == null) {
+          //     imageElement.src = "../images/profile.jpg";
+          // } else {
+          //     imageElement.src = `data:image/jpeg;base64,${arrayBufferToBase64(data.image.data)}`;
+          // }
