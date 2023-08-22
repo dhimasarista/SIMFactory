@@ -86,17 +86,55 @@ class Employee {
         })
     }
 
-    // update(){
-    //     this.app.put("/hr/employee/:id", async (req, res) => {
-    //         const idToUpdate = req.params.id;
-    //         const query = `UPDATE users SET ? WHERE id = ?`;
-    //         try {
-    //             const results = await queryAsync(query, [data, idToUpdate])
-    //         } catch(error) {
-                
-    //         }
-    //     });
-    // }
+    update(){
+        this.app.put("/hr/employee/:id", async (req, res) => {
+            const idToUpdate = req.params.id;
+            const { 
+                name, 
+                department_id, 
+                address, 
+                number_phone, 
+                email, 
+                last_education, 
+                major, 
+                title, 
+                work_experience, 
+                skills, 
+                application_letter, 
+                CV, portfolio, 
+                mcu, criminal_history,
+                employment_contract 
+            } = req.body;
+
+            const queryEmployee = `SELECT * FROM employees WHERE id = ?`;
+            const query = `UPDATE employees SET ? WHERE id = ?`;
+            try {
+                const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]); 
+                const data = {
+                    name: name,
+                    department_id: department_id,
+                    address: address,
+                    number_phone: number_phone,
+                    email: email,
+                    last_education: last_education,
+                    major: major,
+                    title: title,
+                    work_experience: work_experience,
+                    skills: skills,
+                    application_letter: application_letter === null ? employeeOldData.application_letter : application_letter,
+                    CV: CV === null ? employeeOldData.CV : CV,
+                    portfolio: portfolio === null ? employeeOldData.portfolio : portfolio,
+                    mcu: mcu,
+                    criminal_history: criminal_history,
+                    employment_contract: employment_contract === null ? employeeOldData.employment_contract : employment_contract
+                }
+                const results = await queryAsync(query, [data, idToUpdate]);
+                res.status(200).send(results);
+            } catch (error) {
+                errorHandling(res, error);
+            }
+        })
+    }
 }
 class Department{
 
@@ -152,20 +190,6 @@ class Department{
             }
         });
     }
-    // delete(){
-    //     this.app.delete("/hr/department/:id", async (req, res) => {
-    //         const id = req.params.id;
-
-    //         const query = `DELETE FROM departments WHERE id = ?`;
-    //         try {
-    //             const results = await queryAsync(query, id);
-    //             res.status(200).send(results);
-    //             console.log(red, `${symbol} Department: ${id} Succesfully Deleted`);
-    //         } catch (error) {
-    //             errorHandling(res, error);
-    //         }
-    //     })
-    // }
 }
 
 module.exports = {
