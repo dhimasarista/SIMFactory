@@ -5,6 +5,7 @@ const queryAsync = promisify(pool.query).bind(pool);
 const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
 const errorHandling = require('../utils/errorHandling');
+const fs = require("fs");
 
 class Employee {
     constructor(app){
@@ -86,47 +87,71 @@ class Employee {
         })
     }
 
+    // Algoritma upload file
+    // Ketika file yang dipilih akan langsung dikirim ke server
+    // Di dalam direktori `uploads` untuk sementara
+    // Jika event submit di trigger,
+    // data beserta file akan dikirim ke database
+    // kemudian file temporary di `uploads/` 
+    // akan dihapus setelah dikirim ke db
+    // Jika user melakukan reload, akan ada konfirmasi
+    // Jika terkonfirmasi halaman di reload, file akan dihapus dari server
+
+    // Setelah dikirim ke server `uploads`, file akan distamping
+    // dalam bentuk angka random, kode tersebut akan menjadi key
+    // client menyimpan kode tersebut, saat proses pengiriman data
+    // server tinggal mencocokkan kode client dan file yang distamping
+    // untuk mengirim file tersebut ke database
+
     update(){
         this.app.put("/hr/employee/:id", async (req, res) => {
             const idToUpdate = req.params.id;
+            const {
+                photo,
+                applicationLetter,
+                CV,
+                portfolio,
+                employmentContract 
+            } = req.file;
+            // const imageBuffer = 
             const { 
                 name, 
-                department_id, 
+                departmentId, 
                 address, 
-                number_phone, 
+                numberPhone, 
                 email, 
-                last_education, 
+                lastEducation, 
                 major, 
                 title, 
-                work_experience, 
+                workExperience, 
                 skills, 
-                application_letter, 
-                CV, portfolio, 
-                mcu, criminal_history,
-                employment_contract 
+                mcu, criminalHistory,
+                
             } = req.body;
 
             const queryEmployee = `SELECT * FROM employees WHERE id = ?`;
             const query = `UPDATE employees SET ? WHERE id = ?`;
             try {
-                const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]); 
+                // Destructing Array of Object
+                const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
                 const data = {
-                    name: name,
-                    department_id: department_id,
-                    address: address,
-                    number_phone: number_phone,
-                    email: email,
-                    last_education: last_education,
-                    major: major,
-                    title: title,
-                    work_experience: work_experience,
-                    skills: skills,
-                    application_letter: application_letter === null ? employeeOldData.application_letter : application_letter,
-                    CV: CV === null ? employeeOldData.CV : CV,
-                    portfolio: portfolio === null ? employeeOldData.portfolio : portfolio,
-                    mcu: mcu,
-                    criminal_history: criminal_history,
-                    employment_contract: employment_contract === null ? employeeOldData.employment_contract : employment_contract
+                    name: name === undefined ? employeeOldData.name : name,
+                    photo: photo === undefined ? employeeOldData.photo : photo,
+                    departmentId: departmentId === undefined ? employeeOldData.department_id : departmentId,
+                    address: address === undefined ? employeeOldData.address : address,
+                    numberPhone: numberPhone === undefined ? employeeOldData.number_phone : numberPhone,
+                    email: email === undefined ? employeeOldData.email : email,
+                    lastEducation: lastEducation === undefined ? employeeOldData.last_education : lastEducation,
+                    major: major === undefined ? employeeOldData.major : major,
+                    title: title === undefined ? employeeOldData.title : title,
+                    workExperience: workExperience === undefined ? employeeOldData.work_experience : workExperience,
+                    skills: skills === undefined ? employeeOldData.skills : skills,
+                    mcu: mcu === undefined ? employeeOldData.mcu : mcu,
+                    criminalHistory: criminalHistory === undefined ? employeeOldData.criminal_history : criminalHistory,
+                    applicationLetter: applicationLetter === undefined ? employeeOldData.applicationLetter : applicationLetter,
+                    portfolio: portfolio === undefined ? employeeOldData.portfolio : portfolio,
+                    CV: CV === undefined ? employeeOldData.CV : CV,
+                    employmentContract: employmentContract === undefined ? employeeOldData.employmentContract : employmentContract
                 }
                 const results = await queryAsync(query, [data, idToUpdate]);
                 res.status(200).send(results);
