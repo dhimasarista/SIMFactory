@@ -1,3 +1,8 @@
+<style>
+   .red {
+    color: red;
+   }
+</style>
 <div class="row">
   <div class="col-12">
      <div class="card">
@@ -46,7 +51,7 @@
                                 </svg>
                              </i>
                           </a>
-                          <a href="#" class="mt-1 mr-1 badge badge-warning edit-data" data-id="<%- data.id %>" onclick="editData(parseInt(this.getAttribute('data-id')))">
+                          <a href="#" class="mt-1 mr-1 badge badge-warning edit-data" data-id="<%- data.id %>" onclick="editButtons(parseInt('<%- data.id %>'))">
                              <i>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                    <g fill="none">
@@ -84,14 +89,12 @@
         <div class="card-body" id="employeeFormData" style="display: none;">
            <form id="employeeForm">
               <input type="hidden" id="employeeIdForm" name="employeeIdForm">
-               <div class="form-group">
-                  <label for="formPhoto">Photo</label>
-                  <input type="file" class="form-control" id="formPhoto" name="formPhoto">
-               </div>
+              <!-- 1 -->
               <div class="form-group">
                  <label for="formName">Name</label>
                  <input type="text" class="form-control" id="formName" name="formName">
               </div>
+              <!-- 2 -->
               <div class="form-group">
                 <label for="formDepartments">Departments: </label>
                 <select name="formDepartments" id="formDepartments">
@@ -101,50 +104,47 @@
                    <% }); %>
                 </select>
              </div>
+             <!-- 3 -->
               <div class="form-group">
                  <label for="formAddress">Address</label>
                  <input type="text" class="form-control" id="formAddress" name="formAddress">
               </div>
+              <!-- 4 -->
               <div class="form-group">
                  <label for="formNumberPhone">Number Phone</label>
                  <input type="text" class="form-control" id="formNumberPhone" name="formNumberPhone">
               </div>
+              <!-- 5 -->
               <div class="form-group">
                  <label for="formEmail">Email</label>
                  <input type="email" class="form-control" id="formEmail" name="formEmail">
               </div>
+              <!-- 6 -->
               <div class="form-group">
                  <label for="formLastEducation">Last Education</label>
                  <input type="text" class="form-control" id="formLastEducation" name="formLastEducation">
               </div>
+              <!-- 7 -->
               <div class="form-group">
                  <label for="formMajor">Major</label>
                  <input type="text" class="form-control" id="formMajor" name="formMajor">
               </div>
+              <!-- 8 -->
               <div class="form-group">
                  <label for="formTitle">Title</label>
                  <input type="text" class="form-control" id="formTitle" name="formTitle">
               </div>
+              <!-- 9 -->
               <div class="form-group">
                  <label for="formWorkExperience">Work Experience</label>
                  <textarea class="form-control" id="formWorkExperience" name="formWorkExperience"></textarea>
               </div>
+              <!-- 10 -->
               <div class="form-group">
                  <label for="formSkills">Skills</label>
                  <textarea class="form-control" id="formSkills" name="formSkills"></textarea>
               </div>
-              <div class="form-group">
-                 <label for="formApplicationLetter">Application Letter</label>
-                 <input type="file" class="form-control" id="formApplicationLetter" name="formApplicationLetter">
-              </div>
-              <div class="form-group">
-                 <label for="formCV">CV</label>
-                 <input type="file" class="form-control" id="formCV" name="formCV">
-              </div>
-              <div class="form-group">
-                 <label for="formPortfolio">Portfolio</label>
-                 <input type="file" class="form-control" id="formPortfolio" name="formPortfolio">
-              </div>
+              <!-- 11 -->
               <div class="form-group">
                  <label for="formMCU">MCU</label>
                  <select class="form-control" id="formMCU" name="formMCU">
@@ -152,6 +152,7 @@
                     <option value="0">No</option>
                  </select>
               </div>
+              <!-- 12 -->
               <div class="form-group">
                  <label for="formCriminalHistory">Criminal History</label>
                  <select class="form-control" id="formCriminalHistory" name="formCriminalHistory">
@@ -159,11 +160,37 @@
                     <option value="0">No</option>
                  </select>
               </div>
+              <!-- 13 -->
+              <div class="form-group">
+               <label for="formPhoto">Photo</label>
+               <input type="file" class="form-control" id="formPhoto" name="formPhoto">
+               <p class="red">*JPEG/JPG/PNG</p>
+               </div>
+               <!-- 14 -->
+              <div class="form-group">
+               <label for="formApplicationLetter">Application Letter</label>
+               <input type="file" class="form-control" id="formApplicationLetter" name="formApplicationLetter">
+               <p class="red">*PDF</p>
+               </div>
+               <!-- 15 -->
+               <div class="form-group">
+                  <label for="formCV">CV</label>
+                  <input type="file" class="form-control" id="formCV" name="formCV">
+                  <p class="red">*PDF</p>
+               </div>
+               <!-- 16 -->
+               <div class="form-group">
+                  <label for="formPortfolio">Portfolio</label>
+                  <input type="file" class="form-control" id="formPortfolio" name="formPortfolio">
+                  <p class="red">*PDF</p>
+               </div>
+               <!-- 17 -->
               <div class="form-group">
                  <label for="formEmploymentContract">Employment Contract</label>
                  <input type="file" class="form-control" id="formEmploymentContract" name="formEmploymentContract">
+                 <p class="red">*PDF</p>
               </div>
-              <button type="submit" class="btn btn-primary">submit</button>
+              <div class="add-submit-button"></div>
            </form>
         </div>
         <!-- /.card-body -->
@@ -173,6 +200,7 @@
   <!-- /.col -->
 </div>
 <script>
+   // Menampilkan data employee dalam bentuk tabel
   let table = new DataTable('#employee',{
     deferLoading: 10,
     initComplete: function(settings, json) {
@@ -184,22 +212,11 @@
   // Buttons
   const newButton = document.getElementById('newButton');
   const employeeButton = document.getElementById("employeeButton");
-  const editButtons = document.querySelectorAll(".edit-data");
+//   const editButtons = document.querySelectorAll(".edit-data");
   // Tables
   const employeeTable = document.getElementById('employeeTable');
   const employeeForm = document.getElementById('employeeFormData');
-  
-  const tbody = document.querySelector('#employee tbody');
-  
-  newButton.addEventListener('click', () => {
-      employeeTable.style.display = 'none';
-      employeeForm.style.display = 'block';
-      employeeButton.style.display = "inline";
-      newButton.style.display = "none";
-  
-      clearForm();
-  });
-  
+
   employeeButton.addEventListener("click", () => {
       employeeTable.style.display = 'block';
       employeeForm.style.display = 'none';
@@ -208,19 +225,65 @@
       employeeButton.style.display = "none";
       clearForm();
   });
+
+  const createSubmitButton = (params) => {
+      // Menambahkan tombol submit ke dalam elemen dengan class "submit-button"
+      const submitButtonContainer = document.querySelector('.add-submit-button');
+      submitButtonContainer.innerHTML = `<button type="button" class="btn btn-primary" onclick="${params}">Submit</button>`;
+  }
   
-  editButtons.forEach(button => {
-    button.addEventListener("click", (event) => {
+  newButton.addEventListener('click', () => {
+      employeeTable.style.display = 'none';
+      employeeForm.style.display = 'block';
+      employeeButton.style.display = "inline";
+      newButton.style.display = "none";
+      clearForm();
+
+      createSubmitButton('saveData()');
+  });
+
+  const editButtons = (id) => {
       event.preventDefault(); // Menghentikan perilaku default tautan
       employeeTable.style.display = 'none';
       employeeForm.style.display = 'block';
       employeeButton.style.display = "inline";
       newButton.style.display = "none";
-  
-      const id = parseInt(this.target.getAttribute("data-id"));
+      createSubmitButton('saveEdit()');
       editData(id);
-    })
-  })
+  }
+
+      const photo = document.getElementById("formPhoto");
+      const appLetter = document.getElementById("formApplicationLetter");
+      const CV = document.getElementById("formCV");
+      const portfolio = document.getElementById("formPortfolio");
+      const empyContract = document.getElementById("formEmploymentContract");
+
+      // Melakukan pemeriksa format file
+      const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+      const pdfType = ["application/pdf"];
+      // Fungsi untuk memeriksa jenis file
+      function checkFileType(fileInput, expectedTypes, errorMessage, toDelete) {
+         if (!expectedTypes.includes(fileInput.type)) {
+            Swal.fire('Error', errorMessage, 'error');
+            toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
+         }
+      }
+      // Melakukan pemeriksaan
+      photo.addEventListener("change", function () {
+         checkFileType(this.files[0], ["image/jpeg", "image/jpg", "image/png"], 'Change the image format.', photo);
+      });
+      appLetter.addEventListener("change", function () {
+         checkFileType(this.files[0], pdfType, 'Its Not PDF', appLetter);
+      });
+      CV.addEventListener("change", function () {
+         checkFileType(this.files[0], pdfType, 'Its Not PDF', CV);
+      });
+      portfolio.addEventListener("change", function () {
+         checkFileType(this.files[0], pdfType, 'Its Not PDF', portfolio);
+      });
+      empyContract.addEventListener("change", function () {
+         checkFileType(this.files[0], pdfType, 'Its Not PDF', empyContract);
+      });
   
   // Event Listener
   // addEmployeeForm.addEventListener('submit', (e) => {
@@ -228,53 +291,12 @@
   
   //     saveData();
   // });
-  const saveData = () => {
-    const name = document.getElementById("name").value;
-    const department = document.getElementById("departments").value;
-  
-    if(name === ""){
-      Swal.fire("Empty", "Please fill in all the fields.", "info");
-      return;
-    }
-    if(department === 'Select First'){
-      Swal.fire("Empty", "Please choose the departments", "info");
-      return;
-    }
-    const data = {
-      name: name,
-      department_id: department
-    }
-    fetch("/hr/employee", {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-      Swal.fire({
-          title: "Success",
-          text: "Data saved successfully!",
-          icon: "success",
-          confirmButtonText: "OK"
-      }).then((result) => {
-          // Jika tombol OK ditekan
-          if (result.isConfirmed) {
-              // Reload halaman
-              location.reload();
-          }
-      });
-    })
-    .catch(error => {
-      Swal.fire("Error", "Something wrong happen!", "error");
-    })
-  }
   
   const editData = (id) => {
      fetch(`/hr/employee/${id}`)
      .then(response => response.json())
      .then(data => {
+        document.getElementById("formPhoto").value = data.photo;  
         document.getElementById("formName").value = data.name === null ? "" : data.name;  
         document.getElementById("formAddress").value = data.address === null ? "" : data.address;
         document.getElementById("formNumberPhone").value = data.number_phone === null ? "" : data.number_phone;
@@ -298,11 +320,71 @@
                 break;
             } 
         }
-  
-  
     });
   }
-  
+
+  const saveData = () => {
+      // const name = document.getElementById("name").value;
+      // const department = document.getElementById("departments").value;
+   
+      // if(name === ""){
+      //    Swal.fire("Empty", "Please fill in all the fields.", "info");
+      //    return;
+      // }
+      // if(department === 'Select First'){
+      //    Swal.fire("Empty", "Please choose the departments", "info");
+      //    return;
+      // }
+      Swal.fire({
+         title: "Success",
+         text: "Data saved successfully!",
+         icon: "success",
+         confirmButtonText: "OK"
+      }).then((result) => {
+         // Jika tombol OK ditekan
+         if (result.isConfirmed) {
+            // Reload halaman
+            location.reload();
+         }
+      });
+   }
+
+
+  const saveEdit = () => {
+      const name = document.getElementById("formName").value;
+      const department = document.getElementById("formDepartments").value;
+      const address = document.getElementById("formAddress").value;
+      const numberPhone =  document.getElementById("formNumberPhone").value;
+      const email = document.getElementById("formEmail").value;
+      const lastEducation = document.getElementById("formLastEducation").value;
+      const major = document.getElementById("formMajor").value;
+      const title = document.getElementById("formTitle").value;
+      const workExperince = document.getElementById("formWorkExperience").value;
+      const skilss = document.getElementById("formSkills").value;
+      const mcu = document.getElementById("formMCU").value;
+      const crimHistory = document.getElementById("formCriminalHistory").value;
+
+      // Buffer Value
+      const photo = document.getElementById("formPhoto").files[0];
+      const appLetter = document.getElementById("formApplicationLetter").files[0];
+      const CV = document.getElementById("formCV").files[0];
+      const portfolio = document.getElementById("formPortfolio").files[0];
+      const empContract = document.getElementById("formEmploymentContract").files[0];
+
+      Swal.fire({
+         title: "Success",
+         text: "Data saved successfully!",
+         icon: "success",
+         confirmButtonText: "OK"
+      }).then((result) => {
+         // Jika tombol OK ditekan
+         if (result.isConfirmed) {
+            // Reload halaman
+            location.reload();
+         }
+      });
+   }
+
   const deleteData = (id) => {
     Swal.fire({
       title: "Are you sure?",
