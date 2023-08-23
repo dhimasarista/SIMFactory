@@ -8,7 +8,7 @@ class Uploads{
     uploadImage(){
         this.app.post("/upload/image", upload.single("image"), (req, res) => {
             const uploadedImage = req.file;
-            console.log(uploadedImage);
+            // console.log(uploadedImage);
 
             const data = {
                 fileName: uploadedImage.fileName,

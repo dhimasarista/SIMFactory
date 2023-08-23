@@ -162,6 +162,12 @@
               </div>
               <!-- 13 -->
               <div class="form-group">
+               
+               <div class="mb-3">
+                  <label for="formFile" class="form-label">Default file input example</label>
+                  <input class="form-control" type="file" id="formFile">
+                </div>
+
                <label for="formPhoto">Photo</label>
                <input type="file" class="form-control" id="formPhoto" name="formPhoto">
                <p class="red">*JPEG/JPG/PNG</p>
@@ -314,12 +320,12 @@
          }
       }
 
-      const fileLength = photo.files.length;
-      if (fileLength === 1) {
-         window.addEventListener('unload', () => {
-            deleteImageFromServer();
-         });
-      }
+      window.addEventListener('beforeunload', (event) => {
+         event.preventDefault();
+         event.returnValue = ''; // This line is necessary for some browsers
+
+         deleteImageFromServer();
+      });
 
       // Fix
       const deleteImageFromServer = () => {
