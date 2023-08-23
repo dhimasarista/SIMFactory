@@ -338,11 +338,12 @@
       }
    }
 
-   window.addEventListener('beforeunload', (event) => {
-      event.preventDefault();
-      event.returnValue = ''; // This line is necessary for some browsers
-
-      deleteImageFromServer();
+   // Jika foto sudah dipilih dan halaman direload
+   window.addEventListener('beforeunload', () => {
+      // Maka hapus image yang diupload tadi diserver
+      if (photo.value !== "") {
+         deleteImageFromServer();
+      }
    });
 
    // Fix
