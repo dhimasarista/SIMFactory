@@ -77,7 +77,7 @@
                                    <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
                                 </svg>
                              </i>
-                          </a>
+                           </a>
                        </td>
                     </tr>
                     <% }); %>
@@ -162,9 +162,21 @@
               </div>
               <!-- 13 -->
               <div class="form-group">
-               <label for="formPhoto">Photo</label><br>
-               <input type="file" id="formPhoto" name="formPhoto">
-               <p class="red">*JPEG/JPG/PNG</p>
+                  <label for="formPhoto">Photo</label><br>
+                  <div class="input-image">
+                     <input type="file" id="formPhoto" name="formPhoto">
+                     <p class="red">*JPEG/JPG/PNG</p>
+                  </div>
+                  <div class="button-delete-image" style="display: none;">
+                     <a type="button" class="mt-1 mr-1 badge badge-danger">
+                        <i>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                           </svg>
+                        </i>
+                     </a>
+                     <span id="image-file-name"></span>
+                  </div>
                </div>
                <!-- 14 -->
               <div class="form-group">
@@ -200,8 +212,6 @@
   <!-- /.col -->
 </div>
 <script>
-   // Inisialisasi form data
-   const formData = new FormData();
    // Menampilkan data employee dalam bentuk tabel
    let table = new DataTable('#employee',{
       deferLoading: 10,
@@ -259,7 +269,8 @@
       employeeForm.style.display = 'block';
       employeeButton.style.display = "inline";
       newButton.style.display = "none";
-      createSubmitButton('saveEdit()');
+      
+      createSubmitButton(`saveEdit(${parseInt(id)})`);
       editData(id);
    }
    // Form Input Element
@@ -271,7 +282,7 @@
    const lastEducation = document.getElementById("formLastEducation");
    const major = document.getElementById("formMajor");
    const title = document.getElementById("formTitle");
-   const workExperince = document.getElementById("formWorkExperience");
+   const workExperience = document.getElementById("formWorkExperience");
    const skilss = document.getElementById("formSkills");
    const mcu = document.getElementById("formMCU");
    const crimHistory = document.getElementById("formCriminalHistory");
@@ -292,6 +303,7 @@
          toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
       }
    }
+
    // Melakukan pemeriksaan, jika file tidak sesuai
    photo.addEventListener("change", function () {
       checkFileType(this.files[0], ["image/jpeg", "image/jpg", "image/png"], 'Change the image format.', photo);
@@ -308,30 +320,50 @@
    empyContract.addEventListener("change", function () {
       checkFileType(this.files[0], pdfType, 'Its Not PDF', empyContract);
    });
-
+   
+   const inputImage = document.querySelector(".input-image")
+   const buttonDeleteImage = document.querySelector(".button-delete-image");
+   const imageFileName = document.querySelector("#image-file-name")
+   
    // Mengupload Files
+   // Problem #2: Upload hanya bisa sekali, jika ditimpa maka akan error
    photo.addEventListener("change", (event) => {
       const selectedFile = event.target.files[0];
 
-      // Kemudian mengirimkan ke server di direktoru `uploads/images/`
-      uploadImage(selectedFile);
+      // Kemudian mengirimkan ke server di direktori `uploads/images/`
+      uploadFile({
+         file: selectedFile,
+         dataName: "image",
+         path: "/upload/image"
+      });
+      
+      // Dan merubah button input menjadi 
+      inputImage.style.display = "none";
+      buttonDeleteImage.style.display = "inline";  
+      imageFileName.textContent = selectedFile["name"]
    });
 
+   buttonDeleteImage.addEventListener("click", () => {
+      Swal.fire('Sorry, We Have a Bug! So you just can once upload file')
+      // deleteImageFromServer(photo.files[0]["name"]);
+      // photo.value = "";
+      // inputImage.style.display = "inline";
+      // buttonDeleteImage.style.display = "none";
+   })
+
    // Fungsi Upload Image
-   const uploadImage = async (image) => {
-      formData.append("image", image);
+   const uploadFile = ({
+      file, dataName, path
+   }) => {
+      // Inisialisasi form data
+      const formData = new FormData();
+      formData.append(dataName, file);
 
       try {
-         const sendImage = await fetch("/upload/image", {
+         fetch(path, {
             method: "POST",
             body: formData
          });
-
-         if (sendImage.ok) {
-            Swal.fire("Success", "Data saved successfully!", "success");
-         } else {
-            throw new Error('An error occurred while uploading the image.');
-         }
       } catch (error) {
          Swal.fire("Error", error.message, "error");
          console.error(error);
@@ -342,13 +374,13 @@
    window.addEventListener('beforeunload', () => {
       // Maka hapus image yang diupload tadi diserver
       if (photo.value !== "") {
-         deleteImageFromServer();
+         deleteImageFromServer(photo.files[0]["name"]);
       }
    });
 
    // Fix
-   const deleteImageFromServer = () => {
-      fetch(`/delete/image/${photo.files[0]["name"]}`)
+   const deleteImageFromServer = (name) => {
+      fetch(`/delete/image/${name}`)
       .then(response => response.text())
       .then(result => {
          console.log(result); // Menampilkan pesan dari server
@@ -357,19 +389,12 @@
          console.error("Error deleting image:", error);
       });
    }
-
-  // Event Listener
-  // addEmployeeForm.addEventListener('submit', (e) => {
-  //     e.preventDefault();
-  
-  //     saveData();
-  // });
   
   const editData = (id) => {
      fetch(`/hr/employee/${id}`)
      .then(response => response.json())
      .then(data => {
-        document.getElementById("formPhoto").value = data.photo;  
+      //   document.getElementById("formPhoto").value = data.photo;  
         document.getElementById("formName").value = data.name === null ? "" : data.name;  
         document.getElementById("formAddress").value = data.address === null ? "" : data.address;
         document.getElementById("formNumberPhone").value = data.number_phone === null ? "" : data.number_phone;
@@ -396,6 +421,21 @@
     });
   }
 
+  const submitSwal = (message) => {
+      Swal.fire({
+         title: "Success",
+         text: message,
+         icon: "success",
+         confirmButtonText: "OK"
+      }).then((result) => {
+         // Jika tombol OK ditekan
+         if (result.isConfirmed) {
+            // Reload halaman
+            location.reload();
+         }
+      });
+  }
+
   const saveData = () => {
       // const name = document.getElementById("name").value;
       // const department = document.getElementById("departments").value;
@@ -408,33 +448,43 @@
       //    Swal.fire("Empty", "Please choose the departments", "info");
       //    return;
       // }
-      Swal.fire({
-         title: "Success",
-         text: "Data saved successfully!",
-         icon: "success",
-         confirmButtonText: "OK"
-      }).then((result) => {
-         // Jika tombol OK ditekan
-         if (result.isConfirmed) {
-            // Reload halaman
-            location.reload();
-         }
-      });
+      submitSwal("");
    }
 
 
-   const saveEdit = () => {
-      Swal.fire({
-         title: "Success",
-         text: "Data saved successfully!",
-         icon: "success",
-         confirmButtonText: "OK"
-      }).then((result) => {
-         // Jika tombol OK ditekan
-         if (result.isConfirmed) {
-            // Reload halaman
-            location.reload();
+   const saveEdit = (id) => {
+      // Checking ketersedian file
+      const photoName = photo.value === "" ? undefined : photo.files[0]["name"];
+
+      const editData = {
+        name: name.value,
+        department_id: department.value,
+        address: address.value,
+        number_phone: numberPhone.value,
+        email: email.value,
+        last_education: lastEducation.value,
+        major: major.value,
+        title: title.value,
+        work_experience: workExperience.value,
+        skills: skilss.value,
+        mcu: mcu.value,
+        criminal_history: crimHistory.value,
+        photo: photoName  // Assuming you have photoName defined earlier
+    };
+
+      fetch(`/hr/employee/${id}`, {
+         method: "PUT",
+         body: JSON.stringify(editData),
+         headers: {
+            'Content-Type': 'application/json'
          }
+      }).then((response => response.json()))
+      .then((results) => {
+         submitSwal(`Data Updated: ${id}`);
+      })
+      .catch((error) => {
+         console.log(error);
+         Swal.fire("Error", error.message, "error");
       });
    }
 

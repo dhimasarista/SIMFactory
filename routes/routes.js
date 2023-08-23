@@ -13,6 +13,7 @@ const setupRoutes = (app) => {
   new Employee(app).getById(); // Mengambil Data Employee berdasarkan ID
   new Employee(app).add(); // Menambahkan Employee
   new Employee(app).delete(); // Menghapus Employee
+  new Employee(app).update(); // Menghapus Employee
   new Department(app).getAndRender(); // Halaman Daftar Departments
   new Department(app).add(); // Menambahkan Department
   new Login(app).render(); // Halaman autentikasi

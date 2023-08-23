@@ -20,7 +20,6 @@ class Uploads{
     deleteImage(){
         this.app.get("/delete/image/:file", (req, res) => {
             const fileName = req.params.file;
-            console.log(fileName);
             deleteImage(fileName);
 
             res.status(200).send(`Image ${fileName} has been deleted from server.`);

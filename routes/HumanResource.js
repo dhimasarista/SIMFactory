@@ -102,63 +102,67 @@ class Employee {
     // client menyimpan kode tersebut, saat proses pengiriman data
     // server tinggal mencocokkan kode client dan file yang distamping
     // untuk mengirim file tersebut ke database
-
+    
     update(){
         this.app.put("/hr/employee/:id", async (req, res) => {
+            try {
             const idToUpdate = req.params.id;
-            const {
+            const { 
+                name, 
+                department_id, 
+                address, 
+                number_phone, 
+                email, 
+                last_education, 
+                major, 
+                title, 
+                work_experience, 
+                skills, 
+                mcu, criminal_history,
+                // file
                 photo,
                 applicationLetter,
                 CV,
                 portfolio,
                 employmentContract 
-            } = req.file;
-            // const imageBuffer = 
-            const { 
-                name, 
-                departmentId, 
-                address, 
-                numberPhone, 
-                email, 
-                lastEducation, 
-                major, 
-                title, 
-                workExperience, 
-                skills, 
-                mcu, criminalHistory,
-                
             } = req.body;
 
+            console.log("address: ", address);
+            // Kueri
             const queryEmployee = `SELECT * FROM employees WHERE id = ?`;
             const query = `UPDATE employees SET ? WHERE id = ?`;
-            try {
+            
+            const imageFile = photo === undefined ? null : fs.readFileSync(`uploads/images/${photo}`);
+
                 // Destructing Array of Object
                 const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
                 const data = {
                     name: name === undefined ? employeeOldData.name : name,
-                    photo: photo === undefined ? employeeOldData.photo : photo,
-                    departmentId: departmentId === undefined ? employeeOldData.department_id : departmentId,
+                    department_id: department_id === undefined ? employeeOldData.department_id : parseInt(department_id),
                     address: address === undefined ? employeeOldData.address : address,
-                    numberPhone: numberPhone === undefined ? employeeOldData.number_phone : numberPhone,
+                    number_phone: number_phone === undefined ? employeeOldData.number_phone : number_phone,
                     email: email === undefined ? employeeOldData.email : email,
-                    lastEducation: lastEducation === undefined ? employeeOldData.last_education : lastEducation,
+                    last_education: last_education === undefined ? employeeOldData.last_education : last_education,
                     major: major === undefined ? employeeOldData.major : major,
                     title: title === undefined ? employeeOldData.title : title,
-                    workExperience: workExperience === undefined ? employeeOldData.work_experience : workExperience,
+                    work_experience: work_experience === undefined ? employeeOldData.work_experience : work_experience,
                     skills: skills === undefined ? employeeOldData.skills : skills,
                     mcu: mcu === undefined ? employeeOldData.mcu : mcu,
-                    criminalHistory: criminalHistory === undefined ? employeeOldData.criminal_history : criminalHistory,
-                    applicationLetter: applicationLetter === undefined ? employeeOldData.applicationLetter : applicationLetter,
-                    portfolio: portfolio === undefined ? employeeOldData.portfolio : portfolio,
-                    CV: CV === undefined ? employeeOldData.CV : CV,
-                    employmentContract: employmentContract === undefined ? employeeOldData.employmentContract : employmentContract
+                    criminal_history: criminal_history === undefined ? employeeOldData.criminal_history : criminal_history,
+                    
+                    photo: imageFile === undefined ? employeeOldData.photo : imageFile,
+                    // applicationLetter: applicationLetter === undefined ? employeeOldData.applicationLetter : applicationLetter,
+                    // portfolio: portfolio === undefined ? employeeOldData.portfolio : portfolio,
+                    // CV: CV === undefined ? employeeOldData.CV : CV,
+                    // employmentContract: employmentContract === undefined ? employeeOldData.employmentContract : employmentContract
                 }
                 const results = await queryAsync(query, [data, idToUpdate]);
                 res.status(200).send(results);
+                console.log(req.body);
             } catch (error) {
                 errorHandling(res, error);
             }
-        })
+        });
     }
 }
 class Department{
