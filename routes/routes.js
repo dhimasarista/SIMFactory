@@ -4,6 +4,7 @@ const { Login, Logout } = require("./Authentication");
 const { Administrator, Profile} = require("./Administrator");
 const Index = require("./Index");
 const { Errors500, Errors400 } = require("./Erros");
+const { Uploads } = require("./Uploads");
 
 const setupRoutes = (app) => {
   new Index(app).get(); // Halaman Utama
@@ -27,6 +28,9 @@ const setupRoutes = (app) => {
   new Profile(app).updateUser(); // Memperbarui data user
   new Errors500(app).error500(); // Error dibagian internal server
   new Errors400(app).error404(); // Error ketika dia yang kamu cari tidak ada
+
+  new Uploads(app).uploadImage();
+  new Uploads(app).deleteImage();
 };
 
 module.exports = setupRoutes;

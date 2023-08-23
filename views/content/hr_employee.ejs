@@ -284,7 +284,58 @@
       empyContract.addEventListener("change", function () {
          checkFileType(this.files[0], pdfType, 'Its Not PDF', empyContract);
       });
-  
+
+      // Mengupload Files
+      photo.addEventListener("change", (event) => {
+         const selectedFile = event.target.files[0];
+
+         uploadImage(selectedFile);
+      });
+
+      const formData = new FormData();
+      // Fungsi Upload Image
+      const uploadImage = async (image) => {
+         formData.append("image", image);
+
+         try {
+            const sendImage = await fetch("/upload/image", {
+               method: "POST",
+               body: formData
+            });
+
+            if (sendImage.ok) {
+               Swal.fire("Success", "Data saved successfully!", "success");
+            } else {
+               throw new Error('An error occurred while uploading the image.');
+            }
+         } catch (error) {
+            Swal.fire("Error", error.message, "error");
+            console.error(error);
+         }
+      }
+
+      const fileLength = photo.files.length;
+      if (fileLength === 1) {
+         window.addEventListener('unload', () => {
+            deleteImageFromServer();
+         });
+      }
+
+      // Fix
+      const deleteImageFromServer = () => {
+            fetch(`/delete/image/${photo.files[0]["name"]}`)
+                .then(response => response.text())
+                .then(result => {
+                    console.log(result); // Menampilkan pesan dari server
+                })
+                .catch(error => {
+                    console.error("Error deleting image:", error);
+                });
+        }
+
+
+      // Fungsi menghapus file
+
   // Event Listener
   // addEmployeeForm.addEventListener('submit', (e) => {
   //     e.preventDefault();
@@ -365,11 +416,11 @@
       const crimHistory = document.getElementById("formCriminalHistory").value;
 
       // Buffer Value
-      const photo = document.getElementById("formPhoto").files[0];
-      const appLetter = document.getElementById("formApplicationLetter").files[0];
-      const CV = document.getElementById("formCV").files[0];
-      const portfolio = document.getElementById("formPortfolio").files[0];
-      const empContract = document.getElementById("formEmploymentContract").files[0];
+      const photo = document.getElementById("formPhoto").files[0]["name"];
+      const appLetter = document.getElementById("formApplicationLetter").files[0]["name"];
+      const CV = document.getElementById("formCV").files[0]["name"];
+      const portfolio = document.getElementById("formPortfolio").files[0]["name"];
+      const empContract = document.getElementById("formEmploymentContract").files[0]["name"];
 
       Swal.fire({
          title: "Success",
@@ -426,6 +477,7 @@
       document.getElementById("formTitle").value = "";
       document.getElementById("formWorkExperience").value = "";
       document.getElementById("formSkills").value = "";
+      document.getElementById("formPhoto").value = null;
       document.getElementById("formApplicationLetter").value = null;
       document.getElementById("formCV").value = null;
       document.getElementById("formPortfolio").value = null;
