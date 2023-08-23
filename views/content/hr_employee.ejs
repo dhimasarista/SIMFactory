@@ -96,7 +96,7 @@
               </div>
               <!-- 2 -->
               <div class="form-group">
-                <label for="formDepartments">Departments: </label>
+                <label for="formDepartments">Departments</label><br>
                 <select name="formDepartments" id="formDepartments">
                    <option hidden>Select First</option>
                    <% departments.forEach((data) => { %>
@@ -162,38 +162,32 @@
               </div>
               <!-- 13 -->
               <div class="form-group">
-               
-               <div class="mb-3">
-                  <label for="formFile" class="form-label">Default file input example</label>
-                  <input class="form-control" type="file" id="formFile">
-                </div>
-
-               <label for="formPhoto">Photo</label>
-               <input type="file" class="form-control" id="formPhoto" name="formPhoto">
+               <label for="formPhoto">Photo</label><br>
+               <input type="file" id="formPhoto" name="formPhoto">
                <p class="red">*JPEG/JPG/PNG</p>
                </div>
                <!-- 14 -->
               <div class="form-group">
-               <label for="formApplicationLetter">Application Letter</label>
-               <input type="file" class="form-control" id="formApplicationLetter" name="formApplicationLetter">
+               <label for="formApplicationLetter">Application Letter</label><br>
+               <input type="file" id="formApplicationLetter" name="formApplicationLetter">
                <p class="red">*PDF</p>
                </div>
                <!-- 15 -->
                <div class="form-group">
-                  <label for="formCV">CV</label>
-                  <input type="file" class="form-control" id="formCV" name="formCV">
+                  <label for="formCV">CV</label><br>
+                  <input type="file" id="formCV" name="formCV">
                   <p class="red">*PDF</p>
                </div>
                <!-- 16 -->
                <div class="form-group">
-                  <label for="formPortfolio">Portfolio</label>
-                  <input type="file" class="form-control" id="formPortfolio" name="formPortfolio">
+                  <label for="formPortfolio">Portfolio</label><br>
+                  <input type="file" id="formPortfolio" name="formPortfolio">
                   <p class="red">*PDF</p>
                </div>
                <!-- 17 -->
               <div class="form-group">
-                 <label for="formEmploymentContract">Employment Contract</label>
-                 <input type="file" class="form-control" id="formEmploymentContract" name="formEmploymentContract">
+                 <label for="formEmploymentContract">Employment Contract</label><br>
+                 <input type="file" id="formEmploymentContract" name="formEmploymentContract">
                  <p class="red">*PDF</p>
               </div>
               <div class="add-submit-button"></div>
@@ -206,49 +200,60 @@
   <!-- /.col -->
 </div>
 <script>
+   // Inisialisasi form data
+   const formData = new FormData();
    // Menampilkan data employee dalam bentuk tabel
-  let table = new DataTable('#employee',{
-    deferLoading: 10,
-    initComplete: function(settings, json) {
-        $('.loading-placeholder').remove(); // Menghilangkan animasi loading setelah tabel siap
-        $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
-    }
-  });
+   let table = new DataTable('#employee',{
+      deferLoading: 10,
+      // Animasi jika file belum sepenuhnya dimuat
+      initComplete: function(settings, json) {
+         $('.loading-placeholder').remove(); // Menghilangkan animasi loading setelah tabel siap
+         $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
+      }
+   });
   
-  // Buttons
-  const newButton = document.getElementById('newButton');
-  const employeeButton = document.getElementById("employeeButton");
-//   const editButtons = document.querySelectorAll(".edit-data");
-  // Tables
-  const employeeTable = document.getElementById('employeeTable');
-  const employeeForm = document.getElementById('employeeFormData');
+   // Buttons
+   const newButton = document.getElementById('newButton');
+   const employeeButton = document.getElementById("employeeButton");
+   // const editButtons = document.querySelectorAll(".edit-data");
 
-  employeeButton.addEventListener("click", () => {
+   // Tables
+   const employeeTable = document.getElementById('employeeTable');
+   const employeeForm = document.getElementById('employeeFormData');
+
+   // Trigger event button employee ketika diklik
+   employeeButton.addEventListener("click", () => {
+      // Menampilkan Tabel dan Button New
       employeeTable.style.display = 'block';
-      employeeForm.style.display = 'none';
-  
       newButton.style.display = "inline";
+
+      // Menghilangkan form employee & button employee
+      employeeForm.style.display = 'none';
       employeeButton.style.display = "none";
       clearForm();
-  });
+   });
 
-  const createSubmitButton = (params) => {
+   // Membuat Submit Button untuk data baru maupun data lama
+   const createSubmitButton = (params) => {
       // Menambahkan tombol submit ke dalam elemen dengan class "submit-button"
       const submitButtonContainer = document.querySelector('.add-submit-button');
       submitButtonContainer.innerHTML = `<button type="button" class="btn btn-primary" onclick="${params}">Submit</button>`;
-  }
-  
-  newButton.addEventListener('click', () => {
+   }
+   
+   // Button new ketika diklik
+   newButton.addEventListener('click', () => {
+      // Tabel employee & button new di hilangkan
       employeeTable.style.display = 'none';
+      newButton.style.display = "none";
+      // Tampilkan form employee dan button employee
       employeeForm.style.display = 'block';
       employeeButton.style.display = "inline";
-      newButton.style.display = "none";
       clearForm();
 
       createSubmitButton('saveData()');
-  });
+   });
 
-  const editButtons = (id) => {
+   const editButtons = (id) => {
       event.preventDefault(); // Menghentikan perilaku default tautan
       employeeTable.style.display = 'none';
       employeeForm.style.display = 'block';
@@ -256,91 +261,101 @@
       newButton.style.display = "none";
       createSubmitButton('saveEdit()');
       editData(id);
-  }
+   }
+   // Form Input Element
+   const name = document.getElementById("formName");
+   const department = document.getElementById("formDepartments");
+   const address = document.getElementById("formAddress");
+   const numberPhone =  document.getElementById("formNumberPhone");
+   const email = document.getElementById("formEmail");
+   const lastEducation = document.getElementById("formLastEducation");
+   const major = document.getElementById("formMajor");
+   const title = document.getElementById("formTitle");
+   const workExperince = document.getElementById("formWorkExperience");
+   const skilss = document.getElementById("formSkills");
+   const mcu = document.getElementById("formMCU");
+   const crimHistory = document.getElementById("formCriminalHistory");
+   // Form Input File
+   const photo = document.getElementById("formPhoto");
+   const appLetter = document.getElementById("formApplicationLetter");
+   const CV = document.getElementById("formCV");
+   const portfolio = document.getElementById("formPortfolio");
+   const empyContract = document.getElementById("formEmploymentContract");
 
-      const photo = document.getElementById("formPhoto");
-      const appLetter = document.getElementById("formApplicationLetter");
-      const CV = document.getElementById("formCV");
-      const portfolio = document.getElementById("formPortfolio");
-      const empyContract = document.getElementById("formEmploymentContract");
-
-      // Melakukan pemeriksa format file
-      const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
-      const pdfType = ["application/pdf"];
-      // Fungsi untuk memeriksa jenis file
-      function checkFileType(fileInput, expectedTypes, errorMessage, toDelete) {
-         if (!expectedTypes.includes(fileInput.type)) {
-            Swal.fire('Error', errorMessage, 'error');
-            toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
-         }
+   // Melakukan pemeriksa format file
+   const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+   const pdfType = ["application/pdf"];
+   // Fungsi untuk memeriksa jenis file
+   function checkFileType(fileInput, expectedTypes, errorMessage, toDelete) {
+      if (!expectedTypes.includes(fileInput.type)) {
+         Swal.fire('Error', errorMessage, 'error');
+         toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
       }
-      // Melakukan pemeriksaan
-      photo.addEventListener("change", function () {
-         checkFileType(this.files[0], ["image/jpeg", "image/jpg", "image/png"], 'Change the image format.', photo);
-      });
-      appLetter.addEventListener("change", function () {
-         checkFileType(this.files[0], pdfType, 'Its Not PDF', appLetter);
-      });
-      CV.addEventListener("change", function () {
-         checkFileType(this.files[0], pdfType, 'Its Not PDF', CV);
-      });
-      portfolio.addEventListener("change", function () {
-         checkFileType(this.files[0], pdfType, 'Its Not PDF', portfolio);
-      });
-      empyContract.addEventListener("change", function () {
-         checkFileType(this.files[0], pdfType, 'Its Not PDF', empyContract);
-      });
+   }
+   // Melakukan pemeriksaan, jika file tidak sesuai
+   photo.addEventListener("change", function () {
+      checkFileType(this.files[0], ["image/jpeg", "image/jpg", "image/png"], 'Change the image format.', photo);
+   });
+   appLetter.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', appLetter);
+   });
+   CV.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', CV);
+   });
+   portfolio.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', portfolio);
+   });
+   empyContract.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', empyContract);
+   });
 
-      // Mengupload Files
-      photo.addEventListener("change", (event) => {
-         const selectedFile = event.target.files[0];
+   // Mengupload Files
+   photo.addEventListener("change", (event) => {
+      const selectedFile = event.target.files[0];
 
-         uploadImage(selectedFile);
-      });
+      // Kemudian mengirimkan ke server di direktoru `uploads/images/`
+      uploadImage(selectedFile);
+   });
 
-      const formData = new FormData();
-      // Fungsi Upload Image
-      const uploadImage = async (image) => {
-         formData.append("image", image);
+   // Fungsi Upload Image
+   const uploadImage = async (image) => {
+      formData.append("image", image);
 
-         try {
-            const sendImage = await fetch("/upload/image", {
-               method: "POST",
-               body: formData
-            });
+      try {
+         const sendImage = await fetch("/upload/image", {
+            method: "POST",
+            body: formData
+         });
 
-            if (sendImage.ok) {
-               Swal.fire("Success", "Data saved successfully!", "success");
-            } else {
-               throw new Error('An error occurred while uploading the image.');
-            }
-         } catch (error) {
-            Swal.fire("Error", error.message, "error");
-            console.error(error);
+         if (sendImage.ok) {
+            Swal.fire("Success", "Data saved successfully!", "success");
+         } else {
+            throw new Error('An error occurred while uploading the image.');
          }
+      } catch (error) {
+         Swal.fire("Error", error.message, "error");
+         console.error(error);
       }
+   }
 
-      window.addEventListener('beforeunload', (event) => {
-         event.preventDefault();
-         event.returnValue = ''; // This line is necessary for some browsers
+   window.addEventListener('beforeunload', (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // This line is necessary for some browsers
 
-         deleteImageFromServer();
+      deleteImageFromServer();
+   });
+
+   // Fix
+   const deleteImageFromServer = () => {
+      fetch(`/delete/image/${photo.files[0]["name"]}`)
+      .then(response => response.text())
+      .then(result => {
+         console.log(result); // Menampilkan pesan dari server
+      })
+      .catch(error => {
+         console.error("Error deleting image:", error);
       });
-
-      // Fix
-      const deleteImageFromServer = () => {
-            fetch(`/delete/image/${photo.files[0]["name"]}`)
-                .then(response => response.text())
-                .then(result => {
-                    console.log(result); // Menampilkan pesan dari server
-                })
-                .catch(error => {
-                    console.error("Error deleting image:", error);
-                });
-        }
-
-
-      // Fungsi menghapus file
+   }
 
   // Event Listener
   // addEmployeeForm.addEventListener('submit', (e) => {
@@ -407,27 +422,7 @@
    }
 
 
-  const saveEdit = () => {
-      const name = document.getElementById("formName").value;
-      const department = document.getElementById("formDepartments").value;
-      const address = document.getElementById("formAddress").value;
-      const numberPhone =  document.getElementById("formNumberPhone").value;
-      const email = document.getElementById("formEmail").value;
-      const lastEducation = document.getElementById("formLastEducation").value;
-      const major = document.getElementById("formMajor").value;
-      const title = document.getElementById("formTitle").value;
-      const workExperince = document.getElementById("formWorkExperience").value;
-      const skilss = document.getElementById("formSkills").value;
-      const mcu = document.getElementById("formMCU").value;
-      const crimHistory = document.getElementById("formCriminalHistory").value;
-
-      // Buffer Value
-      const photo = document.getElementById("formPhoto").files[0]["name"];
-      const appLetter = document.getElementById("formApplicationLetter").files[0]["name"];
-      const CV = document.getElementById("formCV").files[0]["name"];
-      const portfolio = document.getElementById("formPortfolio").files[0]["name"];
-      const empContract = document.getElementById("formEmploymentContract").files[0]["name"];
-
+   const saveEdit = () => {
       Swal.fire({
          title: "Success",
          text: "Data saved successfully!",
