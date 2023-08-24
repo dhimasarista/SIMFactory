@@ -1,3 +1,18 @@
+/*
+    * Login().render: me-render halaman login dari views/login.ejs
+    * Login().post: 
+        ** Menerima request dari client berupa username dan password
+        ** Kemudian mencocokkan request berupa data tersebut ke db 
+        ** Jika hasil validasi password user dengan bcrypt true,
+        ** User diizikan masuk, dan disimpan ke dalam cookies dengan waktu 1 jam
+        ** Cookies disimpan dengan nama user:
+            *** id di cookies dari id user, digunakan untuk mencocokkan data dengan id employee
+            *** role dibagi 2, 
+                **** data dari admins tabel hanya bisa mengakses halaman administrator
+                **** users tabel untuk mengakses halaman-halaman aplikasi dan tidak bisa mengakses halaman administrator
+            *** department_id, digunankan untuk path mana saja yang bisa diakses sesuai departemen-nya
+*/
+
 const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
