@@ -127,8 +127,8 @@ class Employee {
                 employmentContract 
             } = req.body;
 
-            console.log("address: ", address);
             // Kueri
+            const queryUsers = `UPDATE users SET department_id = ? WHERE id = ?`;
             const queryEmployee = `SELECT * FROM employees WHERE id = ?`;
             const query = `UPDATE employees SET ? WHERE id = ?`;
             
@@ -136,6 +136,7 @@ class Employee {
 
                 // Destructing Array of Object
                 const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
+                await queryAsync(queryUsers, [department_id, idToUpdate]);
                 const data = {
                     name: name === undefined ? employeeOldData.name : name,
                     department_id: department_id === undefined ? employeeOldData.department_id : parseInt(department_id),
@@ -158,7 +159,6 @@ class Employee {
                 }
                 const results = await queryAsync(query, [data, idToUpdate]);
                 res.status(200).send(results);
-                console.log(req.body);
             } catch (error) {
                 errorHandling(res, error);
             }
