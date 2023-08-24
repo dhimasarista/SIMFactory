@@ -13,6 +13,7 @@ class Index{
             // Mengambil user dari cookie
             const user = req.cookies.user;
             const path = req.path;
+            console.log(req.cookies);
 
             try {
                 // Menghitung total karyawan

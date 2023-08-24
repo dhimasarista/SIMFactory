@@ -17,7 +17,7 @@ const userAuthorization = (app) => {
           const isProduction = user && user.department === 904;
           const isWarehouse = user && user.department === 903;
           const isHumanResource = user && user.department === 902;
-          // const isEngineering = user && user.department === 901;
+          const isEngineering = user && user.department === 901;
           // const isIT = user && user.department === 905;
           
           // Pengecualian untuk path /logout
@@ -51,6 +51,9 @@ const userAuthorization = (app) => {
               return res.redirect("/");
             }
             if (isHumanResource && (currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
+              return res.redirect("/");
+            }
+            if (isEngineering && (currentPath.startsWith("/warehouse") || currentPath.startsWith("/production") || currentPath.startsWith("/hr"))) {
               return res.redirect("/");
             }
           }

@@ -146,7 +146,7 @@ class Profile{
 
     updateUser() {
         this.app.put("/employee/profile/:id", async (req, res) => {
-            const id = req.params.id;
+            const id = parseInt(req.params.id);
             const username = req.body.username;
             const password = req.body.password;
     
@@ -164,6 +164,7 @@ class Profile{
                 const updatedPassword = password ? await bcrypt.hash(password, 10) : selectData[0].password;
     
                 const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
+                res.cookie("user", {id: id, username: updatedUsername, role: "employee", department: selectData[0].department_id} , { maxAge: 3600000 }); // 1 Jam
                 res.status(200).send(updateData)
             } catch (error) {
                 errorHandling(res, error);

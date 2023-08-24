@@ -39,7 +39,7 @@
             <%= user.username %>
          </a>
       </li>
-      <% if (user.role === 'user' && user.id !== 1) { %>
+      <% if (user.role === 'employee' && user.id !== 1){ %> 
          <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-user"></i>
