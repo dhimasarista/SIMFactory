@@ -164,7 +164,7 @@ class Profile{
                 const updatedPassword = password ? await bcrypt.hash(password, 10) : selectData[0].password;
     
                 const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
-                res.status(200).json({ message: 'User updated successfully' });
+                res.status(200).send(updateData)
             } catch (error) {
                 errorHandling(res, error);
             }

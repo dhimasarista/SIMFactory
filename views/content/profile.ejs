@@ -74,40 +74,39 @@
             return;
         }
     
-        Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: "Yes, Update it!"
-    }). then(result => {
-        if (result.isConfirmed) {
-        fetch(`/employee/profile/${id}`, {
-          method: "PUT",
-          headers: {
-                "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        }).then(response => response.json())
-        .then(result => {});
-        Swal.fire({
-          title: "Updated!",
-          text: "Data updated successfully!",
-          icon: "success",
-          confirmButtonText: "OK"
-      }).then((result) => {
-          // Jika tombol OK ditekan
-          if (result.isConfirmed) {
-              // Reload halaman
-              location.reload();
-          }
-      });
-      }
-    })
-    .catch(error => {
-        console.error("Error updating data:", error);
-    })
-    }
+         Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Yes, Update it!"
+         }).then(result => {
+            if (result.isConfirmed) {
+               fetch(`/employee/profile/${id}`, {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(data)}
+                  ).then(response => response.json())
+                  .then(result => {});
+               Swal.fire({
+                  title: "Updated!",
+                  text: "Data updated successfully!",
+                  icon: "success",
+                  confirmButtonText: "OK"
+               }).then((result) => {
+                  // Jika tombol OK ditekan
+                  if (result.isConfirmed) {
+                     // Reload halaman
+                     location.reload();
+                  }
+               });
+            }
+         }).catch(error => {
+            console.error("Error updating data:", error);
+         });
+   }
  </script>
