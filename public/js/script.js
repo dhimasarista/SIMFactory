@@ -44,3 +44,5 @@ function arrayBufferToBase64(buffer) {
           // } else {
           //     imageElement.src = `data:image/jpeg;base64,${arrayBufferToBase64(data.image.data)}`;
           // }
+
+          

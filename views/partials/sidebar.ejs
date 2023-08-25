@@ -1,9 +1,11 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4 mb-3">
    <!-- Brand Logo -->
-   <a href="#" class="brand-link">
-   <img src="../img/database-circle.svg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="height: 250px; ">
-   <span class="brand-text font-weight-light">SIMFactory</span>
-   </a>
+   <div id="branding">
+      <a href="#" class="brand-link">
+         <img src="../img/database-circle.svg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="height: 250px; ">
+         <span class="brand-text font-weight-light">SIMFactory</span>
+         </a>
+   </div>
    <!-- Sidebar -->
    <div class="sidebar">
       <!-- Sidebar Menu -->
@@ -125,3 +127,16 @@
    </div>
    <!-- /.sidebar -->
 </aside>
+<script>
+   document.querySelector('#branding').addEventListener('click',(e) => {
+      e.preventDefault();
+      Swal.fire({
+         title: '<strong>SIMFactory Tech-Stack</strong>',
+         html: `<b>by</b> ` + `<a href="//dhimasarista.github.io" target="_blank">dhimasarista.github.io</a>`,
+         imageUrl: '../../img/tech-stack.svg',
+         imageWidth: 400,
+         imageHeight: 200,
+         imageAlt: 'Custom image',
+      })
+   });
+</script>
