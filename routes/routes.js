@@ -32,6 +32,8 @@ const setupRoutes = (app) => {
 
   new Uploads(app).uploadImage();
   new Uploads(app).deleteImage();
+  new Uploads(app).uploadPdf();
+  new Uploads(app).deletePdf();
 };
 
 module.exports = setupRoutes;

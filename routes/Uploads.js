@@ -1,4 +1,4 @@
-const { upload, deleteImage } = require("../utils/uploads/fileUploads");
+const { upload, deleteImage, deletePdf } = require("../utils/uploads/fileUploads");
 
 class Uploads{
     constructor(app) {
@@ -6,15 +6,13 @@ class Uploads{
     }
 
     uploadImage(){
-        this.app.post("/upload/image", upload.single("image"), (req, res) => {
-            const uploadedImage = req.file;
-            // console.log(uploadedImage);
-
-            const data = {
-                fileName: uploadedImage.fileName,
-                mimeType: uploadedImage.mimeType
-            }
-        });
+        try {
+            this.app.post("/upload/image", upload.single("image"), (req, res) => {
+                res.status(200);
+            });
+        } catch (error) {
+            console.log(red, `${qm} Error: `, error);
+        }
     }
 
     deleteImage(){
@@ -24,6 +22,25 @@ class Uploads{
 
             res.status(200).send(`Image ${fileName} has been deleted from server.`);
         })
+    }
+
+    uploadPdf(){
+        try {
+            this.app.post("/upload/pdf", upload.single("pdf"), (req, res) => {
+                res.status(200);
+            })
+        } catch (error) {
+            console.log(red, `${qm} Error: `, error);
+        }
+    }
+
+    deletePdf(){
+        this.app.get("/delete/pdf/:file", (req, res) => {
+            const fileName = req.params.file;
+            deletePdf(fileName);
+
+            res.status(200).send(`Image ${fileName} has been deleted from server.`);
+        });
     }
 }
 

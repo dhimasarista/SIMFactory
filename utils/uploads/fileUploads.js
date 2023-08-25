@@ -29,7 +29,17 @@ const deleteImage = (imageFile) => {
     });
 }
 
+const deletePdf = (pdfFile) => {
+    const pdfPath = path.join(__dirname, "..", "..", "uploads", "pdf", pdfFile);
+    fs.unlink(pdfPath, (err) => {
+        if (err) {
+            console.log("Error deleting pdf:", err);
+        }
+    })
+}
+
 module.exports = {
     upload,
-    deleteImage
+    deleteImage,
+    deletePdf
 };
