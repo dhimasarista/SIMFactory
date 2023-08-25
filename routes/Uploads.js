@@ -1,4 +1,4 @@
-const { upload, deleteImage, deletePdf } = require("../utils/uploads/fileUploads");
+const { upload, deleteImageHandler, deletePdfHandler } = require("../utils/uploads/fileUploads");
 
 class Uploads{
     constructor(app) {
@@ -18,7 +18,7 @@ class Uploads{
     deleteImage(){
         this.app.get("/delete/image/:file", (req, res) => {
             const fileName = req.params.file;
-            deleteImage(fileName);
+            deleteImageHandler(fileName);
 
             res.status(200).send(`Image ${fileName} has been deleted from server.`);
         })
@@ -35,11 +35,14 @@ class Uploads{
     }
 
     deletePdf(){
-        this.app.get("/delete/pdf/:file", (req, res) => {
+        this.app.get("/delete/pdf/:file", async (req, res) => {
             const fileName = req.params.file;
-            deletePdf(fileName);
-
-            res.status(200).send(`Image ${fileName} has been deleted from server.`);
+            try {
+                await deletePdfHandler(fileName);
+                res.status(200).send(`PDF ${fileName} has been deleted from server.`);
+            } catch (error) {
+                res.status(500).send(`Error ${fileName} deleting from server.`);
+            }
         });
     }
 }

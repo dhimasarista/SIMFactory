@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
         if (file.mimetype.startsWith("image/")) {
             cb(null, "uploads/images/");
         } else if (file.mimetype === "application/pdf") {
-            cb(null, "uploads/pdf/");
+            cb(null, "uploads/pdfs/");
         } else {
             cb(new Error("Unsupported file type"));
         }
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-const deleteImage = (imageFile) => {
+const deleteImageHandler = (imageFile) => {
     const imagePath = path.join(__dirname, "..", "..", 'uploads', "images", imageFile);
     fs.unlink(imagePath, (err) => {
         if (err) {
@@ -29,17 +29,17 @@ const deleteImage = (imageFile) => {
     });
 }
 
-const deletePdf = (pdfFile) => {
-    const pdfPath = path.join(__dirname, "..", "..", "uploads", "pdf", pdfFile);
-    fs.unlink(pdfPath, (err) => {
-        if (err) {
-            console.log("Error deleting pdf:", err);
-        }
-    })
+const deletePdfHandler = async (pdfFile) => {
+    const pdfPath = path.join(__dirname, "..", "..", "uploads", "pdfs", pdfFile);
+    try {
+        await fs.promises.unlink(pdfPath);
+    } catch (error) {
+        // console.log("Error deleting pdf:", error);
+    }
 }
 
 module.exports = {
     upload,
-    deleteImage,
-    deletePdf
+    deleteImageHandler,
+    deletePdfHandler
 };
