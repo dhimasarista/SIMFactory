@@ -313,6 +313,7 @@
       if (!expectedTypes.includes(fileInput.type)) {
          Swal.fire('Error', errorMessage, 'error');
          toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
+         return;
       }
    }
 
@@ -350,8 +351,10 @@
       });
       
       // Dan merubah button input menjadi 
-      inputImage.style.display = "none";
-      buttonDeleteImage.style.display = "inline";  
+      if (selectedFile !== undefined) {
+         inputImage.style.display = "none";
+         buttonDeleteImage.style.display = "inline";  
+      }
       imageFileName.textContent = selectedFile["name"]
    });
    // Delete buttons
@@ -376,8 +379,10 @@
             path: "/upload/pdf"
          });
 
-         inputAppletter.style.display = "none";
-         buttonDeleteAppletter.style.display = "inline";
+         if (selectedFile !== undefined) {
+            inputAppletter.style.display = "none";
+            buttonDeleteAppletter.style.display = "inline";
+         }
          appletterFileName.textContent = selectedFile["name"];
       } catch (error) {
          console.log(error);
