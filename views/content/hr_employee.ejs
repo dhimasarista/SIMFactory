@@ -365,20 +365,20 @@
 
    const inputAppletter = document.querySelector(".input-appletter");
    const buttonDeleteAppletter = document.querySelector(".button-delete-appletter");
-   const appletterFileName = document.querySelector("#image-file-name");
+   const appletterFileName = document.querySelector("#appletter-file-name");
    appLetter.addEventListener("change", (event) => {
       try {
          const selectedFile = event.target.files[0];
 
-      uploadFile({
-         file: selectedFile,
-         dataName:"application_letter",
-         path: "upload/pdf"
-      });
+         uploadFile({
+            file: selectedFile,
+            dataName:"pdf",
+            path: "/upload/pdf"
+         });
 
-      inputAppletter.style.display = "none";
-      buttonDeleteAppletter.style.display = "inline";
-      appletterFileName.textContent = selectedFile["name"];
+         inputAppletter.style.display = "none";
+         buttonDeleteAppletter.style.display = "inline";
+         appletterFileName.textContent = selectedFile["name"];
       } catch (error) {
          console.log(error);
       }
