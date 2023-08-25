@@ -13,8 +13,7 @@ class Index{
             // Mengambil user dari cookie
             const user = req.cookies.user;
             const path = req.path;
-            console.log(req.cookies);
-
+            
             try {
                 // Menghitung total karyawan
                 const totalEmployees = await queryAsync("SELECT COUNT(*) AS total FROM employees"); // Array of Object

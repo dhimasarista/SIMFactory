@@ -91,19 +91,20 @@
                   },
                   body: JSON.stringify(data)}
                   ).then(response => response.json())
-                  .then(result => {});
-               Swal.fire({
-                  title: "Updated!",
-                  text: "Data updated successfully!",
-                  icon: "success",
-                  confirmButtonText: "OK"
-               }).then((result) => {
-                  // Jika tombol OK ditekan
-                  if (result.isConfirmed) {
-                     // Reload halaman
-                     location.reload();
-                  }
-               });
+                  .then(result => {
+                     Swal.fire({
+                        title: "Data Updated!",
+                        text: "Please, Relogin",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                     }).then((result) => {
+                        // Jika tombol OK ditekan
+                        if (result.isConfirmed) {
+                           // Reload halaman
+                           location.reload();
+                        }
+                     });
+                  });
             }
          }).catch(error => {
             console.error("Error updating data:", error);

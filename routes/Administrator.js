@@ -164,8 +164,9 @@ class Profile{
                 const updatedPassword = password ? await bcrypt.hash(password, 10) : selectData[0].password;
     
                 const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
-                res.cookie("user", {id: id, username: updatedUsername, role: "employee", department: selectData[0].department_id} , { maxAge: 3600000 }); // 1 Jam
-                res.status(200).send(updateData)
+                res.clearCookie('user');
+                // res.cookie("user", {id: id, username: updatedUsername, role: "employee", department: selectData[0].department_id} , { maxAge: 3600000 }); // 1 Jam
+                res.status(200).json(updateData)
             } catch (error) {
                 errorHandling(res, error);
             }
