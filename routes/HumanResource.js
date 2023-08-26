@@ -121,7 +121,7 @@ class Employee {
                 mcu, criminal_history,
                 // file
                 photo,
-                applicationLetter,
+                application_letter,
                 CV,
                 portfolio,
                 employmentContract 
@@ -133,6 +133,7 @@ class Employee {
             const query = `UPDATE employees SET ? WHERE id = ?`;
             
             const imageFile = photo === undefined ? null : fs.readFileSync(`uploads/images/${photo}`);
+            const appLetterFile = application_letter === undefined ? null : fs.readFileSync(`uploads/pdfs/${application_letter}`);
 
                 // Destructing Array of Object
                 const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
@@ -152,7 +153,7 @@ class Employee {
                     criminal_history: criminal_history === undefined ? employeeOldData.criminal_history : criminal_history,
                     
                     photo: imageFile === undefined ? employeeOldData.photo : imageFile,
-                    // applicationLetter: applicationLetter === undefined ? employeeOldData.applicationLetter : applicationLetter,
+                    // application_letter: appLetterFile === undefined ? employeeOldData.applicationLetter : application_letter,appLetterFile
                     // portfolio: portfolio === undefined ? employeeOldData.portfolio : portfolio,
                     // CV: CV === undefined ? employeeOldData.CV : CV,
                     // employmentContract: employmentContract === undefined ? employeeOldData.employmentContract : employmentContract
