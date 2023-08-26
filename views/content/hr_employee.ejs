@@ -26,7 +26,7 @@
                     
                     <h4 style="margin-top: 10px;" id="name-employee"></h4>
                     <h6 id="id-employee"></h6>
-                    <p>Departemen</p>
+                    <p id="department-employee"></p>
                   </div>
                   <div class="card-body text-center">
                     <h4>Documents</h4>
@@ -54,18 +54,19 @@
               </div>
               <div class="card">
                 <div class="card-body">
-                  <h4>Pendidikan Terakhir</h4>
-                  <p>Gelar Terakhir: Gelar Pendidikan Karyawan</p>
-                  <p>Jurusan: Jurusan Pendidikan Karyawan</p>
+                  <h4>Background</h4>
+                  <p>Last Education: <span id="last_education-employee"></span></p>
+                  <p>Title: <span id="title-employee"></span></p>
+                  <p>Major: <span id="major-employee"></span></p>
                   <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                 </div>
               </div>
               <div class="card">
                 <div class="card-body">
                   <h4>Work Experience</h4>
-                  <p>984758937495</p>
+                  <p id="work_experience-employee"></p>
                   <h4>Skills</h4>
-                  <p>34790839480</p>
+                  <p id="skills-employee"></p>
                   <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                 </div>
               </div>
@@ -317,7 +318,15 @@
       .then(results => {
          document.getElementById("name-employee").textContent = results.name;
          document.getElementById("id-employee").textContent = results.id;
+         document.getElementById("nophone-employee").textContent = results.number_phone;
+         document.getElementById("email-employee").textContent = results.email;
          document.getElementById("address-employee").textContent = results.address;
+         document.getElementById("department-employee").textContent = results.department_name;
+         document.getElementById("last_education-employee").textContent = results.last_education;
+         document.getElementById("major-employee").textContent = results.major;
+         document.getElementById("work_experience-employee").textContent = results.work_experience;
+         document.getElementById("skills-employee").textContent = results.skills;
+         document.getElementById("title-employee").textContent = results.title
       });
    }
 
@@ -432,6 +441,8 @@
    
    // Mengupload Files
    // Problem #2: Upload hanya bisa sekali, jika ditimpa maka akan error
+
+   // Photo
    photo.addEventListener("change", (event) => {
       const selectedFile = event.target.files[0];
 
@@ -458,6 +469,7 @@
       // buttonDeleteImage.style.display = "none";
    });
 
+   // Application Letter
    const inputAppletter = document.querySelector(".input-appletter");
    const buttonDeleteAppletter = document.querySelector(".button-delete-appletter");
    const appletterFileName = document.querySelector("#appletter-file-name");
@@ -484,6 +496,21 @@
    buttonDeleteAppletter.addEventListener("click", () => {
       Swal.fire('Sorry, We Have a Bug! So you just can once upload file')
    });
+
+   // CV
+   CV.addEventListener("change", (event) => {
+      const selectedData = event.target.files[0];
+
+      try {
+         uploadFile({
+            file: selectedData,
+            dataName: "pdf",
+            path: "/upload/pdf"
+         })
+      } catch (error) {
+         console.error(errpr);
+      }
+   })
 
 
    // Fungsi Upload Image

@@ -40,11 +40,11 @@ class Employee {
         this.app.get("/hr/employee/:id", async (req, res) => {
             const id = req.params.id;
 
-            const query = `SELECT * FROM employees WHERE id = ?`;
+            const query = `SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id WHERE employees.id = ?`;
             try {
-                const result = await queryAsync(query, [id]);
-                res.json(result[0]);
-                console.log(result[0]);
+                const results = await queryAsync(query, [id]);
+                console.log(results[0]);
+                res.json(results[0]);
             } catch(error) {
                 errorHandling(res, error);
             }
@@ -88,21 +88,10 @@ class Employee {
         })
     }
 
-    // Algoritma upload file
-    // Ketika file yang dipilih akan langsung dikirim ke server
-    // Di dalam direktori `uploads` untuk sementara
-    // Jika event submit di trigger,
-    // data beserta file akan dikirim ke database
-    // kemudian file temporary di `uploads/` 
-    // akan dihapus setelah dikirim ke db
-    // Jika user melakukan reload, akan ada konfirmasi
-    // Jika terkonfirmasi halaman di reload, file akan dihapus dari server
+    // Flow upload files
+    // file yang diupload langsung dikirim ke server
+    // sebelum form di submit.
 
-    // Setelah dikirim ke server `uploads`, file akan distamping
-    // dalam bentuk angka random, kode tersebut akan menjadi key
-    // client menyimpan kode tersebut, saat proses pengiriman data
-    // server tinggal mencocokkan kode client dan file yang distamping
-    // untuk mengirim file tersebut ke database
     
     update(){
         this.app.put("/hr/employee/:id", async (req, res) => {
