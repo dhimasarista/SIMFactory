@@ -22,11 +22,11 @@
               <div class="card">
                 <div class="card-body">
                   <div class="text-center">
-                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: top; " alt="User Image">
+                    <img src="#" id="photo-employee" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: center; " alt="User Image">
                     
                     <h4 style="margin-top: 10px;" id="name-employee"></h4>
                     <h6 id="id-employee"></h6>
-                    <p id="department-employee"></p>
+                    <p>Department: <span id="department-employee"></span></p>
                   </div>
                   <div class="card-body text-center">
                     <h4>Documents</h4>
@@ -326,7 +326,14 @@
          document.getElementById("major-employee").textContent = results.major;
          document.getElementById("work_experience-employee").textContent = results.work_experience;
          document.getElementById("skills-employee").textContent = results.skills;
-         document.getElementById("title-employee").textContent = results.title
+         document.getElementById("title-employee").textContent = results.title;
+
+         // Photo: arrayBufferToBase64() dari script.js
+         if (results.photo === null) {
+            document.getElementById("photo-employee").src = "../img/profile.jpg";
+         } else {
+            document.getElementById("photo-employee").src = `data:image/jpeg;base64,${arrayBufferToBase64(results.photo.data)}`
+         }
       });
    }
 

@@ -38,11 +38,9 @@ function arrayBufferToBase64(buffer) {
   }
   return btoa(binary);
 }
-          // const imageElement = document.getElementById('photo-profile');
-          // if (data.image == null) {
-          //     imageElement.src = "../images/profile.jpg";
-          // } else {
-          //     imageElement.src = `data:image/jpeg;base64,${arrayBufferToBase64(data.image.data)}`;
-          // }
 
-          
+// fetch("/hr/employee/2002")
+// .then(response => response.json())
+// .then(results => {
+//     console.log(results);
+//  });

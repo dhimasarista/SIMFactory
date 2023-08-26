@@ -43,7 +43,6 @@ class Employee {
             const query = `SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id WHERE employees.id = ?`;
             try {
                 const results = await queryAsync(query, [id]);
-                console.log(results[0]);
                 res.json(results[0]);
             } catch(error) {
                 errorHandling(res, error);
