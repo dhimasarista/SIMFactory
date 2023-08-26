@@ -24,7 +24,8 @@
                   <div class="text-center">
                     <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: top; " alt="User Image">
                     
-                    <h4 style="margin-top: 10px;">Nama Karyawan</h4>
+                    <h4 style="margin-top: 10px;" id="name-employee"></h4>
+                    <h6 id="id-employee"></h6>
                     <p>Departemen</p>
                   </div>
                   <div class="card-body text-center">
@@ -45,9 +46,9 @@
               <div class="card">
                 <div class="card-body">
                   <h4>Informasi Pribadi</h4>
-                  <p>Alamat: Alamat Karyawan</p>
-                  <p>Nomor Telepon: Nomor Telepon Karyawan</p>
-                  <p>Email: Email Karyawan</p>
+                  <p>Address: <span id="address-employee"></span></p>
+                  <p>No. Phone: <span id="nophone-employee"></span></p>
+                  <p>Email: <span id="email-employee"></span></p>
                   <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                 </div>
               </div>
@@ -116,7 +117,7 @@
                        <td style="width: 45%;"><%- data.name %></td>
                        <td style="width: 20%;"><%- data.department_name %></td>
                        <td style="display: flex; flex-wrap: wrap;  align-items: center; justify-content: center;">
-                          <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button" onclick="employeProfileButtons()">
+                          <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button" onclick="employeProfileButtons(parseInt(`<%- data.id %>`))">
                              <i>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                    <path fill="currentColor" d="M11 9c0 1.66-1.34 3-3 3s-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3m3 11H2v-2c0-2.21 2.69-4 6-4s6 1.79 6 4m8-6v2h-9v-2m9-4v2h-9V8m9-4v2h-9V4Z"/>
@@ -307,13 +308,21 @@
    });
 
    // 
-   const employeProfileButtons = () => {
+   const employeProfileButtons = (id) => {
       document.getElementById("list-employee").style.display = "none";
-      document.getElementById("employee-profile").style.display = "inline";
+      document.getElementById("employee-profile").style.display = "block";
+
+      fetch(`/hr/employee/${id}`)
+      .then(response =>  response.json())
+      .then(results => {
+         document.getElementById("name-employee").textContent = results.name;
+         document.getElementById("id-employee").textContent = results.id;
+         document.getElementById("address-employee").textContent = results.address;
+      });
    }
 
    const backButton = () => {
-      document.getElementById("list-employee").style.display = "inline";
+      document.getElementById("list-employee").style.display = "block";
       document.getElementById("employee-profile").style.display = "none";
    }
   

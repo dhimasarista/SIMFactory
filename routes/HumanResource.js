@@ -44,6 +44,7 @@ class Employee {
             try {
                 const result = await queryAsync(query, [id]);
                 res.json(result[0]);
+                console.log(result[0]);
             } catch(error) {
                 errorHandling(res, error);
             }
