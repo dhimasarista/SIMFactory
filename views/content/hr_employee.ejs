@@ -22,21 +22,21 @@
               <div class="card">
                 <div class="card-body">
                   <div class="text-center">
-                    <img src="#" id="photo-employee" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: center; " alt="User Image">
+                    <img src="../img/Loading_icon.gif" id="photo-employee" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: center; " alt="User Image">
                     
                     <h4 style="margin-top: 10px;" id="name-employee"></h4>
                     <h6 id="id-employee"></h6>
                     <p>Department: <span id="department-employee"></span></p>
                   </div>
                   <div class="card-body text-center">
-                    <h4>Documents</h4>
+                    <!-- <h4>Documents</h4> -->
                     <div class="text-left">
-                      <p>App Letter</p>
-                    <p>CV</p>
-                    <p>Portfolio</p>
-                    <p>Contract</p>
-                    <p>MCU</p>
-                    <p>Criminal History</p>
+                     <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
+                     <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
+                     <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
+                     <p><a href="#" id="contract-employee">Empl_Contract Not Found</a></p>
+                     <p>MCU: <span id="mcu-employee"></span></p>
+                     <p>Criminal History: <span id="crimhistory-employee"></span></p>
                     </div>
                   </div>
                 </div>
@@ -308,7 +308,7 @@
       }
    });
 
-   // 
+   // Detail Employee
    const employeProfileButtons = (id) => {
       document.getElementById("list-employee").style.display = "none";
       document.getElementById("employee-profile").style.display = "block";
@@ -334,10 +334,29 @@
          } else {
             document.getElementById("photo-employee").src = `data:image/jpeg;base64,${arrayBufferToBase64(results.photo.data)}`
          }
+
+         
+         let appLetterUrl= `data:application/pdf;base64,${arrayBufferToBase64(results.application_letter.data)}`;
+         document.getElementById("appletter-employee").href = appLetterUrl;
+         document.getElementById("appletter-employee").innerText = `${results.name}_AppLetter.pdf`;
+         document.getElementById("appletter-employee").download = `${results.name}_AppLetter.pdf`;
+
+         if (results.mcu === 1) {
+            document.getElementById('mcu-employee').textContent = "Yes";
+         } else {
+            document.getElementById('mcu-employee').textContent = "No";
+         }
+
+         if (results.criminal_history === 0) {
+            document.getElementById('crimhistory-employee').textContent = "Nothing";
+         } else {
+            document.getElementById('crimhistory-employee').textContent = "Any";
+         }
       });
    }
 
    const backButton = () => {
+      document.getElementById("photo-employee").src = "../img/Loading_icon.gif";
       document.getElementById("list-employee").style.display = "block";
       document.getElementById("employee-profile").style.display = "none";
    }
@@ -587,9 +606,9 @@
         document.getElementById("formTitle").value = data.title === null ? "" : data.title;
         document.getElementById("formWorkExperience").value = data.work_experience === null ? "" : data.work_experience;
         document.getElementById("formSkills").value = data.skills === null ? "" : data.skills;
-        document.getElementById("formApplicationLetter").value = data.application_letter ;
-        document.getElementById("formCV").value = data.CV;
-        document.getElementById("formPortfolio").value = data.portfolio;
+      //   document.getElementById("formApplicationLetter").value = data.application_letter ;
+      //   document.getElementById("formCV").value = data.CV;
+      //   document.getElementById("formPortfolio").value = data.portfolio;
         document.getElementById("formMCU").value = data.mcu === null ? "0" : data.mcu;
         document.getElementById("formCriminalHistory").value = data.criminal_history === null ? "0" : data.criminal_history;
         document.getElementById("formEmploymentContract").value = data.employment_contract;
@@ -620,25 +639,14 @@
   }
 
   const saveData = () => {
-      // const name = document.getElementById("name").value;
-      // const department = document.getElementById("departments").value;
-   
-      // if(name === ""){
-      //    Swal.fire("Empty", "Please fill in all the fields.", "info");
-      //    return;
-      // }
-      // if(department === 'Select First'){
-      //    Swal.fire("Empty", "Please choose the departments", "info");
-      //    return;
-      // }
       submitSwal("");
    }
 
 
    const saveEdit = (id) => {
       // Checking ketersedian file
-      const photoName = photo.value === "" ? undefined : photo.files[0]["name"];
-      const appLetterName = appLetter.value === "" ? undefined : appLetter.files[0]["name"];
+      const photoName = photo.files[0] == undefined ? undefined : photo.files[0]["name"];
+      const appLetterName = appLetter.files[0] === undefined ? undefined : appLetter.files[0]["name"];
 
       const editData = {
         name: name.value,
