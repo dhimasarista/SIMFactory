@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="id">
+   <head>
+      <%- include ("partials/head.ejs") %>
+   </head>
+   <body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+      <div class="wrapper">
+         <!-- Preloader -->
+         <!-- <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            </div> -->
+         <!-- Navbar -->
+         <%- include ("partials/navbar.ejs") %>
+         <!-- /.navbar -->
+         <!-- Main Sidebar Container -->
+         <%- include ("partials/sidebar.ejs") %>
+         <!-- Content Wrapper. Contains page content -->
+         <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <%- include ("partials/content-header.ejs") %>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+               <div class="container-fluid">
+                  <%- include ("content/material") %>
+               </div>
+               <!--/. container-fluid -->
+            </section>
+            <!-- /.content -->
+         </div>
+         <!-- Footer -->
+         <%- include ("partials/footer.ejs") %>
+         <!-- Control Sidebar -->
+         <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+         </aside>
+         <!-- /.control-sidebar -->
+      </div>
+   </body>
+</html>

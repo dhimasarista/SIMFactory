@@ -5,6 +5,7 @@ const { Administrator, Profile} = require("./Administrator");
 const Index = require("./Index");
 const { Errors500, Errors400 } = require("./Erros");
 const { Uploads } = require("./Uploads");
+const { Material } = require("./Warehouse");
 
 const setupRoutes = (app) => {
   new Index(app).get(); // Halaman Utama
@@ -16,6 +17,7 @@ const setupRoutes = (app) => {
   new Employee(app).update(); // Menghapus Employee
   new Department(app).getAndRender(); // Halaman Daftar Departments
   new Department(app).add(); // Menambahkan Department
+  new Material(app).render() //
   new Login(app).render(); // Halaman autentikasi
   new Login(app).post(); // Melakukan validasi
   new Logout(app).clearAndRedirect(); // Routing logout melalui path /logout

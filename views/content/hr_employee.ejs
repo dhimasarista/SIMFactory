@@ -308,6 +308,7 @@
    // Menampilkan data employee dalam bentuk tabel
    let table = new DataTable('#employee',{
       deferLoading: 10,
+      ordering: true,
       // Animasi jika file belum sepenuhnya dimuat
       initComplete: function(settings, json) {
          $('.loading-placeholder').remove(); // Menghilangkan animasi loading setelah tabel siap
