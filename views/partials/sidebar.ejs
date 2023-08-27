@@ -33,6 +33,38 @@
                         <p>Dashboard</p>
                      </a>
                   </li>
+                  <li class="nav-item menu-open">
+                     <a href="#" class="nav-link bg-default">
+                        <i class="nav-icon">
+                           <!-- Size 24 -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M5.12 5h13.75l-.94-1h-12l-.81 1m15.42.23c.29.34.46.77.46 1.27V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5c0-.5.17-.93.46-1.27l1.38-1.68C5.12 3.21 5.53 3 6 3h12c.47 0 .88.21 1.15.55l1.39 1.68M6 18h6v-3H6v3Z"/></svg>
+                        </i>
+                        <p>
+                           Monitoring
+                           <i class="right fas fa-angle-left"></i>
+                        </p>
+                     </a>
+                     <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                           <a href="#" class="nav-link">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Production</p>
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="/production/control" class="nav-link <%= path === '/production/control' ? 'bg-warning' : '' %>">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Materials</p>
+                           </a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="#" class="nav-link">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Schedules</p>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
                      <% if(user.department === 904 || user.department === 905){ %>
                         <li class="nav-item menu-open">
                            <a href="#" class="nav-link bg-default">

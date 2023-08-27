@@ -197,6 +197,13 @@
          <button type="button" class="btn btn-tool" data-card-widget="collapse">
          <i class="fas fa-minus"></i>
          </button>
+         <button type="button" class="btn btn-tool" data-widget="fullscreen">
+            <i class="fas fa-expand-arrows-alt"></i>
+            </button>
+         <!-- <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            </a>
+          </li> -->
          <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
             <i class="fas fa-times"></i>
             </button> -->
@@ -275,9 +282,11 @@
       <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Print</a>
    </div>
    <!-- /.card-footer -->
+   
 </div>
 
 <script>
+   
    $(function () {
   'use strict'
   var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
