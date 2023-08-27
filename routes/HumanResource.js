@@ -50,6 +50,10 @@ class Employee {
         })
     }
 
+    // Flow upload files
+    // file yang diupload langsung dikirim ke server
+    // sebelum form di submit.
+
     add(){
         this.app.post("/hr/employee", async (req, res) => {
             const { name, department_id } = req.body;
@@ -87,11 +91,6 @@ class Employee {
         })
     }
 
-    // Flow upload files
-    // file yang diupload langsung dikirim ke server
-    // sebelum form di submit.
-
-    
     update(){
         this.app.put("/hr/employee/:id", async (req, res) => {
             try {

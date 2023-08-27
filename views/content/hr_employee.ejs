@@ -11,6 +11,13 @@
             <h3 class="card-title">Employee Profile</h3>
             <span style="margin-left: auto;">
               <a href="#" class="mt-1 mr-1 badge badge-secondary" onclick="backButton()">
+               <script>
+                     const backButton = () => {
+                        document.getElementById("photo-employee").src = "../img/Loading_icon.gif";
+                        document.getElementById("list-employee").style.display = "block";
+                        document.getElementById("employee-profile").style.display = "none";
+                     }
+               </script>
                 <i>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 11l-4 4l4 4m-4-4h11a4 4 0 0 0 0-8h-1"/></svg>
                 </i>
@@ -47,8 +54,8 @@
                 <div class="card-body">
                   <h4>Informasi Pribadi</h4>
                   <p>Address: <span id="address-employee"></span></p>
-                  <p>No. Phone: <span id="nophone-employee"></span></p>
-                  <p>Email: <span id="email-employee"></span></p>
+                  <p>No. Phone: <a id="nophone-employee"></a></p>
+                  <p>Email: <a id="email-employee"></span></p>
                   <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                 </div>
               </div>
@@ -56,8 +63,8 @@
                 <div class="card-body">
                   <h4>Background</h4>
                   <p>Last Education: <span id="last_education-employee"></span></p>
-                  <p>Title: <span id="title-employee"></span></p>
                   <p>Major: <span id="major-employee"></span></p>
+                  <p>Title: <span id="title-employee"></span></p>
                   <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
                 </div>
               </div>
@@ -320,6 +327,7 @@
          document.getElementById("id-employee").textContent = results.id;
          document.getElementById("nophone-employee").textContent = results.number_phone;
          document.getElementById("email-employee").textContent = results.email;
+         document.getElementById("email-employee").href = `mailto:${results.email}`;
          document.getElementById("address-employee").textContent = results.address;
          document.getElementById("department-employee").textContent = results.department_name;
          document.getElementById("last_education-employee").textContent = results.last_education;
@@ -335,11 +343,17 @@
             document.getElementById("photo-employee").src = `data:image/jpeg;base64,${arrayBufferToBase64(results.photo.data)}`
          }
 
-         
+         // App Letter
          let appLetterUrl= `data:application/pdf;base64,${arrayBufferToBase64(results.application_letter.data)}`;
          document.getElementById("appletter-employee").href = appLetterUrl;
          document.getElementById("appletter-employee").innerText = `${results.name}_AppLetter.pdf`;
          document.getElementById("appletter-employee").download = `${results.name}_AppLetter.pdf`;
+
+         // CV
+         // let CVUrl = `data:application/pdf;base64,${arrayBufferToBase64(results.CV.data)}`;
+         document.getElementById("cv-employee").href = CVUrl;
+         document.getElementById("cv-employee").innerText = `${results.name}_CV.pdf`;
+         document.getElementById("cv-employee").download = `${results.name}_CV.pdf`;
 
          if (results.mcu === 1) {
             document.getElementById('mcu-employee').textContent = "Yes";
@@ -353,12 +367,6 @@
             document.getElementById('crimhistory-employee').textContent = "Any";
          }
       });
-   }
-
-   const backButton = () => {
-      document.getElementById("photo-employee").src = "../img/Loading_icon.gif";
-      document.getElementById("list-employee").style.display = "block";
-      document.getElementById("employee-profile").style.display = "none";
    }
   
    // Buttons
