@@ -4,6 +4,7 @@ const queryAsync = promisify(pool.query).bind(pool);
 const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
 const errorHandling = require('../utils/errorHandling');
+const fs = require("fs");
 
 const employee = {
     renderPage: async (req, res) => {

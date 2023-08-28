@@ -10,23 +10,20 @@ const { Material } = require("./Warehouse");
 const setupRoutes = (app) => {
   new Index(app).index(); // Halaman Utama
   new ProductionControl(app).getAndRender(); // Halaman production/control
+
+  // Done
   new Employee(app).setupEmployeeRoutes(); 
   new Department(app).setupDepartmentRoutes();
-  new Material(app).render() //
-  new Login(app).render(); // Halaman autentikasi
-  new Login(app).post(); // Melakukan validasi
+  new Administrator(app).setupAdministratorRoutes(); 
+  new User(app).setupUserRoutes();
+  new Login(app).setupLoginRoutes();
   new Logout(app).clearAndRedirect(); // Routing logout melalui path /logout
-  new Administrator(app).getAndRender(); // Halaman Administrator
-  new Administrator(app).searchEmployeeById(); // Mencari employee dengan id
-  new Administrator(app).getEmployeeById(); // Kemudian menampilkan hasil pencarian
-  new Administrator(app).addUser(); // Jika ada, Tambahkan sebagai user
-  new Administrator(app).editUser(); // Update User berupa username dan password
-  new Administrator(app).deleteUser(); // Menghapus user
-  new User(app).renderUserProfile(); // Halaman profile user
-  new User(app).updateUser(); // Memperbarui data user
+  
   new Errors500(app).error500(); // Error dibagian internal server
   new Errors400(app).error404(); // Error ketika dia yang kamu cari tidak ada
-
+  
+  new Material(app).render();
+  
   new Uploads(app).uploadImage();
   new Uploads(app).deleteImage();
   new Uploads(app).uploadPdf();

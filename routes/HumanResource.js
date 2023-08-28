@@ -26,7 +26,6 @@ class Employee {
     }
 }
 class Department{
-
     constructor(app){
         this.app = app;
     }
