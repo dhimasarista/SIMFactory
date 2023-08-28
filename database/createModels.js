@@ -6,6 +6,9 @@ const { magenta, qm, symbol } = require("../utils/logging");
 
 const { promisify } = require('util');
 const pool = require("../configs/database");
+const models = require("../models/models");
+const materials = require("../models/materials");
+const modelsMaterials = require("../models/modelsMaterials");
 const queryAsync = promisify(pool.query).bind(pool);
 
 // Memanggil semua fungsi untuk membuat tables 
@@ -16,6 +19,9 @@ const queryAsync = promisify(pool.query).bind(pool);
     await department(queryAsync);
     await employees(queryAsync);
     await users(queryAsync);
+    await models(queryAsync);
+    await materials(queryAsync);
+    await modelsMaterials(queryAsync);
 
     // Menampilkan pesan secara implisit
     console.log(magenta, `${symbol} Checking tables finished`);

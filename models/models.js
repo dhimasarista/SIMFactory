@@ -1,16 +1,17 @@
 const { red, qm, symbol, green } = require("../utils/logging");
 
-const materials = async (queryAsync) => {
+const models = async (queryAsync) => {
     try {
-        const materialsTable = await queryAsync(
-            `CREATE TABLE IF NOT EXISTS materials(
+        const modelsTable = await queryAsync(
+            `CREATE TABLE IF NOT EXISTS models(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 created_at TIMESTAMP
             )`
         );
-        const result = (materialsTable !== 0) ? "Already Exist" : "Created";
-        console.log(green, `${symbol} Materials Table: ${result}`);
+
+        const result = (modelsTable !== 0) ? "Already Exist" : "Created";
+        console.log(green, `${symbol} Models Table: ${result}`);
     } catch (error) {
         // Terminasi Program dan Keluar
         console.log(red, `${qm} Error creating employees table: `, error);
@@ -18,4 +19,4 @@ const materials = async (queryAsync) => {
     }
 }
 
-module.exports = materials;
+module.exports = models;
