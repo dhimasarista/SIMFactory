@@ -1,14 +1,14 @@
 const { ProductionControl } = require("./Production");
 const { Employee, Department } = require("./HumanResource");
 const { Login, Logout } = require("./Authentication");
-const { Administrator, Profile} = require("./Administrator");
+const { Administrator, User} = require("./Administrator");
 const Index = require("./Index");
 const { Errors500, Errors400 } = require("./Erros");
 const { Uploads } = require("./Uploads");
 const { Material } = require("./Warehouse");
 
 const setupRoutes = (app) => {
-  new Index(app).get(); // Halaman Utama
+  new Index(app).index(); // Halaman Utama
   new ProductionControl(app).getAndRender(); // Halaman production/control
   new Employee(app).getAndRender(); // Halaman Daftar Employees
   new Employee(app).getById(); // Mengambil Data Employee berdasarkan ID
@@ -27,8 +27,8 @@ const setupRoutes = (app) => {
   new Administrator(app).addUser(); // Jika ada, Tambahkan sebagai user
   new Administrator(app).editUser(); // Update User berupa username dan password
   new Administrator(app).deleteUser(); // Menghapus user
-  new Profile(app).getAndRender(); // Halaman profile user
-  new Profile(app).updateUser(); // Memperbarui data user
+  new User(app).renderUserProfile(); // Halaman profile user
+  new User(app).updateUser(); // Memperbarui data user
   new Errors500(app).error500(); // Error dibagian internal server
   new Errors400(app).error404(); // Error ketika dia yang kamu cari tidak ada
 

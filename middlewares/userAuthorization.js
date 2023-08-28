@@ -44,6 +44,9 @@ const userAuthorization = (app) => {
           
           // Redirect users ke path yang diizinkan
           if (user) {
+            if (user.department === null && currentPath.startsWith("/user")) {
+              return res.redirect("/");
+            }
             if (isProduction && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse"))) {
               return res.redirect("/");
             }

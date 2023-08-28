@@ -121,13 +121,13 @@ class Administrator{
     }
 }
 
-class Profile{
+class User{
     constructor(app){
         this.app = app;
     }
 
-    getAndRender(){
-        this.app.get("/employee/profile/", async (req, res) => {
+    renderUserProfile(){
+        this.app.get("/user/profile/", async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
             const id = user.id;
@@ -147,7 +147,7 @@ class Profile{
     }
 
     updateUser() {
-        this.app.put("/employee/profile/:id", async (req, res) => {
+        this.app.put("/user/profile/:id", async (req, res) => {
             const id = parseInt(req.params.id);
             const username = req.body.username;
             const password = req.body.password;
@@ -179,5 +179,5 @@ class Profile{
 
 module.exports = {
     Administrator,
-    Profile
+    User
 };
