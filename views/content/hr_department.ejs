@@ -173,7 +173,7 @@
         })
         .then(results => {
             if (results.isConfirmed) {
-                Swal.fire('Its Prank! Hahahaha, it will not deleted.')
+               toastr["error"]("Internal Server Error", "Error")
             }
         })
     }

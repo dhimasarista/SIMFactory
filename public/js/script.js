@@ -44,3 +44,90 @@ function arrayBufferToBase64(buffer) {
 // .then(results => {
 //     console.log(results);
 //  });
+
+// toastr.options = {
+//   "closeButton": false,
+//   "debug": false,
+//   "newestOnTop": false,
+//   "progressBar": false,
+//   "positionClass": "toast-top-right",
+//   "preventDuplicates": false,
+//   "onclick": null,
+//   "showDuration": "300",
+//   "hideDuration": "1000",
+//   "timeOut": "5000",
+//   "extendedTimeOut": "1000",
+//   "showEasing": "swing",
+//   "hideEasing": "linear",
+//   "showMethod": "fadeIn",
+//   "hideMethod": "fadeOut"
+// }
+
+// Membuat 
+const inactivityDuration = 2000; // 1 Menit (dalam milidetik) 60000
+const logoutDuration = 10000; // 10 Menit (dalam milidetik)600000
+
+const showToast = () => {
+  toastr.warning("Your session will expire soon due to inactivity.", "Attention");
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "20000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+}
+const showLogoutAlert = () => {
+  Swal.fire({
+    title: "You're logged off",
+    text: "Please login again.",
+    icon: "warning",
+    confirmButtonText: "OK",
+  }).then((result) => {
+    logout();
+  });
+}
+
+const logout = () => {
+  window.location.href = "/logout";
+}
+
+
+// Jika user tidak aktif
+// Tampilkan toastr
+
+// Jika user aktif kembali
+// Reset timeout
+function resetInactivity() {
+  let inactivityTimeout;
+  clearTimeout(inactivityTimeout);
+
+  setTimeout(() => {
+    showToast();
+    resetLogout();
+  }, inactivityDuration); // 1 Menit (dalam milidetik) 60000
+} resetInactivity();
+
+function resetLogout() {
+  let logoutTimeout;
+  clearTimeout(logoutTimeout);
+  setTimeout(() => {
+    showLogoutAlert();
+  }, logoutDuration); // 10 Menit (dalam milidetik) 600000
+
+}
+document.addEventListener("mousemove", resetInactivity);
+document.addEventListener("keydown", resetInactivity);
+
+
+
