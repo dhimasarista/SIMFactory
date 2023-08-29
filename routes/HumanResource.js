@@ -1,10 +1,3 @@
-const { promisify } = require('util');
-const { green, symbol, red } = require('../utils/logging');
-const pool = require("../configs/database");
-const queryAsync = promisify(pool.query).bind(pool);
-
-const errorHandling = require('../utils/errorHandling');
-
 const employee = require('../controllers/employee');
 const department = require('../controllers/department');
 

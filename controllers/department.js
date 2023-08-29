@@ -1,10 +1,9 @@
 const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
-const batchingData = require("../utils/batchingData");
-const getDataEmployee = require('../models/query/getDataEmployee');
 const errorHandling = require('../utils/errorHandling');
-const fs = require("fs");
+const { green, symbol } = require('../utils/logging');
+
 
 const department = {
     render: async (req, res) => {
