@@ -43,9 +43,10 @@ if (cluster.isMaster) {
   app.use(cors({
     "origin": "*",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "allowedHeaders": ['Content-Type', 'text/event-stream']
+    "allowedHeaders": ['Content-Type', 'Authorization']
   }));
 
+  metrics(app);
   app.use(compression()); // Kompresi HTTP Resources yang dikirimkan ke klien
   sessionSetup(app); // Session
   // app.use(flash());
@@ -57,7 +58,6 @@ if (cluster.isMaster) {
   app.use(cookieParser()); // Menggunakan cookie-parser
   // app.use(cacheMiddleware); // Caching secara global
   userAuthorization(app);
-  metrics(app);
 
   // Routes
   setupRoutes(app);

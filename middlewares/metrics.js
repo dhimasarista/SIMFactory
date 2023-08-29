@@ -9,6 +9,7 @@ const metrics = (app) => {
         res.on('finish', () => {
             const endTime = new Date().getTime();
             executionTime = endTime - startTime;
+            req.executionTime = executionTime;
         });
 
         // Continue to the next middleware or the main handler
@@ -20,7 +21,7 @@ const metrics = (app) => {
         const memory = process.memoryUsage().heapUsed / (1024 * 1024); // Convert to megabytes
         const formattedMemoryUsage = memory.toFixed(1);
         memoryUsage = formattedMemoryUsage;
-
+        req.memoryUsage = memoryUsage;
         next();
     });
 
@@ -36,9 +37,9 @@ const metrics = (app) => {
         }
 
         // Send execution time log to the client
-        sendLogMessage(`Execution time: ${executionTime || 'N/A'} ms`);
+        sendLogMessage(`${executionTime || 'N/A'} ms/`);
         // Send memory usage log to the client
-        sendLogMessage(`Memory usage: ${memoryUsage || 'N/A'} MB`);
+        sendLogMessage(`${memoryUsage || 'N/A'} MB`);
     });
 }
 

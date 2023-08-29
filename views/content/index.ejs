@@ -303,14 +303,14 @@
    // fetch("/metrics")
    // .then(response => response.json())
    // .then(results => {
-   //    document.getElementById('metrics').innerHTML = `${results.memory} MB`
+   //    document.getElementById('metrics').innerHTML = `${results.memory}`
    // });
    
    const eventSource = new EventSource('/metrics');
    const metrics = document.getElementById('metrics');
    metrics.innerHTML = '';
    eventSource.onmessage = function(event) {
-       const metricsItem = document.createElement('li');
+       const metricsItem = document.createElement('span');
        metricsItem.textContent = event.data;
        metrics.appendChild(metricsItem);
    }
