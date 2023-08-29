@@ -12,6 +12,8 @@ const dhim = require("./utils/dhim");
 const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
+const metrics = require('./middlewares/metrics');
+const cors = require("cors");
 
 // Cluster Module
 const cluster = require("cluster");
@@ -38,6 +40,12 @@ if (cluster.isMaster) {
   console.log(magenta, `${qm} Starting ${numCPUs} workers...`);
 
   // Middlewares
+  app.use(cors({
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "allowedHeaders": ['Content-Type', 'text/event-stream']
+  }));
+
   app.use(compression()); // Kompresi HTTP Resources yang dikirimkan ke klien
   sessionSetup(app); // Session
   // app.use(flash());
@@ -49,6 +57,7 @@ if (cluster.isMaster) {
   app.use(cookieParser()); // Menggunakan cookie-parser
   // app.use(cacheMiddleware); // Caching secara global
   userAuthorization(app);
+  metrics(app);
 
   // Routes
   setupRoutes(app);

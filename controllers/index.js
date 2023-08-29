@@ -4,7 +4,7 @@ const queryAsync = promisify(pool.query).bind(pool);;
 const errorHandling = require('../utils/errorHandling');
 
 module.exports = {
-    get: async (req, res) => {
+    render: async (req, res) => {
         // Mengambil user dari cookie
         const user = req.cookies.user;
         const path = req.path;

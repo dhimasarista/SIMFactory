@@ -22,8 +22,11 @@ const promisePool = pool.promise();
 class Login{
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
     }
-    setupLoginRoutes(){
+
+    setupRoutes(){
         this.app.route("/login")
         .get((req,res) => {
             // Merender views: login.ejs untuk path /login
@@ -109,6 +112,8 @@ class Login{
 class Logout{
     constructor(app){
         this.app = app;
+
+        this.clearAndRedirect();
     }
 
     // Method Logout: Menghapus cookie user dan mengalihkan ke /login

@@ -1,12 +1,16 @@
-const { get } = require("../controllers/index");
+const { render } = require("../controllers/index");
 
 class Index{
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
+        // this.setupMiddlewares();
     }
     // Method halaman utama
-    index(){
-        this.app.get("/", get);
+    setupRoutes(){
+        this.app.get("/", render);
+
     }
 }
 

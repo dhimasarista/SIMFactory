@@ -48,15 +48,12 @@
    <div class="clearfix hidden-md-up"></div>
    <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
-         <span class="info-box-icon bg-success elevation-1">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-               <path fill="white" d="M11 6h3l3.29-3.3a1 1 0 0 1 1.42 0l2.58 2.59a1 1 0 0 1 0 1.41L19 9h-8v2a1 1 0 0 1-1 1a1 1 0 0 1-1-1V8a2 2 0 0 1 2-2m-6 5v4l-2.29 2.29a1 1 0 0 0 0 1.41l2.58 2.59a1 1 0 0 0 1.42 0L11 17h4a1 1 0 0 0 1-1v-1h1a1 1 0 0 0 1-1v-1h1a1 1 0 0 0 1-1v-1h-7v1a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9Z"/>
-            </svg>
-         </span>
+         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
          <div class="info-box-content">
-            <span class="info-box-text">Partners</span>
-            <span class="info-box-number">12</span>
+            <span class="info-box-text">Employee</span>
+            <span class="info-box-number"><%= totalEmployees %></span>
          </div>
+         
          <!-- /.info-box-content -->
       </div>
       <!-- /.info-box -->
@@ -64,10 +61,12 @@
    <!-- /.col -->
    <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
-         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+         <span class="info-box-icon bg-warning elevation-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512"><path fill="currentColor" d="M480 160H32c-17.673 0-32-14.327-32-32V64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24s24-10.745 24-24s-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24s24-10.745 24-24s-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24s24-10.745 24-24s-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24s24-10.745 24-24s-10.745-24-24-24zm112 248H32c-17.673 0-32-14.327-32-32v-64c0-17.673 14.327-32 32-32h448c17.673 0 32 14.327 32 32v64c0 17.673-14.327 32-32 32zm-48-88c-13.255 0-24 10.745-24 24s10.745 24 24 24s24-10.745 24-24s-10.745-24-24-24zm-64 0c-13.255 0-24 10.745-24 24s10.745 24 24 24s24-10.745 24-24s-10.745-24-24-24z"/></svg>
+         </span>
          <div class="info-box-content">
-            <span class="info-box-text">Employee</span>
-            <span class="info-box-number"><%= totalEmployees %></span>
+            <span class="info-box-text">Server</span>
+            <span class="info-box-number" id="metrics"></span>
          </div>
          <!-- /.info-box-content -->
       </div>
@@ -299,9 +298,24 @@
 </div>
 
 <script>
+   'use strict'
+
+   // fetch("/metrics")
+   // .then(response => response.json())
+   // .then(results => {
+   //    document.getElementById('metrics').innerHTML = `${results.memory} MB`
+   // });
+   
+   const eventSource = new EventSource('/metrics');
+   const metrics = document.getElementById('metrics');
+   metrics.innerHTML = '';
+   eventSource.onmessage = function(event) {
+       const metricsItem = document.createElement('li');
+       metricsItem.textContent = event.data;
+       metrics.appendChild(metricsItem);
+   }
    
    $(function () {
-  'use strict'
   var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
 
   var salesChartData = {

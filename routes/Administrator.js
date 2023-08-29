@@ -1,18 +1,15 @@
-const { promisify } = require('util');
-const pool = require("../configs/database");
-const queryAsync = promisify(pool.query).bind(pool);
-const bcrypt = require('bcrypt');
-const errorHandling = require('../utils/errorHandling');
-
+// Routing Handler
 const administrator = require('../controllers/administrator');
 const user = require('../controllers/user');
 
 class Administrator{
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
     }
     
-    setupAdministratorRoutes(){
+    setupRoutes(){
         // Grouping Routes
         this.app.route("/administrator")
         .get(administrator.render)
@@ -34,9 +31,11 @@ class Administrator{
 class User{
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
     }
 
-    setupUserRoutes(){
+    setupRoutes(){
         this.app.get("/user/profile/", user.render);
         this.app.put("/user/profile/:id", user.updateUser);
     }    

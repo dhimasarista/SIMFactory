@@ -11,10 +11,12 @@ const department = require('../controllers/department');
 class Employee {
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
     }
 
     // Routing grup
-    setupEmployeeRoutes(){
+    setupRoutes(){
         this.app.route("/hr/employee")
         .get(employee.renderPage) // Halaman Employee
         .post(employee.addEmployee); // Menambahkan Karyawan Baru
@@ -28,9 +30,11 @@ class Employee {
 class Department{
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
     }
 
-    setupDepartmentRoutes(){
+    setupRoutes(){
         this.app.route("/hr/department")
         .get(department.render)
         .post(department.addDepartment)
