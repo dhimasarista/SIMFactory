@@ -63,30 +63,13 @@ function arrayBufferToBase64(buffer) {
 //   "hideMethod": "fadeOut"
 // }
 
-// Membuat 
-const inactivityDuration = 2000; // 1 Menit (dalam milidetik) 60000
+
+// // Membuat 
+let inactivityTimeout;
+let logoutTimeout;
+const inactivityDuration = 60000; // 1 Menit (dalam milidetik) 60000
 const logoutDuration = 10000; // 10 Menit (dalam milidetik)600000
 
-const showToast = () => {
-  toastr.warning("Your session will expire soon due to inactivity.", "Attention");
-  toastr.options = {
-    "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "20000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-  }
-}
 const showLogoutAlert = () => {
   Swal.fire({
     title: "You're logged off",
@@ -96,38 +79,56 @@ const showLogoutAlert = () => {
   }).then((result) => {
     logout();
   });
+};
+
+const showToast = () => {
+  toastr.warning("Your session will expire soon due to inactivity.", "Attention");
+  toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
 }
 
-const logout = () => {
-  window.location.href = "/logout";
-}
-
-
-// Jika user tidak aktif
-// Tampilkan toastr
-
-// Jika user aktif kembali
-// Reset timeout
 function resetInactivity() {
-  let inactivityTimeout;
   clearTimeout(inactivityTimeout);
 
-  setTimeout(() => {
+  inactivityTimeout = setTimeout(() => {
     showToast();
-    resetLogout();
-  }, inactivityDuration); // 1 Menit (dalam milidetik) 60000
-} resetInactivity();
-
-function resetLogout() {
-  let logoutTimeout;
-  clearTimeout(logoutTimeout);
-  setTimeout(() => {
-    showLogoutAlert();
-  }, logoutDuration); // 10 Menit (dalam milidetik) 600000
-
+  }, inactivityDuration);
 }
+
+// Mendeteksi Mouse dan Keyboard
 document.addEventListener("mousemove", resetInactivity);
 document.addEventListener("keydown", resetInactivity);
+resetInactivity();
+
+// const logout = () => {
+//   window.location.href = "/logout";
+// };
 
 
 
+// function resetLogout() {
+//   clearTimeout(logoutTimeout);
+
+//   logoutTimeout = setTimeout(() => {
+//     showLogoutAlert();
+//   }, logoutDuration);
+// }
+
+
+// // Mengatur timeout pertama kali saat halaman dimuat
+// resetInactivity();
