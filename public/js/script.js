@@ -67,8 +67,8 @@ function arrayBufferToBase64(buffer) {
 // // Membuat 
 let inactivityTimeout;
 let logoutTimeout;
-const inactivityDuration = 60000; // 1 Menit (dalam milidetik) 60000
-const logoutDuration = 10000; // 10 Menit (dalam milidetik)600000
+const inactivityDuration = 1200000 ; // 1 Menit (dalam milidetik) 60000
+const logoutDuration = 1800000 ; // 10 Menit (dalam milidetik) 600000
 
 const showLogoutAlert = () => {
   Swal.fire({
@@ -104,10 +104,28 @@ const showToast = () => {
 
 function resetInactivity() {
   clearTimeout(inactivityTimeout);
+  clearTimeout(logoutTimeout); // Hapus juga timeout logout sebelumnya jika ada
 
   inactivityTimeout = setTimeout(() => {
     showToast();
+    logoutTimeout = setTimeout(() => {
+      showLogoutAlert();
+    }, logoutDuration);
   }, inactivityDuration);
+}
+
+function resetLogout() {
+  clearTimeout(logoutTimeout);
+
+  logoutTimeout = setTimeout(() => {
+    fetch("/logout");
+    showLogoutAlert();
+  }, logoutDuration);
+}
+
+function logout() {
+  // Implement your logout logic here
+  window.location.href = "/logout";
 }
 
 // Mendeteksi Mouse dan Keyboard
@@ -115,23 +133,9 @@ document.addEventListener("mousemove", resetInactivity);
 document.addEventListener("keydown", resetInactivity);
 resetInactivity();
 
-// const logout = () => {
-//   window.location.href = "/logout";
-// };
+// Mengatur timeout pertama kali saat halaman dimuat
+resetLogout();
 
-
-
-// function resetLogout() {
-//   clearTimeout(logoutTimeout);
-
-//   logoutTimeout = setTimeout(() => {
-//     showLogoutAlert();
-//   }, logoutDuration);
-// }
-
-
-// // Mengatur timeout pertama kali saat halaman dimuat
-// resetInactivity();
 
 
 const socket = io();
