@@ -697,10 +697,19 @@
          newButton.style.display = "inline";
       
          // Menghilangkan form employee & button employee
-         employeeForm.style.display = 'none';
-         employeeButton.style.display = "none";
-         toastr["success"](`Data Employee ${id} Updated`, "Success");
-         location.reload();
+         Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Yes, Update it!"
+         }).then((result) => {
+            if (result.isConfirmed) {
+               location.reload()
+            }
+         })
       })
       .catch((error) => {
          console.log(error);

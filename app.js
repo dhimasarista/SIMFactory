@@ -27,7 +27,7 @@ const server = http.createServer(app); // Create HTTP server
 dotenv.config(); // Load variabel environment dari file .env
 
 // Menggunakan Socket 
-setupSocketIO(server);
+// setupSocketIO(server);
 
 if (cluster.isMaster) {
   // Fork workers setiap CPU core
