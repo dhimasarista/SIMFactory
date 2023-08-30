@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Socket</title>
+</head>
+<body>
+    <h1>Employee Names</h1>
+    <ul>
+        <% employees.forEach((employee) => { %>
+            <li><%- employee.name %></li>
+        <% }); %>
+    </ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('employeesData', (employees) => {
+            const employeeList = document.querySelector('ul');
+            employeeList.innerHTML = '';
+
+            employees.forEach((employee) => {
+                const li = document.createElement('li');
+                li.textContent = employee.name;
+                employeeList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>

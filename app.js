@@ -14,7 +14,6 @@ const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
 const metrics = require('./middlewares/metrics');
 const cors = require("cors");
-const { Server } = require("socket.io");
 const http = require('http'); // Import http module
 
 // Cluster Module
@@ -25,7 +24,7 @@ const numCPUs = require("os").cpus().length;
 const app = express(); // Inisialisasi Aplikasi Express
 const server = http.createServer(app); // Create HTTP server
 dotenv.config(); // Load variabel environment dari file .env
-const io = new Server(server);
+
 
 if (cluster.isMaster) {
   // Fork workers setiap CPU core
@@ -64,7 +63,7 @@ if (cluster.isMaster) {
   userAuthorization(app);
 
   // Routes
-  setupRoutes(app, io);
+  setupRoutes(app);
 
   // Middleware untuk menangani error
   unMatchedRoutes(app); // 404

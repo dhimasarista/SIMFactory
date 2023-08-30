@@ -1,22 +1,9 @@
-const socketMiddleware = (io) => {
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
 
-  io.on('connection', (socket) => {
-    console.log('A user connected');
+const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
 
-    // Mengirim pesan saat klien terhubung
-    socket.emit('message', 'Welcome to the server!');
-
-    // Menerima pesan dari klien
-    socket.on('chatMessage', (message) => {
-      console.log('Received chat message:', message);
-      // Broadcast pesan kepada semua klien
-      io.emit('chatMessage', message);
-    });
-
-    socket.on('disconnect', () => {
-      console.log('A user disconnected');
-    });
-  });
-};
-
-module.exports = socketMiddleware;
+module.exports = io;

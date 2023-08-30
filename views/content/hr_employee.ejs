@@ -123,9 +123,9 @@
                         <th style="width: 20%;">Actions</th>
                      </tr>
                   </thead>
-                  <tbody id="employee-data">
+                  <tbody>
                      <% employees.forEach((data) => { %>
-                     <tr>
+                     <tr id="employee-data">
                         <td style="text-align: center; width: 15%;"><%- data.id %></td>
                         <td style="width: 45%;"><%- data.name %></td>
                         <td style="width: 20%;"><%- data.department_name %></td>
@@ -322,11 +322,15 @@
    });
 
    const socket = io();
-   socket.on('data_update', (updateData) => {
-    // Update tampilan atau lakukan hal lain sesuai dengan perubahan data
-    console.log('Received data update:', updateData);
-    // Contoh: render ulang tabel atau elemen lainnya dengan data yang baru
-    });
+
+   socket.on('employeesData', (employees) => {
+      const employeeList = document.getElementById('employee-data');
+      employeeList.innerHTML = '';
+
+      employees.forEach((employee) => {
+         
+      });
+   });
    
    // Detail Employee
    const employeProfileButtons = (id) => {

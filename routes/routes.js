@@ -6,10 +6,11 @@ const Index = require("./Index");
 const Errors = require("./Erros");
 const Uploads= require("./Uploads");
 const { Material } = require("./Warehouse");
+const Testing = require("./Testing");
 
-const setupRoutes = (app, io) => {
+const setupRoutes = (app) => {
   new Index(app);
-  new Employee(app, io); 
+  new Employee(app  ); 
   new Department(app);
   new Production(app);
   new Administrator(app); 
@@ -19,6 +20,9 @@ const setupRoutes = (app, io) => {
   new Errors(app);
   new Material(app).render();
   new Uploads(app);
+
+  // Testing
+  new Testing(app);
 };
 
 module.exports = setupRoutes;

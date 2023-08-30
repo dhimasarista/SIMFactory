@@ -5,6 +5,7 @@ const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
 const errorHandling = require('../utils/errorHandling');
 const fs = require("fs");
+const io = require('../middlewares/socketio');
 
 const employee = {
     renderPage: async (req, res) => {
@@ -19,9 +20,10 @@ const employee = {
                 queryAsync: queryAsync,
                 query: employeesQuery
             });
-            // Mengirim data ke klien melalui socket.io
-            const updateData = { type: 'data_update', data: employees };
-            this.io.emit('data_update', updateData);
+
+            io.on('connection', (socket) => {
+                socket.emit('employeesData', employees);
+            });
             
             // Fetching departments untuk form new-employee
             const departments = await queryAsync("SELECT * FROM departments");

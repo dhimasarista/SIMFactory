@@ -4,13 +4,14 @@ const department = require('../controllers/department');
 class Employee {
     constructor(app, io){
         this.app = app;
-        this.io = io;
 
         this.setupRoutes();
     }
 
     // Routing grup
     setupRoutes(){
+    const server = require('http').Server(this.app); // Pastikan app adalah instansi Express Anda
+    const io = require('socket.io')(server);
       this.app.route("/hr/employee")
         .get(employee.renderPage) // Halaman Employee
         .post(employee.addEmployee); // Menambahkan Karyawan Baru
