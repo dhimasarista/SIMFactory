@@ -9,12 +9,12 @@ class Production{
 
     prodControlRoutes(){
         this.app.get("/production/control",(req, res) => {
+            // Mengambil user dari cookie
+            const user = req.cookies.user;
+            const path = req.path;
             try {
-                // Mengambil user dari cookie
-                const user = req.cookies.user;
-                const path = req.path;
 
-                throw new Error("Internal Server Error");
+                throw new Error("Halaman Belum dibuat dude");
                 
                 // Rendering views: prod_control.ejs
                 res.render("prod_control", {
@@ -22,7 +22,7 @@ class Production{
                     user: user
                 });
             } catch (error) {
-                errorHandling(res,error);
+                errorHandling(res, user, path, error);
             }
         });
     }

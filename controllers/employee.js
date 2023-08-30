@@ -19,12 +19,15 @@ const employee = {
                 queryAsync: queryAsync,
                 query: employeesQuery
             });
+            // Mengirim data ke klien melalui socket.io
+            const updateData = { type: 'data_update', data: employees };
+            this.io.emit('data_update', updateData);
             
             // Fetching departments untuk form new-employee
             const departments = await queryAsync("SELECT * FROM departments");
             res.render("hr_employee", {user, path, employees, departments});
         } catch(error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     addEmployee: async (req, res) => {
@@ -43,7 +46,7 @@ const employee = {
             res.status(200).send(results);
             console.log(green, `${symbol} Employee: ${name} Succesfully Added`);
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     getById: async (req, res) => {
@@ -54,7 +57,7 @@ const employee = {
             const results = await queryAsync(query, [id]);
             res.json(results[0]);
         } catch(error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     deleteById: async (req, res) => {
@@ -66,7 +69,7 @@ const employee = {
             res.status(200).send(results);
             console.log(green, `${symbol} Employee: ${idToDelete} Succesfully Deleted`);
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     updateEmploye: async (req, res) => {
@@ -127,7 +130,7 @@ const employee = {
         const results = await queryAsync(queryUpdateEmployee, [data, idToUpdate]);
         res.status(200).send(results);
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     }
 }

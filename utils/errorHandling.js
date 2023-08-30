@@ -1,8 +1,7 @@
 const { red, qm } = require('../utils/logging');
-const errorHandling = (res, error) => {
+const errorHandling = (res, user, path, error) => {
     console.log(red, `${qm} Error: `, error);
-    const errorMessage = encodeURIComponent(error.message);
-    res.redirect(`/error/500?message=${errorMessage}`); // Mengalihkan Ke Halaman Error 500
+    res.render("500", {user, path, errors: [error]});
 }
 
 module.exports = errorHandling;

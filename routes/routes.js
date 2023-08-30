@@ -7,9 +7,9 @@ const Errors = require("./Erros");
 const Uploads= require("./Uploads");
 const { Material } = require("./Warehouse");
 
-const setupRoutes = (app) => {
+const setupRoutes = (app, io) => {
   new Index(app);
-  new Employee(app); 
+  new Employee(app, io); 
   new Department(app);
   new Production(app);
   new Administrator(app); 

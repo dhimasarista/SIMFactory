@@ -2,15 +2,16 @@ const employee = require('../controllers/employee');
 const department = require('../controllers/department');
 
 class Employee {
-    constructor(app){
+    constructor(app, io){
         this.app = app;
+        this.io = io;
 
         this.setupRoutes();
     }
 
     // Routing grup
     setupRoutes(){
-        this.app.route("/hr/employee")
+      this.app.route("/hr/employee")
         .get(employee.renderPage) // Halaman Employee
         .post(employee.addEmployee); // Menambahkan Karyawan Baru
 
