@@ -62,27 +62,12 @@ function arrayBufferToBase64(buffer) {
 //   "showMethod": "fadeIn",
 //   "hideMethod": "fadeOut"
 // }
-
-
-// // Membuat 
-let inactivityTimeout;
-let logoutTimeout;
-const inactivityDuration = 1200000 ; // 1 Menit (dalam milidetik) 60000
-const logoutDuration = 1800000 ; // 10 Menit (dalam milidetik) 600000
-
-const showLogoutAlert = () => {
-  Swal.fire({
-    title: "You're logged off",
-    text: "Please login again.",
-    icon: "warning",
-    confirmButtonText: "OK",
-  }).then((result) => {
-    logout();
-  });
-};
+const inactivityCheck = () => {
+  let inactivityTimeout;
+const inactivityDuration = 60000; // 1 Menit (dalam milidetik)
 
 const showToast = () => {
-  toastr.warning("Your session will expire soon due to inactivity.", "Attention");
+  toastr.warning("It seems inactivity.", "Attention");
   toastr.options = {
     "closeButton": true,
     "debug": false,
@@ -104,38 +89,13 @@ const showToast = () => {
 
 function resetInactivity() {
   clearTimeout(inactivityTimeout);
-  clearTimeout(logoutTimeout); // Hapus juga timeout logout sebelumnya jika ada
 
   inactivityTimeout = setTimeout(() => {
     showToast();
-    logoutTimeout = setTimeout(() => {
-      showLogoutAlert();
-    }, logoutDuration);
   }, inactivityDuration);
 }
 
-function resetLogout() {
-  clearTimeout(logoutTimeout);
-
-  logoutTimeout = setTimeout(() => {
-    fetch("/logout");
-    showLogoutAlert();
-  }, logoutDuration);
+  // Mulai perhitungan ketidakaktifan ketika mouse atau keyboard bergerak
+  document.addEventListener("mousemove", resetInactivity);
+  document.addEventListener("keydown", resetInactivity);
 }
-
-function logout() {
-  // Implement your logout logic here
-  window.location.href = "/logout";
-}
-
-// Mendeteksi Mouse dan Keyboard
-document.addEventListener("mousemove", resetInactivity);
-document.addEventListener("keydown", resetInactivity);
-resetInactivity();
-
-// Mengatur timeout pertama kali saat halaman dimuat
-resetLogout();
-
-
-
-const socket = io();

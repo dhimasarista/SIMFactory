@@ -175,6 +175,11 @@
             float: right;
             
         }
+        #guest-button{
+            margin: 40px;
+            /* text-decoration: none; */
+            color: white;
+        }
     </style>
 </head>
 <body class="body-login">
@@ -199,9 +204,25 @@
                     </div>
                   <% } %>
                   <button id="login" type="submit" class="login-box-button">Login</button>
-                  
+                  <a id="guest-button">Guest</a>
                 </form>
         </div>
     </body>
 </body>
+<script>
+document.getElementById("guest-button").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await fetch("/guest");
+        if (response.ok) {
+            window.location.href = "/monitoring/production";
+        } else {
+            console.error("Error setting guest user:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error setting guest user:", error);
+    }
+});
+</script>
 </html>

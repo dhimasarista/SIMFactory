@@ -5,6 +5,8 @@ const userAuthorization = (app) => {
         try {
           // Mengambil user dari cookies
           const user = req.cookies.user;
+
+          console.log(user);
           const currentPath = req.originalUrl;
           
           // Jika tidak ada user atau belum login
@@ -23,6 +25,13 @@ const userAuthorization = (app) => {
           // Pengecualian untuk path /logout
           if (currentPath === "/logout") {
             return next(); // Lanjutkan ke middleware berikutnya
+          }
+
+          if (user === "guest" && user.role === "notUser") {
+            if (!currentPath.startsWith("/monitoring/")) {
+              return res.redirect("/monitoring/production");
+            }
+            return next();
           }
 
           // Redirect admin ke path /administrator

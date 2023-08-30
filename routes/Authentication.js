@@ -27,6 +27,16 @@ class Login{
     }
 
     setupRoutes(){
+        this.app.get("/guest", (req, res) => {
+            try {
+                res.cookie("user", JSON.stringify({ username: "guest", role: "notUser" }), { maxAge: 3600000 }); // 1 Jam dalam milidetik
+                console.log(req.cookies.user);
+                res.status(200).send("Guest user set successfully.");
+            } catch (error) {
+                console.error(error);
+                res.status(500).send("Internal server error.");
+            }
+        });
         this.app.route("/login")
         .get((req,res) => {
             // Merender views: login.ejs untuk path /login
@@ -39,7 +49,7 @@ class Login{
             async (req, res) => {
                 const errors = validationResult(req);
                 if (!errors.isEmpty()) {
-                    return res.render("login", {errors: errors.array()})
+                    return res.render("login", {errors: errors.array()});
                 }
                 // Mengambil data dari permintaan HTTP yang dikirm user dari form
                 const username = req.body.username;
