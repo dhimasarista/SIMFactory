@@ -1,9 +1,13 @@
-const express = require('express');
-const http = require('http');
+// socketio.js
 const socketIO = require('socket.io');
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIO(server);
+module.exports = (server) => {
+    const io = socketIO(server);
 
-module.exports = io;
+    io.on('connection', (socket) => {
+        console.log('A user connected ' + socket);
+        // Handle other socket events here
+    });
+
+    return io;
+};

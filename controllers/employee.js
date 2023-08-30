@@ -20,10 +20,6 @@ const employee = {
                 queryAsync: queryAsync,
                 query: employeesQuery
             });
-
-            io.on('connection', (socket) => {
-                socket.emit('employeesData', employees);
-            });
             
             // Fetching departments untuk form new-employee
             const departments = await queryAsync("SELECT * FROM departments");

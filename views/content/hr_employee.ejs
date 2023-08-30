@@ -320,17 +320,6 @@
          $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
       }
    });
-
-   const socket = io();
-
-   socket.on('employeesData', (employees) => {
-      const employeeList = document.getElementById('employee-data');
-      employeeList.innerHTML = '';
-
-      employees.forEach((employee) => {
-         
-      });
-   });
    
    // Detail Employee
    const employeProfileButtons = (id) => {
