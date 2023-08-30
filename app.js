@@ -19,15 +19,15 @@ const http = require('http'); // Import http module
 // Cluster Module
 const cluster = require("cluster");
 const { unMatchedRoutes, internalServer } = require('./middlewares/error');
+const setupSocketIO = require('./middlewares/socketio');
 const numCPUs = require("os").cpus().length;
 
 const app = express(); // Inisialisasi Aplikasi Express
 const server = http.createServer(app); // Create HTTP server
 dotenv.config(); // Load variabel environment dari file .env
 
-const createSocketIO = require('./middlewares/socketio');
-createSocketIO(server);
-
+// Menggunakan Socket 
+setupSocketIO(server);
 
 if (cluster.isMaster) {
   // Fork workers setiap CPU core

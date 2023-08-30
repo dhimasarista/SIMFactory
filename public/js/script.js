@@ -132,3 +132,11 @@ resetInactivity();
 
 // // Mengatur timeout pertama kali saat halaman dimuat
 // resetInactivity();
+
+
+const socket = io();
+
+// Mendengarkan peristiwa saat pengguna lain masuk
+socket.on('otherUserLoggedIn', otherUserId => {
+  toastr.info(`User with ID ${otherUserId} just logged in!`);
+});

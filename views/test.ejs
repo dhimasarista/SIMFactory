@@ -1,3 +1,4 @@
+<!-- test.ejs -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,26 +6,29 @@
 </head>
 <body>
     <h1>Employee Names</h1>
-    <ul>
+    <ul id="employeeList">
         <% employees.forEach((employee) => { %>
             <li><%- employee.name %></li>
         <% }); %>
     </ul>
 
+    <button id="updateButton">Update Data</button>
+
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <script>
         const socket = io();
-        // client-side
-        socket.on("connect", () => {
-        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+
+        document.getElementById("updateButton").addEventListener("click", () => {
+            // Mengirim perintah ke server untuk memperbarui data
+            socket.emit("updateData");
         });
 
-        socket.on('connect', (employees) => {
-            const employeeList = document.querySelector('ul');
-            employeeList.innerHTML = '';
+        socket.on("updateEmployeeList", (updatedEmployees) => {
+            const employeeList = document.getElementById("employeeList");
+            employeeList.innerHTML = ""; // Kosongkan daftar karyawan
 
-            employees.forEach((employee) => {
-                const li = document.createElement('li');
+            updatedEmployees.forEach((employee) => {
+                const li = document.createElement("li");
                 li.textContent = employee.name;
                 employeeList.appendChild(li);
             });
