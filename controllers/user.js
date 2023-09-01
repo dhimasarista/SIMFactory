@@ -20,7 +20,7 @@ const user = {
                 data: results[0]
             });
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     updateUser: async (req, res) => {
@@ -46,7 +46,7 @@ const user = {
             // res.cookie("user", {id: id, username: updatedUsername, role: "employee", department: selectData[0].department_id} , { maxAge: 3600000 }); // 1 Jam
             res.status(200).json(updateData)
         } catch (error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     },
     employeeData: async (req, res) => {
@@ -59,7 +59,7 @@ const user = {
             const results = await queryAsync(query, [id]);
             res.json(results[0]);
         } catch (error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     },
     searchEmployee: async(req, res) => {
@@ -71,7 +71,7 @@ const user = {
             // Data dikirimkan dalam bentuk JSON
             res.json(results);
         } catch (error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     }
 }

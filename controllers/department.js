@@ -1,12 +1,13 @@
 const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
-const errorHandling = require('../utils/errorHandling');
+const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const { green, symbol } = require('../utils/logging');
 
 
 const department = {
     render: async (req, res) => {
+        
         const user = req.cookies.user;
         const path = req.path;
         try {
@@ -25,7 +26,7 @@ const department = {
             const results = await queryAsync(query);
             res.render("hr_department", {user: user, path, departments: results});
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     addDepartment: async (req, res) => {
@@ -45,7 +46,7 @@ const department = {
             res.status(200).send(results);
             console.log(green, `${symbol} Department: ${name} Succesfully Added`);
         } catch (error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     }
 }

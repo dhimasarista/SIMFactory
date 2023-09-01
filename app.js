@@ -19,7 +19,6 @@ const http = require('http'); // Import http module
 // Cluster Module
 const cluster = require("cluster");
 const { unMatchedRoutes, internalServer } = require('./middlewares/error');
-const setupSocketIO = require('./middlewares/socketio');
 const numCPUs = require("os").cpus().length;
 
 const app = express(); // Inisialisasi Aplikasi Express

@@ -6,7 +6,6 @@ const userAuthorization = (app) => {
           // Mengambil user dari cookies
           const user = req.cookies.user;
 
-          console.log(user);
           const currentPath = req.originalUrl;
           
           // Jika tidak ada user atau belum login

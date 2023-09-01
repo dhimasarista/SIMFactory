@@ -1,7 +1,7 @@
 const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);;
-const errorHandling = require('../utils/errorHandling');
+const { errorHandling, errorLogging} = require('../utils/errorHandling');
 
 module.exports = {
     render: async (req, res) => {
@@ -21,7 +21,7 @@ module.exports = {
                 totalEmployees: totalEmployees[0].total,
             });
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     }
 }

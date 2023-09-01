@@ -280,8 +280,20 @@
                <!-- 15 -->
                <div class="form-group">
                   <label for="formCV">CV</label><br>
-                  <input type="file" id="formCV" name="formCV">
-                  <p class="red">*PDF</p>
+                  <div class="input-cv">
+                     <input type="file" id="formCV" name="formCV">
+                     <p class="red">*PDF</p>
+                  </div>
+                  <div class="button-delete-cv" style="display: none;">
+                     <a type="button" class="mt-1 mr-1 badge badge-danger">
+                        <i>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                           </svg>
+                        </i>
+                     </a>
+                     <span id="cv-file-name"></span>
+                  </div>
                </div>
                <!-- 16 -->
                <div class="form-group">
@@ -351,7 +363,7 @@
          document.getElementById("appletter-employee").download = `${results.name}_AppLetter.pdf`;
    
          // CV
-         // let CVUrl = `data:application/pdf;base64,${arrayBufferToBase64(results.CV.data)}`;
+         let CVUrl = `data:application/pdf;base64,${arrayBufferToBase64(results.CV.data)}`;
          document.getElementById("cv-employee").href = CVUrl;
          document.getElementById("cv-employee").innerText = `${results.name}_CV.pdf`;
          document.getElementById("cv-employee").download = `${results.name}_CV.pdf`;
@@ -460,13 +472,13 @@
       checkFileType(this.files[0], pdfType, 'Its Not PDF', empyContract);
    });
    
-   const inputImage = document.querySelector(".input-image")
-   const buttonDeleteImage = document.querySelector(".button-delete-image");
-   const imageFileName = document.querySelector("#image-file-name");
    
    // Mengupload Files
    // Problem #2: Upload hanya bisa sekali, jika ditimpa maka akan error
    
+   const inputImage = document.querySelector(".input-image")
+   const buttonDeleteImage = document.querySelector(".button-delete-image");
+   const imageFileName = document.querySelector("#image-file-name");
    // Photo
    photo.addEventListener("change", (event) => {
       const selectedFile = event.target.files[0];
@@ -519,23 +531,36 @@
    });
    
    buttonDeleteAppletter.addEventListener("click", () => {
-      Swal.fire('Sorry, We Have a Bug! So you just can once upload file')
+      Swal.fire('Sorry, We Have a Bug! So you just can once upload file');
    });
-   
-   // CV
+
+   const inputCV = document.querySelector(".input-cv");
+   const buttonDeleteCV = document.querySelector(".button-delete-cv");
+   const cvFileName = document.querySelector("#cv-file-name");
+
    CV.addEventListener("change", (event) => {
-      const selectedData = event.target.files[0];
-   
       try {
+         const selectedFile = event.target.files[0];
+
          uploadFile({
-            file: selectedData,
+            file: selectedFile,
             dataName: "pdf",
             path: "/upload/pdf"
-         })
+         });
+
+         if (selectedFile !== undefined) {
+            inputCV.style.display = "none";
+            buttonDeleteCV.style.display = "inline";
+         }
+         cvFileName.textContent = selectedFile["name"];
       } catch (error) {
-         console.error(errpr);
+         console.error(error);
       }
-   })
+   });
+
+   buttonDeleteCV.addEventListener('change', () => {
+      Swal.fire('Sorry, We Have a Bug! So you just can once upload file');
+   });
    
    
    // Fungsi Upload Image
@@ -661,6 +686,7 @@
       // Checking ketersedian file
       const photoName = photo.files[0] == undefined ? undefined : photo.files[0]["name"];
       const appLetterName = appLetter.files[0] === undefined ? undefined : appLetter.files[0]["name"];
+      const CVName = CV.files[0] === undefined ? undefined : CV.files[0]["name"];
    
       const editData = {
         name: name.value,
@@ -676,7 +702,8 @@
         mcu: mcu.value,
         criminal_history: crimHistory.value,
         photo: photoName,
-        application_letter: appLetterName
+        application_letter: appLetterName,
+        CV: CVName
     };
    
       fetch(`/hr/employee/${id}`, {

@@ -3,9 +3,8 @@ const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
-const errorHandling = require('../utils/errorHandling');
+const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const fs = require("fs");
-const io = require('../middlewares/socketio');
 
 const employee = {
     renderPage: async (req, res) => {
@@ -44,7 +43,7 @@ const employee = {
             res.status(200).send(results);
             console.log(green, `${symbol} Employee: ${name} Succesfully Added`);
         } catch (error) {
-            errorHandling(res, user, path, error);
+            errorLogging(error);
         }
     },
     getById: async (req, res) => {
@@ -55,7 +54,7 @@ const employee = {
             const results = await queryAsync(query, [id]);
             res.json(results[0]);
         } catch(error) {
-            errorHandling(res, user, path, error);
+            errorLogging(error);
         }
     },
     deleteById: async (req, res) => {
@@ -67,7 +66,7 @@ const employee = {
             res.status(200).send(results);
             console.log(green, `${symbol} Employee: ${idToDelete} Succesfully Deleted`);
         } catch (error) {
-            errorHandling(res, user, path, error);
+            errorLogging(error);
         }
     },
     updateEmploye: async (req, res) => {
@@ -101,6 +100,7 @@ const employee = {
         
         const imageFile = photo === undefined ? null : fs.readFileSync(`uploads/images/${photo}`);
         const appLetterFile = application_letter === undefined ? null : fs.readFileSync(`uploads/pdfs/${application_letter}`);
+        const CVFile = CV === undefined ? null : fs.readFileSync(`uploads/pdfs/${CV}`);
         // Destructing Array of Object
         const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
         // Melakukan update ke tabel users
@@ -120,15 +120,15 @@ const employee = {
             criminal_history: criminal_history === undefined ? employeeOldData.criminal_history : criminal_history,
             
             photo: imageFile === null ? employeeOldData.photo : imageFile,
-            application_letter: appLetterFile === null ? employeeOldData.application_letter : appLetterFile
+            application_letter: appLetterFile === null ? employeeOldData.application_letter : appLetterFile,
+            CV: CVFile === null ? employeeOldData.CV : CVFile,
             // portfolio: portfolio === undefined ? employeeOldData.portfolio : portfolio,
-            // CV: CV === undefined ? employeeOldData.CV : CV,
             // employmentContract: employmentContract === undefined ? employeeOldData.employmentContract : employmentContract
         }
         const results = await queryAsync(queryUpdateEmployee, [data, idToUpdate]);
         res.status(200).send(results);
         } catch (error) {
-            errorHandling(res, user, path, error);
+            errorLogging(error);
         }
     }
 }

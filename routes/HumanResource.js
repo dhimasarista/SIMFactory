@@ -10,8 +10,6 @@ class Employee {
 
     // Routing grup
     setupRoutes(){
-    const server = require('http').Server(this.app); // Pastikan app adalah instansi Express Anda
-    const io = require('socket.io')(server);
       this.app.route("/hr/employee")
         .get(employee.renderPage) // Halaman Employee
         .post(employee.addEmployee); // Menambahkan Karyawan Baru

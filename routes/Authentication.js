@@ -30,7 +30,7 @@ class Login{
         this.app.get("/guest", (req, res) => {
             try {
                 res.cookie("user", JSON.stringify({ username: "guest", role: "notUser" }), { maxAge: 3600000 }); // 1 Jam dalam milidetik
-                console.log(req.cookies.user);
+                // console.log(req.cookies.user);
                 res.status(200).send("Guest user set successfully.");
             } catch (error) {
                 console.error(error);

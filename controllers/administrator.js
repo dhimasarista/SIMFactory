@@ -2,7 +2,7 @@ const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
-const errorHandling = require('../utils/errorHandling');
+const { errorHandling, errorLogging} = require('../utils/errorHandling');
 
 const administrator = {
     render: async (req, res) => {
@@ -19,7 +19,7 @@ const administrator = {
                 userList: results,
                 });
         } catch (error) {
-            errorHandling(res, error);
+            errorHandling(res, user, path, error);
         }
     },
     addUser: async (req, res) => {
@@ -35,7 +35,7 @@ const administrator = {
             const results = await queryAsync(query, data);
             res.status(200).send(results);
         } catch (error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     },
     editUser: async (req, res) => {
@@ -55,7 +55,7 @@ const administrator = {
             const results = await queryAsync(queryUpdate, [data, idToNumber]);
             res.status(200).send(results);
         } catch(error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     },
     deleteUser: async (req, res) => {
@@ -65,7 +65,7 @@ const administrator = {
             const results = await queryAsync(query, id);
             res.status(200).send(results);
         } catch(error) {
-            errorHandling(res, error);
+            errorLogging(error);
         }
     }
 }
