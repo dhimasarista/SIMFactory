@@ -1,40 +1,68 @@
 <!DOCTYPE html>
-<html lang="id">
-   <head>
-      <%- include ("partials/head.ejs") %>
-   </head>
-   <body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
-      <div class="wrapper">
-         <!-- Preloader -->
-         <!-- <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-            </div> -->
-         <!-- Navbar -->
-         <%- include ("partials/navbar.ejs") %>
-         <!-- /.navbar -->
-         <!-- Main Sidebar Container -->
-         <%- include ("partials/sidebar.ejs") %>
-         <!-- Content Wrapper. Contains page content -->
-         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <%- include ("partials/content-header.ejs") %>
-            <!-- /.content-header -->
-            <!-- Main content -->
-            <section class="content">
-               <div class="container-fluid">
-                  <%- include ("content/index.ejs") %>
-               </div>
-               <!--/. container-fluid -->
-            </section>
-            <!-- /.content -->
-         </div>
-         <!-- Footer -->
-         <%- include ("partials/footer.ejs") %>
-         <!-- Control Sidebar -->
-         <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-         </aside>
-         <!-- /.control-sidebar -->
-      </div>
-   </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gambar Background Responsif</title>
+    <style>
+        /* CSS untuk membuat gambar background responsif */
+        body {
+            background-image: url('https://images.unsplash.com/photo-1626470159480-427d823d3671?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1680&q=80');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Untuk menjaga gambar tetap di latar belakang */
+            background-position: center center;
+            height: 100vh; /* Membuat tinggi latar belakang setara dengan tinggi layar */
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        /* Efek fade gelap */
+        body::before {
+            content: '';
+            background: rgba(0, 0, 0, 0.5); /* Warna gelap dengan opacity */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        /* Tengahkan konten */
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            font-family: 'Helvetica', sans-serif; /* Ganti dengan font keren yang Anda suka */
+        }
+
+        /* Tambahkan gaya untuk teks judul */
+        .content h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        /* Tambahkan gaya untuk teks subjudul */
+        .content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* Tambahkan gaya untuk teks keterangan */
+        .content h5 {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>FUTURE INDUSTRIES Sdn. Bhd</h1>
+        <h3>Welcome to SIMFactory</h3>
+        <h5>Sistem Informasi dan Manajemen Produksi</h5>
+    </div>
+</body>
 </html>

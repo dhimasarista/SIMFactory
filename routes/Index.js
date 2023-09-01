@@ -9,7 +9,11 @@ class Index{
     }
     // Method halaman utama
     setupRoutes(){
-        this.app.get("/", render);
+        this.app.get("/", (req, res) => {
+
+            res.render("index");
+        });
+        this.app.get("/dashboard", render);
     }
 }
 

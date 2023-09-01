@@ -15,7 +15,7 @@ module.exports = {
             const totalEmployees = await queryAsync("SELECT COUNT(*) AS total FROM employees"); // Array of Object
             
             // (MVC) Rendering views: index.ejs
-            res.render("index", {
+            res.render("dashboard", {
                 errors: [],
                 user: user,
                 path: path,
