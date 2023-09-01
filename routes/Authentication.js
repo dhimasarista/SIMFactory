@@ -39,7 +39,7 @@ class Login{
                 });
             }
             // Selanjutnya, arahkan pengguna ke "/monitoring"
-            res.redirect("/monitoring/production");
+            res.redirect("/");
         });
 
         this.app.route("/login")
