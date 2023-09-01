@@ -33,7 +33,6 @@ const deletePdfHandler = async (pdfFile) => {
     const pdfPath = path.join(__dirname, "..", "..", "uploads", "pdfs", pdfFile);
     try {
         await fs.promises.unlink(pdfPath);
-        console.log(`File Berhasil Dihapus ${pdfFile}`);
     } catch (error) {
         // Terjadi logging error walaupun kode ok
         // console.log("Error deleting pdf:", error);
