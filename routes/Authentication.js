@@ -102,7 +102,7 @@ class Login{
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
     
                             // Lalu di alihkan ke halaman utama
-                            return res.redirect("/");
+                            return res.redirect("/dashboard");
                         }
                     // Jika password salah
                     } else {
