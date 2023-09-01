@@ -6,6 +6,13 @@ const userAuthorization = (app) => {
           // Mengambil user dari cookies
           const user = req.cookies.user;
           const currentPath = req.originalUrl;
+
+
+          // Daftar page yang diizinkan
+          // const allowedPaths = ["/", "/error", "/monitoring"];
+          // if (!user && !allowedPaths.includes(currentPath)) {
+          //   return res.redirect("/login");
+          // }
           
           if (currentPath === "/guest") {
             return next(); // Lanjutkan ke middleware berikutnya
@@ -41,7 +48,7 @@ const userAuthorization = (app) => {
           // Jika bukan admin, dan mengakses /administrator
           if (!isAdmin && currentPath === "/administrator") {
             // Alihkan ke halaman utama
-            return res.redirect("/");
+            return res.redirect("/dashboard");
           }
 
           
@@ -51,16 +58,16 @@ const userAuthorization = (app) => {
               return res.redirect("/login");
             }
             if (isProduction && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse"))) {
-              return res.redirect("/");
+              return res.redirect("/dashboard");
             }
             if (isWarehouse && (currentPath.startsWith("/production") || currentPath.startsWith("/hr"))) {
-              return res.redirect("/");
+              return res.redirect("/dashboard");
             }
             if (isHumanResource && (currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
-              return res.redirect("/");
+              return res.redirect("/dashboard");
             }
             if (isEngineering && (currentPath.startsWith("/warehouse") || currentPath.startsWith("/production") || currentPath.startsWith("/hr"))) {
-              return res.redirect("/");
+              return res.redirect("/dashboard");
             }
           }
         } catch(error) {

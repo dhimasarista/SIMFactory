@@ -10,8 +10,8 @@ class Index{
     // Method halaman utama
     setupRoutes(){
         this.app.get("/", (req, res) => {
-
-            res.render("index");
+            const user = req.cookies.user;
+            res.render("index", { user });
         });
         this.app.get("/dashboard", render);
     }
