@@ -5,6 +5,7 @@ const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const fs = require("fs");
+const { deletePdfHandler, deleteImageHandler } = require('../utils/uploads/fileUploads');
 
 const employee = {
     renderPage: async (req, res) => {
@@ -101,10 +102,13 @@ const employee = {
             const imageFile = photo === undefined ? null : fs.readFileSync(`uploads/images/${photo}`);
             const appLetterFile = application_letter === undefined ? null : fs.readFileSync(`uploads/pdfs/${application_letter}`);
             const CVFile = CV === undefined ? null : fs.readFileSync(`uploads/pdfs/${CV}`);
+            
             // Destructing Array of Object
             const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
+            
             // Melakukan update ke tabel users
             await queryAsync(queryUsers, [department_id, idToUpdate]);
+
             const data = {
                 name: name === undefined ? employeeOldData.name : name,
                 department_id: department_id === undefined ? employeeOldData.department_id : parseInt(department_id),
@@ -127,6 +131,12 @@ const employee = {
             }
             const results = await queryAsync(queryUpdateEmployee, [data, idToUpdate]);
             res.status(200).send(results);
+
+            // Menghapus file setelah upload ke db
+            // Untuk sementara file dihapus oleh client ketika halaman di reload
+            // if (imageFile) {
+            //     deleteImageHandler(photo);
+            // }
         } catch (error) {
             errorLogging(error);
         }
@@ -144,9 +154,12 @@ module.exports = employee;
 
     // Problem #2: Upload hanya bisa sekali, jika ditimpa maka akan error(FIXED)
     // Solusi #2: Jangan upload ketika event change, tapi setelah event tersebut
-    //            dengan pengecekan nilai ada atau tidak, jika ada kirim.
+    // dengan pengecekan nilai ada atau tidak, jika ada kirim.
 
     // Alur upload file (Client): Ketika event change pada input, lakukan pengecekan.
     // Jika files[0] !== undefined, upload ke dir server dan tampilkan button delete.
     // Alur delete file: button delete akan meminta response ke server untuk
     // menghapus file sesuai nama file yang diminta
+
+    // Untuk sementara file dihapus oleh client ketika halaman di reload, sesaat
+    // setelah button isConfirmed diklik

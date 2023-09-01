@@ -655,7 +655,7 @@
       })
       .catch(error => {
          console.error("Error deleting pdf:", error);
-      })
+      });
    }
    
    const editButtons = (id) => {
@@ -771,7 +771,12 @@
             confirmButtonText: "Yes, Update it!"
          }).then((result) => {
             if (result.isConfirmed) {
-               location.reload()
+               // Setelah confirm button diklik halaman akan direload
+               location.reload();
+               // Yang juga menghapus file file yang dikirim tadi 
+               // Problem #3
+               // Sejauh ini server masih bisa mengirim file tersebut
+               // ke db, sebelum file dihapus
             }
          })
       })

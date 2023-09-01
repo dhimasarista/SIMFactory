@@ -23,7 +23,6 @@ class Uploads{
             const fileName = req.params.file;
             try {
                 deleteImageHandler(fileName);
-
                 res.status(200).send(`Image ${fileName} has been deleted from server.`);
             } catch (error) {
                 res.status(500).send(`Error ${fileName} deleting from server.`);
