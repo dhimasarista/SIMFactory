@@ -67,8 +67,8 @@
         <h1>FUTURE INDUSTRIES Sdn. Bhd</h1>
         <h3>Welcome to SIMFactory</h3>
         <h5>Sistem Informasi dan Manajemen Produksi</h5>
-        <% if (!user) { %>
-            <a href="/login">Login</a>
+        <% if (!user.department) { %>
+            <a href="/monitoring/production">Back</a>
         <% } else { %>
             <a href="/dashboard">Dashboard</a>
         <% } %>

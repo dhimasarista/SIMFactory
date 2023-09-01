@@ -6,14 +6,8 @@ const userAuthorization = (app) => {
           // Mengambil user dari cookies
           const user = req.cookies.user;
           const currentPath = req.originalUrl;
-
-
-          // Daftar page yang diizinkan
-          // const allowedPaths = ["/", "/error", "/monitoring"];
-          // if (!user && !allowedPaths.includes(currentPath)) {
-          //   return res.redirect("/login");
-          // }
           
+          // Pengecualian untuk path /guest
           if (currentPath === "/guest") {
             return next(); // Lanjutkan ke middleware berikutnya
           }
@@ -54,7 +48,8 @@ const userAuthorization = (app) => {
           
           // Redirect users ke path yang diizinkan
           if (user) {
-            if (!user.department && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
+            // Path yang bisa diakses by login
+            if (!user.department && ( currentPath.startsWith("/dashboard") || currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
               return res.redirect("/login");
             }
             if (isProduction && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse"))) {
