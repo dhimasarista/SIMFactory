@@ -10,7 +10,6 @@ class Index{
     // Method halaman utama
     setupRoutes(){
         this.app.get("/", render);
-
     }
 }
 

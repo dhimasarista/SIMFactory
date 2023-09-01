@@ -5,9 +5,11 @@ const userAuthorization = (app) => {
         try {
           // Mengambil user dari cookies
           const user = req.cookies.user;
-
           const currentPath = req.originalUrl;
           
+          if (currentPath === "/guest") {
+            return next(); // Lanjutkan ke middleware berikutnya
+          }
           // Jika tidak ada user atau belum login
           if (!user && currentPath !== "/login") {
             // Maka semua path yang diakses akan dialihkan ke /login
@@ -20,17 +22,10 @@ const userAuthorization = (app) => {
           const isHumanResource = user && user.department === 902;
           const isEngineering = user && user.department === 901;
           // const isIT = user && user.department === 905;
-          
+
           // Pengecualian untuk path /logout
           if (currentPath === "/logout") {
             return next(); // Lanjutkan ke middleware berikutnya
-          }
-
-          if (user === "guest" && user.role === "notUser") {
-            if (!currentPath.startsWith("/monitoring/")) {
-              return res.redirect("/monitoring/production");
-            }
-            return next();
           }
 
           // Redirect admin ke path /administrator
@@ -52,8 +47,8 @@ const userAuthorization = (app) => {
           
           // Redirect users ke path yang diizinkan
           if (user) {
-            if (user.department === null && currentPath.startsWith("/user")) {
-              return res.redirect("/");
+            if (!user.department && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
+              return res.redirect("/login");
             }
             if (isProduction && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse"))) {
               return res.redirect("/");

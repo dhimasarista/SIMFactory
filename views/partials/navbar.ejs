@@ -36,7 +36,9 @@
       </li> -->
       <li class="nav-item">
          <a class="nav-link" href="#">
-            <%= user.username %>
+            <% if (user.username !== "guest"){ %> 
+               <%= user.username %>
+            <% } %> 
          </a>
       </li>
       <% if (user.role === 'employee' && user.id !== 1){ %> 

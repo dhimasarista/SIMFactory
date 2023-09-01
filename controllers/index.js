@@ -8,6 +8,7 @@ module.exports = {
         // Mengambil user dari cookie
         const user = req.cookies.user;
         const path = req.path;
+        console.log(user);
         
         try {
             // Menghitung total karyawan

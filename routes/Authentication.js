@@ -25,21 +25,27 @@ class Login{
 
         this.setupRoutes();
     }
-
     setupRoutes(){
         this.app.get("/guest", (req, res) => {
-            try {
-                res.cookie("user", JSON.stringify({ username: "guest", role: "notUser" }), { maxAge: 3600000 }); // 1 Jam dalam milidetik
-                // console.log(req.cookies.user);
-                res.status(200).send("Guest user set successfully.");
-            } catch (error) {
-                console.error(error);
-                res.status(500).send("Internal server error.");
+            // Cek apakah cookies pengguna sudah ada
+            const user = req.cookies.user;
+            if (!user) {
+                // Jika cookies kosong, tambahkan cookies untuk pengguna tamu
+                res.cookie("user", {
+                    id: 99,
+                    username: "guest",
+                    role: "notUser",
+                    department: null // Sesuaikan jika diperlukan
+                });
             }
+            // Selanjutnya, arahkan pengguna ke "/monitoring"
+            res.redirect("/monitoring/production");
         });
+
         this.app.route("/login")
         .get((req,res) => {
             // Merender views: login.ejs untuk path /login
+            res.clearCookie("user");
             res.render("login", {errors: [{}]});
         })
         .post(
