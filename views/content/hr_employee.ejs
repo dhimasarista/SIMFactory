@@ -674,39 +674,39 @@
       }
    });
 
-   // const inputContract = document.querySelector(".input-contract");
-   // const buttonDeleteContract = document.querySelector(".button-delete-contract");
-   // const contractFileName = document.getElementById('#contract-file-name');
+   const inputContract = document.querySelector(".input-contract");
+   const buttonDeleteContract = document.querySelector(".button-delete-contract");
+   const contractFileName = document.getElementById('contract-file-name');
 
-   // contract.addEventListener("change", () => {
-   //    try {
-   //       if (contract.files[0]) {
-   //             uploadFile({
-   //                file: contract.files[0],
-   //                dataName: "pdf",
-   //                path: "/upload/pdf"
-   //             });
-   //             inputContract.style.display = "none";
-   //             buttonDeleteContract.style.display = "inline";
-   //             contractFileName.textContent = contract.files[0]["name"];
-   //          }
-   //    } catch (error) {
-   //       toastr.error(error, "Error");
-   //    }
-   // });
+   contract.addEventListener("change", () => {
+      try {
+         if (contract.files[0]) {
+               uploadFile({
+                  file: contract.files[0],
+                  dataName: "pdf",
+                  path: "/upload/pdf"
+               });
+               inputContract.style.display = "none";
+               buttonDeleteContract.style.display = "inline";
+               contractFileName.textContent = contract.files[0]["name"];
+            }
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
 
-   // buttonDeleteContract.addEventListener("click", () => {
-   //    try {
-   //       toastr.success("File Deleted.", "Success");
-   //       deletePdfFromServer(contract.files[0]["name"]);
-   //       inputContract.style.display = "inline";
-   //       buttonDeleteContract.style.display = "none";
-   //       contractFileName.textContent = null;
-   //       contract.value = null;
-   //    } catch (error) {
-   //       toastr.error(error, "Error");
-   //    }
-   // })
+   buttonDeleteContract.addEventListener("click", () => {
+      try {
+         toastr.success("File Deleted.", "Success");
+         deletePdfFromServer(contract.files[0]["name"]);
+         inputContract.style.display = "inline";
+         buttonDeleteContract.style.display = "none";
+         contractFileName.textContent = null;
+         contract.value = null;
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   })
    
    
    // Fungsi Upload Image

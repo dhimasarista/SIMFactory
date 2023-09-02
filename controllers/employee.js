@@ -102,6 +102,8 @@ const employee = {
             const imageFile = photo === undefined ? null : fs.readFileSync(`uploads/images/${photo}`);
             const appLetterFile = application_letter === undefined ? null : fs.readFileSync(`uploads/pdfs/${application_letter}`);
             const CVFile = CV === undefined ? null : fs.readFileSync(`uploads/pdfs/${CV}`);
+            const portfolioFile = portfolio === undefined ? null : fs.readFileSync(`uploads/pdfs/${portfolio}`);
+            const contractFile = employment_contract === undefined ? null : fs.readFileSync(`uploads/pdfs/${employment_contract}`);
             
             // Destructing Array of Object
             const [employeeOldData] = await queryAsync(queryEmployee, [idToUpdate]);
@@ -126,8 +128,8 @@ const employee = {
                 photo: imageFile === null ? employeeOldData.photo : imageFile,
                 application_letter: appLetterFile === null ? employeeOldData.application_letter : appLetterFile,
                 CV: CVFile === null ? employeeOldData.CV : CVFile,
-                portfolio: portfolio === null ? employeeOldData.portfolio : portfolio,
-                employment_contract: employment_contract === null ? employeeOldData.employment_contract : employment_contract
+                portfolio: portfolioFile === null ? employeeOldData.portfolio : portfolioFile,
+                employment_contract: contractFile === null ? employeeOldData.employment_contract : contractFile
             }
             const results = await queryAsync(queryUpdateEmployee, [data, idToUpdate]);
             res.status(200).send(results);
