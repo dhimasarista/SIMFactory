@@ -11,6 +11,7 @@ class Index{
     setupRoutes(){
         this.app.get("/", (req, res) => {
             const user = req.cookies.user;
+            console.log(user);
             res.render("index", { user });
         });
         this.app.get("/dashboard", render);

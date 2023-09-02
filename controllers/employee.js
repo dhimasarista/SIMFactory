@@ -90,7 +90,7 @@ const employee = {
                 application_letter,
                 CV,
                 portfolio,
-                employmentContract 
+                employment_contract 
             } = req.body;
             
 
@@ -126,8 +126,8 @@ const employee = {
                 photo: imageFile === null ? employeeOldData.photo : imageFile,
                 application_letter: appLetterFile === null ? employeeOldData.application_letter : appLetterFile,
                 CV: CVFile === null ? employeeOldData.CV : CVFile,
-                // portfolio: portfolio === undefined ? employeeOldData.portfolio : portfolio,
-                // employmentContract: employmentContract === undefined ? employeeOldData.employmentContract : employmentContract
+                portfolio: portfolio === null ? employeeOldData.portfolio : portfolio,
+                employment_contract: employment_contract === null ? employeeOldData.employment_contract : employment_contract
             }
             const results = await queryAsync(queryUpdateEmployee, [data, idToUpdate]);
             res.status(200).send(results);

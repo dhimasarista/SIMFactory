@@ -33,6 +33,11 @@ const userAuthorization = (app) => {
             return res.redirect("/login");  
           }
 
+          // // Hanya hr yang dapat mengakses update dan delete data
+          // if (user.department === isHumanResource && (currentPath.startsWith("/upload") || currentPath.startsWith("/delete"))) {
+          //   next();
+          // }
+
           // Admin hanya bisa mengakses /administrator
           if (isAdmin) {
             if (currentPath.startsWith("/administrator")) {
