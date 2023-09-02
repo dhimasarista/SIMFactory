@@ -1,4 +1,4 @@
-const errorHandling = require("../utils/errorHandling");
+const {errorHandling} = require("../utils/errorHandling");
 
 class Production{
     constructor(app){
@@ -13,9 +13,6 @@ class Production{
             const user = req.cookies.user;
             const path = req.path;
             try {
-
-                throw new Error("Halaman Belum dibuat dude");
-                
                 // Rendering views: prod_control.ejs
                 res.render("prod_control", {
                     path: path, 
