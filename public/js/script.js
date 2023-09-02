@@ -99,3 +99,15 @@ function resetInactivity() {
   document.addEventListener("mousemove", resetInactivity);
   document.addEventListener("keydown", resetInactivity);
 }
+
+// Menampilkan status offline
+// Mengecek status koneksi
+function checkOnlineStatus() {
+  if (navigator.onLine) {
+    // Pengguna online
+    return true;
+  } else {
+    // Pengguna offline
+    return false;
+  }
+}

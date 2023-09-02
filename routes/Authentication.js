@@ -93,7 +93,7 @@ class Login{
                             // jika iya, akan disimpan di cookie
                             res.cookie(
                                 "user", {id: idUser, username: cookiesChecking, role: "admin"}, 
-                                // { maxAge: 3600000 }
+                                { maxAge: 3600000 }
                             ); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
     
