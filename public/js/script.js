@@ -111,3 +111,23 @@ function checkOnlineStatus() {
     return false;
   }
 }
+
+// Menampilkan pesan jika pengguna offline
+function showMessageIfOffline() {
+  if (!checkOnlineStatus()) {
+    toastr.error("Check Your Connection", "Offline");
+  }
+}
+
+// Memanggil fungsi untuk menampilkan pesan jika pengguna offline
+showMessageIfOffline();
+
+// Mendengarkan perubahan status koneksi
+window.addEventListener('online', () => {
+  toastr.success("You're Back", "Offline");
+});
+
+window.addEventListener('offline', () => {
+  // Pengguna menjadi offline, tampilkan pesan
+  showMessageIfOffline();
+});
