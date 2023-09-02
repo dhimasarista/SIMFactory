@@ -38,7 +38,7 @@ class Login{
                     department: null // Sesuaikan jika diperlukan
                 });
             }
-            // Selanjutnya, arahkan pengguna ke "/monitoring"
+            // Selanjutnya, arahkan pengguna ke "/"
             res.redirect("/");
         });
 
