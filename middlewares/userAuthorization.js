@@ -6,16 +6,6 @@ const userAuthorization = (app) => {
           // Mengambil user dari cookies
           const user = req.cookies.user;
           const currentPath = req.originalUrl;
-          
-          // Pengecualian untuk path /guest
-          if (currentPath === "/guest") {
-            return next(); // Lanjutkan ke middleware berikutnya
-          }
-          // Jika tidak ada user atau belum login
-          if (!user && currentPath !== "/login") {
-            // Maka semua path yang diakses akan dialihkan ke /login
-            return res.redirect("/login");  
-          }
 
           const isAdmin = user && user.role === "admin";
           const isProduction = user && user.department === 904;
@@ -23,13 +13,27 @@ const userAuthorization = (app) => {
           const isHumanResource = user && user.department === 902;
           const isEngineering = user && user.department === 901;
           // const isIT = user && user.department === 905;
-
-          // Pengecualian untuk path /logout
+          
+          // Path yang hanya bisa diakses tanpa autentikasi
+          if (currentPath === "/guest") {
+            return next(); // Lanjutkan ke middleware berikutnya
+          }
           if (currentPath === "/logout") {
             return next(); // Lanjutkan ke middleware berikutnya
           }
 
-          // Redirect admin ke path /administrator
+          // Path /monitoring akan dialihkan ke /monitoring/production
+          if (currentPath === "/monitoring") {
+            res.redirect("/monitoring/production");
+          }
+
+          // Jika tidak ada user atau belum login
+          if (!user && currentPath !== "/login") {
+            // Maka semua path yang diakses akan dialihkan ke /login
+            return res.redirect("/login");  
+          }
+
+          // Admin hanya bisa mengakses /administrator
           if (isAdmin) {
             if (currentPath.startsWith("/administrator")) {
               // Membatalkan eksekusi kode selanjutnya di scope ini
@@ -45,22 +49,29 @@ const userAuthorization = (app) => {
             return res.redirect("/dashboard");
           }
 
+          // Path yang diizinkan berdasarkan role dan department
+          // Path / dan /monitoring dapat diakses menggunakan user guest
           
-          // Redirect users ke path yang diizinkan
+          // Path yang bisa diakses by login
           if (user) {
-            // Path yang bisa diakses by login
+            // Jika department null dan mengakses /dashboard /production dll
+            // arahkan ke path login
             if (!user.department && ( currentPath.startsWith("/dashboard") || currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
               return res.redirect("/login");
             }
+            // Production hanya bisa mengakses /production/ & /dashboard
             if (isProduction && (currentPath.startsWith("/hr") || currentPath.startsWith("/warehouse"))) {
               return res.redirect("/dashboard");
             }
+            // Warehouse hanya bisa mengakses /warehouse/ & /dashboard
             if (isWarehouse && (currentPath.startsWith("/production") || currentPath.startsWith("/hr"))) {
               return res.redirect("/dashboard");
             }
+            // Human resource hanya bisa mengakses /hr/ & /dashboard
             if (isHumanResource && (currentPath.startsWith("/warehouse") || currentPath.startsWith("/production"))) {
               return res.redirect("/dashboard");
             }
+            // Dan engineering /engineering/ & /dashboard
             if (isEngineering && (currentPath.startsWith("/warehouse") || currentPath.startsWith("/production") || currentPath.startsWith("/hr"))) {
               return res.redirect("/dashboard");
             }

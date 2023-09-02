@@ -7,6 +7,7 @@ const Errors = require("./Erros");
 const Uploads= require("./Uploads");
 const { Material } = require("./Warehouse");
 const Testing = require("./Testing");
+const Monitoring = require("./Monitoring");
 
 const setupRoutes = (app) => {
   new Index(app);
@@ -20,6 +21,7 @@ const setupRoutes = (app) => {
   new Errors(app);
   new Material(app).render();
   new Uploads(app);
+  new Monitoring(app);
 
   // Testing
   new Testing(app);

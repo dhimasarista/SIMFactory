@@ -91,14 +91,17 @@ class Login{
                         // Apakah admin tidak undefined
                         if (admin) {
                             // jika iya, akan disimpan di cookie
-                            res.cookie("user", {id: idUser, username: cookiesChecking, role: "admin"} , { maxAge: 3600000 }); // 1 Jam
+                            res.cookie(
+                                "user", {id: idUser, username: cookiesChecking, role: "admin"}, 
+                                // { maxAge: 3600000 }
+                            ); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
     
                             // Lalu di alihkan ke halaman utama
                             return res.redirect("/administrator");
                         } else {
                             // jika users akan disimpan di cookise
-                            res.cookie("user", {id: idUser, username: cookiesChecking, role: "employee", department: user.department_id} , { maxAge: 3600000 }); // 1 Jam
+                            res.cookie("user", {id: idUser, username: cookiesChecking, role: "employee", department: user.department_id}); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
     
                             // Lalu di alihkan ke halaman utama

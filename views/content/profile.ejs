@@ -84,7 +84,7 @@
             confirmButtonText: "Yes, Update it!"
          }).then(result => {
             if (result.isConfirmed) {
-               fetch(`/employee/profile/${id}`, {
+               fetch(`/user/profile/${id}`, {
                   method: "PUT",
                   headers: {
                         "Content-Type": "application/json"

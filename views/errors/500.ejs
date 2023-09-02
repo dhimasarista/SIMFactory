@@ -7,7 +7,12 @@
 
         <p>
           We will work on fixing that right away.
-            Meanwhile, you may return to the <a href="/">home page</a>.
+            Meanwhile, you may return to the 
+            <% if(!user.department) { %>.
+                <a href="/monitoring">home page</a>
+              <% } else { %>
+                <a href="/dashboard">home page</a>
+              <% } %>
         </p>
         <% if (errors !== 0) { %>
           <div class="error-message">
