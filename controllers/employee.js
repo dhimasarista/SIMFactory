@@ -142,6 +142,21 @@ const employee = {
         } catch (error) {
             errorLogging(error);
         }
+    },
+    addUser: async (req, res) => {
+        const id = req.params.id;
+        const { is_user, is_request } = req.body
+        const data = {
+            is_request: is_request
+        }
+
+        const query = `UPDATE employees SET ? WHERE id = ?`;
+        try {
+            const results = await queryAsync(query, [data, id]);
+            res.json(results);
+        } catch (error) {
+            errorLogging(error);
+        }
     }
 }
 

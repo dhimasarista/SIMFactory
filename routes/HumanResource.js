@@ -18,6 +18,9 @@ class Employee {
         .get(employee.getById) // JSON: Mengambil Data Karyawan By ID
         .delete(employee.deleteById) // Menghapus Data Karyawan By ID
         .put(employee.updateEmploye); // Memperbarui Data Karyawan
+
+        this.app.route("/hr/employee/request/add-user/:id")
+        .put(employee.addUser);
     }
 }
 class Department{
