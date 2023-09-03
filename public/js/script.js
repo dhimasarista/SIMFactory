@@ -91,7 +91,9 @@ function resetInactivity() {
   clearTimeout(inactivityTimeout);
 
   inactivityTimeout = setTimeout(() => {
-    showToast();
+    setInterval(() => {
+      showToast();
+    }, inactivityDuration + 60000);
   }, inactivityDuration);
 }
 
@@ -131,3 +133,9 @@ window.addEventListener('offline', () => {
   // Pengguna menjadi offline, tampilkan pesan
   showMessageIfOffline();
 });
+
+// fetch("/")
+// .then(response => response.json())
+// .then(results => {
+//   console.log(results);
+// })

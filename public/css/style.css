@@ -1,0 +1,22 @@
+/* Kustomisasi scrollbar vertikal */
+/* Webkit (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 10px; /* Lebar scrollbar */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1; /* Warna thumb (batang scrollbar) */
+    border-radius: 5px; /* Bentuk thumb */
+  }
+  
+  /* Kustomisasi scrollbar horizontal */
+  /* Webkit (Chrome, Safari, Opera) */
+  ::-webkit-scrollbar-horizontal {
+    height: 10px; /* Tinggi scrollbar horizontal */
+  }
+  
+  ::-webkit-scrollbar-thumb:horizontal {
+    background-color: #d1d1d1; /* Warna thumb (batang scrollbar horizontal) */
+    border-radius: 5px; /* Bentuk thumb horizontal */
+  }
+  

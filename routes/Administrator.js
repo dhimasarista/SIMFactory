@@ -15,6 +15,13 @@ class Administrator{
         .get(administrator.render)
         .post(administrator.addUser);
 
+        this.app.route("/administrator/user/request")
+        .get(administrator.userListReq)
+        .post(administrator.addUserByReq);
+
+        this.app.route("/administrator/user/reject/request")
+        .post(administrator.rejectAddUserByReq);
+
         // Grouping Routes
         this.app.route("/administrator/:id")
         .put(administrator.editUser)

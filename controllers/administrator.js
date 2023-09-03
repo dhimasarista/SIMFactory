@@ -3,6 +3,8 @@ const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
+const batchingData = require('../utils/batchingData');
+const getDataEmployee = require('../models/query/getDataEmployee');
 
 const administrator = {
     render: async (req, res) => {
@@ -76,6 +78,50 @@ const administrator = {
             res.status(200).send(results);
         } catch(error) {
             errorLogging(error);
+        }
+    },
+    userListReq: async (req, res) => {
+        const query = getDataEmployee() + " WHERE is_request";
+        try {
+            const results = await batchingData({
+                queryAsync: queryAsync,
+                query: query,
+                batchSize: 10,
+            });
+
+            res.json(results);
+        } catch (error) {
+            errorLogging(error); 
+        }
+    },
+    // Fixing
+    addUserByReq: async (req, res) => {
+        const { id, department_id, username} = req.body;
+        const data = {
+            id: parseInt(id),
+            username: username,
+            password: await bcrypt.hash(id, 10),
+            department_id: department_id,
+        }
+        console.log(req.body);
+        const query = `INSERT IGNORE INTO users SET ?`;
+        try {
+            await queryAsync("UPDATE employees SET is_user = 1, is_request = 0 WHERE id = ?", [data.id])
+            const results = await queryAsync(query, data);
+            res.json(results);
+        } catch (error) {
+            errorLogging(error); 
+        }
+    },
+    // Fixed
+    rejectAddUserByReq: async (req, res) => {
+        const id = parseInt(req.body.id);
+        try {
+            const results = await queryAsync("UPDATE employees SET is_user = 0, is_request = 0 WHERE id = ?", [id]);
+            res.json(results);
+            console.log(results);
+        } catch (error) {
+            errorLogging(error); 
         }
     }
 }
