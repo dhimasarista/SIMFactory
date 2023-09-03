@@ -141,73 +141,66 @@
     document.querySelectorAll(".id_employee").forEach((data) => {
         idArray.push(parseInt(data.textContent));
     });
-    let table = new DataTable('#userList', {
-        sort: false
-    });
-    const employeeInput = document.getElementById('employeeInput');
-    const searchData = () => {
-    const inputNumber = parseInt(employeeInput.value);
-
-
-
     function cleanString(params) {
         return params.toLowerCase().replace(/[^a-z0-9]/g, '');
     }
     
-    if (isNaN(inputNumber)) {
-        Swal.fire({
-            title: "Warning!",
-            text: "Please Input in Number.",
-            icon: "warning",
-            confirmButtonText: "OK",
-        });
-    } else {
-        // searchEmployeeById
-        fetch(`/administrator/search-employee/${inputNumber}`)
+    let table = new DataTable('#userList', {
+        sort: false
+    });
+
+    const employeeInput = document.getElementById('employeeInput');
+    const searchData = () => {
+        const inputNumber = parseInt(employeeInput.value);
+        let isSame;
+        for (let index = 0; index < idArray.length; index++) {
+            console.log('Iterasi ke-', index);
+            if (inputNumber === idArray[index]) {
+                isSame = true;
+                toastr.error(`User ${inputNumber} already added.`, "Warning");
+                break;
+            } else if (isNaN(inputNumber)) {
+                Swal.fire({
+                    title: "Warning!",
+                    text: "Please Input in Number.",
+                    icon: "warning",
+                    confirmButtonText: "OK",
+                });
+            }
+        }
+        if (!isSame) {
+            fetch(`/administrator/search-employee/${inputNumber}`)
             .then((response) => response.json())
             .then((searchData) => {
                 if (searchData.length === 0) {
                     Swal.fire({
-                        title: "Not Found!",
-                        text: "Theres nothing dude",
-                        icon: "error",
-                        confirmButtonText: "OK",
-                    });
-                } else {
-                    for (let index = 0; index < idArray.length; index++) {
-                        if (searchData[0]["id"] === idArray[index]) {
-                            Swal.fire({
-                                title: "Already Exist",
-                                text: "User has been added",
-                                icon: "info",
-                                confirmButtonText: "OK",
-                            });
-                            break;
-                        } else if (searchData[0]["id"] !== idArray[index]) {
-                            const employeeId = searchData[0].id;
-                            asd = employeeId;
-                            fetch(`/administrator/employee/${employeeId}`)
-                            .then((response) => response.json())
-                            .then((employeeData) => {
-                                // Display employee data in the modal
-                                const modalBody = document.getElementById('employeeModalBody');
-                                modalBody.innerHTML = `
-                                    <div><strong>Name:</strong> <span id="username" data-employee-name="${employeeData.name}">${employeeData.name}</span</div>
-                                    <div><strong>Position:</strong> <span id="department" data-department-id="${employeeData.department_id}">${employeeData.department_name}</span</div>
-                                    <br><br>
-                                    <div><strong>Default Username:</strong> ${cleanString(employeeData.name)}</div>    
-                                    <div><strong>Default Password:</strong> ${employeeData.id}</div>    
-                                `;
-        
-                                // Show the modal
-                                $('#employeeModal').modal('show');
-                            });
-                        }
+                            title: "Not Found!",
+                            text: "Theres nothing dude",
+                            icon: "error",
+                            confirmButtonText: "OK",
+                        });
+                    } else {
+                        const employeeId = searchData[0].id;
+                        fetch(`/administrator/employee/${employeeId}`)
+                        .then((response) => response.json())
+                        .then((employeeData) => {
+                            // Display employee data in the modal
+                            const modalBody = document.getElementById('employeeModalBody');
+                            modalBody.innerHTML = `
+                                <div><strong>Name:</strong> <span id="username" data-employee-name="${employeeData.name}">${employeeData.name}</span</div>
+                                <div><strong>Position:</strong> <span id="department" data-department-id="${employeeData.department_id}">${employeeData.department_name}</span</div>
+                                <br><br>
+                                <div><strong>Default Username:</strong> ${cleanString(employeeData.name)}</div>    
+                                <div><strong>Default Password:</strong> ${employeeData.id}</div>    
+                            `;
+
+                            // Show the modal
+                            $('#employeeModal').modal('show');
+                        });
+                        
                     }
-                       
-                }
-                
-            })
+                    
+                })
             .catch((error) => {
                 console.error('Error fetching search results:', error);
             });
@@ -242,7 +235,9 @@
             },
             body: JSON.stringify(data)
         })
-        .then((response) => response.json())
+        .then((response) => {
+            return response.json();
+        })
         .then((results) => {
             Swal.fire({
                 title: "Success Adding User",
@@ -251,8 +246,11 @@
                 confirmButtonText: "OK",
             }).then(() => {
                 location.reload();
-            })
-        });
+            });
+        })
+        .catch((error) => {
+            toastr.error(error, "Error");
+        })
     }
     
     const deleteUser = (id) => {

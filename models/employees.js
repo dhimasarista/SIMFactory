@@ -24,6 +24,8 @@ const employee = async (queryAsync) => {
             employment_contract MEDIUMBLOB,
             department_id INT,
             FOREIGN KEY (department_id) REFERENCES departments(id),
+            is_user BOOLEAN DEFAULT 0,
+            is_request BOOLEAN DEFAULT 0,
             created_at TIMESTAMP
         )`);
         const result = (employeesTable !== 0) ? "Already Exist" : "Created";

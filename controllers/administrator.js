@@ -30,10 +30,15 @@ const administrator = {
             password: await bcrypt.hash(id, 10),
             department_id: department_id
         }
-        const query = `INSERT INTO users SET ?`;
+        const query = `INSERT IGNORE INTO users SET ?`;
         try {
             const results = await queryAsync(query, data);
-            res.status(200).send(results);
+            console.log(results["insertId"] !== 0);
+            if (results["insertId"] !== 0) {
+                res.status(200).send(results);
+            } else {
+                res.status(409).send(results);
+            }
         } catch (error) {
             errorLogging(error);
         }

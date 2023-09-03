@@ -2,7 +2,7 @@ const { promisify } = require('util');
 const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
-const errorHandling = require('../utils/errorHandling');
+const {errorHandling, errorLogging} = require('../utils/errorHandling');
 const getDataEmployee = require("../models/query/getDataEmployee");
 
 const user = {
