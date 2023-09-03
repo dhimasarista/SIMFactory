@@ -96,12 +96,12 @@ const administrator = {
     },
     // Fixing
     addUserByReq: async (req, res) => {
-        const { id, department_id, username} = req.body;
+        const { id, department_id, username, password } = req.body;
         const data = {
             id: parseInt(id),
             username: username,
             password: await bcrypt.hash(id, 10),
-            department_id: department_id,
+            department_id: department_id
         }
         console.log(req.body);
         const query = `INSERT IGNORE INTO users SET ?`;
