@@ -33,8 +33,13 @@ const administrator = {
         const query = `INSERT IGNORE INTO users SET ?`;
         try {
             const results = await queryAsync(query, data);
-            console.log(results["insertId"] !== 0);
+            const update = {
+                is_user: 1,
+                is_request: 0,
+            }
             if (results["insertId"] !== 0) {
+                const resultChange = await queryAsync(`UPDATE employees SET ? WHERE id = ?`, [update, id]);
+                console.log(resultChange);
                 res.status(200).send(results);
             } else {
                 res.status(409).send(results);
