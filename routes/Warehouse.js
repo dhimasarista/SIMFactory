@@ -31,7 +31,7 @@ class Material{
             // Merender: views/material.ejs
             try {
                 const results = await queryAsync(query)
-                res.render("material",{
+                res.render("wh_material",{
                     path,
                     user,
                     data: results
