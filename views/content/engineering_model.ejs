@@ -28,10 +28,11 @@
                       </tr>
                    </thead>
                    <tbody id="departmentTableBody">
+                     <% data.forEach((model) => { %>
                       <tr>
-                         <td>049835</td>
-                         <td><a href="#">Mobile Apps</a></td>
-                         <td>JS, React Native</td>
+                         <td><%- model.id %></td>
+                         <td><a href="#"><%- model.name %></a></td>
+                         <td></td>
                          <td style="display: flex; justify-content: flex-end;">
                            <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button" onclick="">
                               <i>
@@ -58,6 +59,7 @@
                             </a>
                          </td>
                       </tr>
+                      <% }); %>
                    </tbody>
                 </table>
              </div>
