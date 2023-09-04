@@ -12,18 +12,18 @@
                    <h3 class="card-title">Employee Profile</h3>
                 </div>
                 <div class="card-body">
-                   <div id="employeeId">
-                      <h6 ><b>Employee ID</b></h6>
-                      <p><%= data.id %></p>
-                   </div>
-                   <div id="name">
-                      <h6><b>Name</b></h6>
-                      <p><%= data.name %></p>
-                   </div>
-                   <div id="department">
-                      <h6><b>Department</b></h6>
-                      <p><%= data.department_name %></p>
-                   </div>
+                     <div id="employeeId">
+                        <h6 ><b>Employee ID</b></h6>
+                        <p><%= data.id %></p>
+                     </div>
+                     <div id="name">
+                        <h6><b>Name</b></h6>
+                        <p><%= data.name %></p>
+                     </div>
+                     <div id="department">
+                        <h6><b>Department</b></h6>
+                        <p><%= data.department_name %></p>
+                     </div>
                 </div>
              </div>
           </div>
@@ -57,7 +57,7 @@
         const newPassword = document.getElementById('new-password').value;
     
         const data = {
-            username: newUsername,
+           username: newUsername,
             password: newPassword
         };
         
@@ -68,7 +68,7 @@
                 icon: "warning",
                 confirmButtonText: "OK",
             }).then(() => {
-                // Menghilangkan modal dan backdrop
+               // Menghilangkan modal dan backdrop
                 $("#editModal").modal('hide');
             });
             return;

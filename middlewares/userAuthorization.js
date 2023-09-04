@@ -54,13 +54,6 @@ const userAuthorization = (app) => {
             return res.redirect("/dashboard");
           }
 
-          if (isAdmin || user.id === 1){
-            if (currentPath === "/user/profile") {
-              res.redirect("/dashboard");
-            }
-            return next();
-          }
-
           // Path yang diizinkan berdasarkan role dan department
           // Path / dan /monitoring dapat diakses menggunakan user guest
           

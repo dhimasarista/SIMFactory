@@ -40,8 +40,7 @@ const administrator = {
                 is_request: 0,
             }
             if (results["insertId"] !== 0) {
-                const resultChange = await queryAsync(`UPDATE employees SET ? WHERE id = ?`, [update, id]);
-                console.log(resultChange);
+                await queryAsync(`UPDATE employees SET ? WHERE id = ?`, [update, id]);
                 res.status(200).send(results);
             } else {
                 res.status(409).send(results);
@@ -103,7 +102,6 @@ const administrator = {
             password: await bcrypt.hash(id, 10),
             department_id: department_id
         }
-        console.log(req.body);
         const query = `INSERT IGNORE INTO users SET ?`;
         try {
             await queryAsync("UPDATE employees SET is_user = 1, is_request = 0 WHERE id = ?", [data.id])
@@ -119,7 +117,6 @@ const administrator = {
         try {
             const results = await queryAsync("UPDATE employees SET is_user = 0, is_request = 0 WHERE id = ?", [id]);
             res.json(results);
-            console.log(results);
         } catch (error) {
             errorLogging(error); 
         }

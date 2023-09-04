@@ -11,17 +11,23 @@ const user = {
         const path = req.path;
         const id = user.id;
 
-        const query = getDataEmployee() + " WHERE employees.id = ?";
-        try {
-            const results = await queryAsync(query, [id]); // Array of Object
-            res.render("profile", { 
-                user, 
-                path, 
-                data: results[0]
-            });
-        } catch (error) {
-            errorHandling(res, user, path, error);
+        // user dengan id 1 adalah admin dan user(default)
+        if (user.id === 1 && path === "/user/profile"){
+            res.redirect("/dashboard");
+        } else {
+            const query = getDataEmployee() + " WHERE employees.id = ?";
+            try {
+                const results = await queryAsync(query, [id]); // Array of Object
+                res.render("profile", { 
+                    user, 
+                    path, 
+                    data: results[0]
+                });
+            } catch (error) {
+                errorHandling(res, user, path, error);
+            }
         }
+        
     },
     updateUser: async (req, res) => {
         const id = parseInt(req.params.id);
