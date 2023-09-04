@@ -5,7 +5,6 @@ const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const fs = require("fs");
-const { deletePdfHandler, deleteImageHandler } = require('../utils/uploads/fileUploads');
 
 const employee = {
     renderPage: async (req, res) => {
