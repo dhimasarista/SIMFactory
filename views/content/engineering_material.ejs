@@ -1,13 +1,13 @@
 <div class="row">
     <div class="col-12">
-       <div class="card ">
+       <div class="card border-0">
           <div class="card-header " style="display: flex; justify-content: space-between; align-items: center;">
              <h3 class="card-title">Materials</h3>
              <span style="margin-left: auto;">
              <button type="button" class="btn btn-secondary" id="newButton">
              New
              </button>
-             <button type="button" class="btn btn-secondary" id="departmentButton" style="display: none;"> 
+             <button type="button" class="btn btn-secondary" id="materialButton" style="display: none;"> 
              Departments
              </button>
              <button type="button" class="btn btn-secondary" onclick="printContent()">
@@ -16,12 +16,12 @@
              </span>
           </div>
           <!-- /.card-header -->
-          <div class="card-body p-0 my-2 mx-4" id="departmentTable">
+          <div class="card-body p-0 my-2 mx-4" id="materialTable">
              <div class="table-responsive">
-                <table class="table m-0" id="department">
+                <table class="table m-0 table-borderless table-hover table-sm" id="material">
                    <thead>
                       <tr>
-                         <th>Code</th>
+                         <th>Code S/N</th>
                          <th>Name</th>
                          <th>Manufacturer</th>
                          <th></th>
@@ -32,7 +32,7 @@
                       <tr>
                          <td><%- material.id %></td>
                          <td><a href="#"><%- material.name %></a></td>
-                         <td></td>
+                         <td><%- material.manufacturer %></td>
                          <td style="display: flex; justify-content: flex-end;">
                            <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button" onclick="">
                               <i>
@@ -65,12 +65,20 @@
              </div>
              <!-- /.table-responsive -->
           </div>
-          <div class="card-body" id="departmentForm" style="display: none;">
-             <form id="addDepartmentForm">
+          <div class="card-body" id="materialForm" style="display: none;">
+             <form id="addMaterialForm">
                 <div class="form-group">
-                   <label for="departmentName">Name</label>
-                   <input type="text" class="form-control" id="name" name="name">
+                    <label for="id">Code S/N</label>
+                    <input type="text" class="form-control" id="id" name="id">
+                 </div>
+                <div class="form-group">
+                   <label for="materialName">Name</label>
+                   <input type="text" class="form-control" id="materialName" name="materialName">
                 </div>
+                <div class="form-group">
+                    <label for="manufacturerName">Manufacturer</label>
+                    <input type="text" class="form-control" id="manufacturerName" name="manufacturerName">
+                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
              </form>
           </div>
@@ -85,5 +93,32 @@
             deferRender: true, // This option defers rendering of the table until required
             processing: true,  // Show a processing indicator while waiting for data
             sort: false
+        });
+
+        const newButton = document.getElementById('newButton');
+        const materialButton= document.getElementById('materialButton');
+        const materialTable = document.getElementById('materialTable');
+        const materialForm = document.getElementById('materialForm');
+        const addMaterialForm = document.getElementById('addMaterialForm');
+        
+        newButton.addEventListener('click', () => {
+            materialTable.style.display = 'none';
+            materialForm.style.display = 'block';
+            materialButton.style.display = "inline";
+            newButton.style.display = "none";
+        });
+        materialButton.addEventListener("click", () => {
+            materialForm.style.display = 'none';
+            materialTable.style.display = 'table';
+            materialButton.style.display = "none";
+            newButton.style.display = "inline";
+        }) 
+        
+        addMaterialForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+        
+            saveData();
+            document.getElementById("materialName").value = "";
+            document.getElementById("manufacturerName").value = "";
         });
  </script>
