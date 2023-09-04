@@ -8,6 +8,7 @@ const Uploads= require("./Uploads");
 const { Material } = require("./Warehouse");
 const Testing = require("./Testing");
 const Monitoring = require("./Monitoring");
+const Engineering = require("./Engineering");
 
 const setupRoutes = (app) => {
   new Index(app);
@@ -22,6 +23,7 @@ const setupRoutes = (app) => {
   new Material(app).render();
   new Uploads(app);
   new Monitoring(app);
+  new Engineering(app);
 
   // Testing
   new Testing(app);
