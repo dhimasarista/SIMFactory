@@ -6,6 +6,7 @@ const materials = async (queryAsync) => {
             `CREATE TABLE IF NOT EXISTS materials(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
+                manufacturer VARCHAR(255) NULL,
                 stocks INT NULL,
                 created_at TIMESTAMP
             )`

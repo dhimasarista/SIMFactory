@@ -28,6 +28,24 @@ class Engineering {
             } catch (error) {
                 errorHandling(res, user, path, error);
             }
+        });
+
+        this.app.route("/engineering/material")
+        .get(async (req, res) => {
+            const user = req.cookies.user;
+            const path = req.path;
+            const query = `SELECT * FROM materials`;
+            try {
+                const results = await queryAsync(query);
+
+                res.render("engineering_material", {
+                    user,
+                    path,
+                    data: results
+                })
+            } catch (error) {
+                errorHandling(res, user, path, error);
+            }
         })
     }
 }
