@@ -1,9 +1,11 @@
 const { red, qm, symbol, green } = require("../utils/logging");
 
+// Junction tabel
 const modelsMaterials = async (queryAsync) => {
     try {
         const modelsMaterialsTable = await queryAsync(
             `CREATE TABLE IF NOT EXISTS models_materials(
+                id INT AUTO_INCREMENT PRIMARY KEY,
                 model_id INT,
                 material_id INT,
                 created_at TIMESTAMP,
