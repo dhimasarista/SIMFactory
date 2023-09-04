@@ -87,6 +87,7 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
                     </button>
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button> -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
                         <i class="fas fa-wrench"></i>
@@ -203,102 +204,174 @@
         </div>
         <!-- /.card -->
     </div>
+
+    
     <!-- /.col -->
 </div>
-<!-- /.row -->
-<div class="card">
-    <div class="card-header border-transparent">
-        <h3 class="card-title">Production</h3>
-        <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-            <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-widget="fullscreen">
-            <i class="fas fa-expand-arrows-alt"></i>
-            </button>
-            <!-- <li class="nav-item">
-                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                </a>
-                </li> -->
-            <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-                </button> -->
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header border-transparent">
+                <h5 class="card-title">Production</h5>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        </a>
+                        </li> -->
+                    <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                        <i class="fas fa-times"></i>
+                        </button> -->
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table m-0">
+                        <thead>
+                            <tr>
+                                <th>Line</th>
+                                <th>Model</th>
+                                <th>Status</th>
+                                <th>Team/Shift</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#">1</a></td>
+                                <td>Model 1</td>
+                                <td><span class="badge badge-info">Processing</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#00a65a" data-height="20">B/2nd</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">2</a></td>
+                                <td>Model 2</td>
+                                <td><span class="badge badge-danger">Stopped</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">D/2nd</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">3</a></td>
+                                <td>Model 3</td>
+                                <td><span class="badge badge-info">Processing</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#f56954" data-height="20">F/2nd</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">4</a></td>
+                                <td>Model 4</td>
+                                <td><span class="badge badge-success">Finished</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">G/1st</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">5</a></td>
+                                <td>Model 4</td>
+                                <td><span class="badge badge-warning">Finished</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#f39c12" data-height="20">H/1st</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#">6</a></td>
+                                <td>Empty</td>
+                                <td><span class="badge badge-dark">Not-Production</span></td>
+                                <td>
+                                    <div class="sparkbar" data-color="#f56954" data-height="20">None</div>
+                                </td>
+                            </tr>
+                            <tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Detail</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Print</a>
+            </div>
+            <!-- /.card-footer -->
         </div>
     </div>
-    <!-- /.card-header -->
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table m-0">
-                <thead>
-                    <tr>
-                        <th>Line</th>
-                        <th>Model</th>
-                        <th>Status</th>
-                        <th>Team/Shift</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="#">1</a></td>
-                        <td>Model 1</td>
-                        <td><span class="badge badge-info">Processing</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00a65a" data-height="20">B/2nd</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">2</a></td>
-                        <td>Model 2</td>
-                        <td><span class="badge badge-danger">Stopped</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00c0ef" data-height="20">D/2nd</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">3</a></td>
-                        <td>Model 3</td>
-                        <td><span class="badge badge-info">Processing</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f56954" data-height="20">F/2nd</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">4</a></td>
-                        <td>Model 4</td>
-                        <td><span class="badge badge-success">Finished</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#00c0ef" data-height="20">G/1st</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">5</a></td>
-                        <td>Model 4</td>
-                        <td><span class="badge badge-warning">Finished</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f39c12" data-height="20">H/1st</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">6</a></td>
-                        <td>Empty</td>
-                        <td><span class="badge badge-dark">Not-Production</span></td>
-                        <td>
-                            <div class="sparkbar" data-color="#f56954" data-height="20">None</div>
-                        </td>
-                    </tr>
-                    <tr>
-                </tbody>
-            </table>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Activity Frame</h5>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                                </button>
+                        </div>
+                </div>
+                <style>
+                    img{
+                        height: 360px;
+                        filter: brightness(50%);
+                    }
+    
+                </style>
+                <div class="card-body">
+                    
+                    <!-- Carousel -->
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        
+                        <!-- Indikator slide (titik di bawah carousel) -->
+                        <ul class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ul>
+                
+                        <!-- Daftar slide carousel -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://images.unsplash.com/photo-1611117775350-ac3950990985?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80" alt="Gambar 1">
+                                <div class="carousel-caption">
+                                    <h3>Production</h3>
+                                    <p>Good Quality</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img  src="https://images.unsplash.com/photo-1590496794008-383c8070b257?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1691&q=80" alt="Gambar 2">
+                                <div class="carousel-caption">
+                                    <h3>Logistic</h3>
+                                    <p>Shipping Safe</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img  src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Gambar 3">
+                                <div class="carousel-caption">
+                                    <h3>Engineering</h3>
+                                    <p>High Productivity</p>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- Tombol navigasi carousel -->
+                        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.table-responsive -->
-    </div>
-    <!-- /.card-body -->
-    <div class="card-footer clearfix">
-        <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Detail</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Print</a>
-    </div>
-    <!-- /.card-footer -->
 </div>
+<!-- /.row -->
 <script>
     'use strict'
     
