@@ -7,7 +7,7 @@
              <button type="button" class="btn btn-secondary" id="newButton">
              New
              </button>
-             <button type="button" class="btn btn-secondary" id="materialButton" style="display: none;"> 
+             <button type="button" class="btn btn-secondary" id="materialButton" style="display: none;" onclick="clearForm()"> 
              Departments
              </button>
              <button type="button" class="btn btn-secondary" onclick="printContent()">
@@ -50,7 +50,7 @@
                                </i>
                             </a>
 
-                            <a href="#" class="mt-1 mr-1 badge badge-danger" onclick="deleteData()">
+                            <a href="#" class="mt-1 mr-1 badge badge-danger" onclick="deleteData(parseInt('<%- material.id %>'))">
                                <i>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                      <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
@@ -79,7 +79,7 @@
                     <label for="manufacturerName">Manufacturer</label>
                     <input type="text" class="form-control" id="manufacturerName" name="manufacturerName">
                  </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" onclick="saveData()">Submit</button>
              </form>
           </div>
           <!-- /.card-body -->
@@ -121,4 +121,60 @@
             document.getElementById("materialName").value = "";
             document.getElementById("manufacturerName").value = "";
         });
+
+        const saveData = () => {
+            const codeSN = document.getElementById("id").value;
+            const name = document.getElementById("materialName").value;
+            const manufacturer = document.getElementById("manufacturerName").value;
+
+            const data = {
+               id: codeSN,
+               name: name,
+               manufacturer: manufacturer
+            }
+
+            fetch("/engineering/material", {
+               method: "POST",
+               headers: {
+                  'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(data)
+            })
+            .then((response) => response.json())
+            .then(results => {
+               Swal.fire({
+                  title: "Success",
+                  text: `${name} added.`,
+                  icon: "success",
+                  confirmButtonText: "OK"
+               }).then((result) => {
+                  // Jika tombol OK ditekan
+                  if (result.isConfirmed) {
+                     // Reload halaman
+                     location.reload();
+                  }
+               });
+            })
+            .catch(error => {
+               toastr.error(`Error add ${name} Cause ${error}.`, "Error");
+            })
+        }
+
+         const clearForm = () => {
+            document.getElementById("id").value = null;
+            document.getElementById("materialName").value = null;
+            document.getElementById("manufacturerName").value = null;
+         }
+
+         const deleteData = (id) => {
+
+            fetch(`/engineering/material/${id}`, {
+               method: "DELETE"
+            })
+            .then(response => response.json())
+            .then(results => {
+               toastr.warning(`${results}.`, `Material ${name} Deleted!`);
+            })
+            .catch(error => toastr.error(`Error delete ${id} Cause ${error}.`, "Error"));
+         }
  </script>

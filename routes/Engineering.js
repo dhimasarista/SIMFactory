@@ -47,6 +47,33 @@ class Engineering {
                 errorHandling(res, user, path, error);
             }
         })
+        .post(async (req, res) => {
+            const { id, name, manufacturer } = req.body;
+            const data = {
+                id: id,
+                name: name,
+                manufacturer: manufacturer
+            }
+
+            try {
+                const query = `INSERT INTO materials SET ?`;
+                const results = await queryAsync(query, data);
+                res.json(results);
+            } catch (error) {
+                errorLogging(error);
+            }
+        });
+
+        this.app.delete("/engineering/material/:id", async (req, res) => {
+            const id = req.params.id;
+
+            try {
+                const results = await queryAsync("DELETE FROM materials WHERE id = ?", [id]);
+                res.json(results[0]);
+            } catch (error) {
+                errorLogging(error);
+            }
+        })
     }
 }
 
