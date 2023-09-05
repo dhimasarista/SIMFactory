@@ -4,7 +4,7 @@ const models = async (queryAsync) => {
     try {
         const modelsTable = await queryAsync(
             `CREATE TABLE IF NOT EXISTS models(
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id BIGINT(64) AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 created_at TIMESTAMP
             )`
