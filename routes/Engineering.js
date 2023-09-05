@@ -69,7 +69,7 @@ class Engineering {
 
             try {
                 const results = await queryAsync("DELETE FROM materials WHERE id = ?", [id]);
-                res.json(results[0]);
+                res.json(results);
             } catch (error) {
                 errorLogging(error);
             }

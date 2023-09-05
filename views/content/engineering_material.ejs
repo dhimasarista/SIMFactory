@@ -29,7 +29,7 @@
                    </thead>
                    <tbody id="departmentTableBody">
                      <% data.forEach((material) => { %>
-                      <tr>
+                      <tr id="material-<%- material.id %>">
                          <td><%- material.id %></td>
                          <td><a href="#"><%- material.name %></a></td>
                          <td><%- material.manufacturer %></td>
@@ -79,7 +79,7 @@
                     <label for="manufacturerName">Manufacturer</label>
                     <input type="text" class="form-control" id="manufacturerName" name="manufacturerName">
                  </div>
-                <button type="submit" class="btn btn-primary" onclick="saveData()">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
              </form>
           </div>
           <!-- /.card-body -->
@@ -89,10 +89,10 @@
     <!-- /.col -->
  </div>
  <script>
-        let table = new DataTable('#department', {
+        let table = new DataTable('#material', {
             deferRender: true, // This option defers rendering of the table until required
             processing: true,  // Show a processing indicator while waiting for data
-            sort: false
+            // sort: false
         });
 
         const newButton = document.getElementById('newButton');
@@ -118,8 +118,7 @@
             e.preventDefault();
         
             saveData();
-            document.getElementById("materialName").value = "";
-            document.getElementById("manufacturerName").value = "";
+            clearForm();
         });
 
         const saveData = () => {
@@ -173,7 +172,8 @@
             })
             .then(response => response.json())
             .then(results => {
-               toastr.warning(`${results}.`, `Material ${name} Deleted!`);
+               document.getElementById(`material-${id}`).remove();
+               toastr.warning(`Success Delete ${id}.`, `Warning!`);
             })
             .catch(error => toastr.error(`Error delete ${id} Cause ${error}.`, "Error"));
          }
