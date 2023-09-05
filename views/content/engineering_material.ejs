@@ -15,6 +15,21 @@
              </button>
              </span>
           </div>
+          <script>
+               // Web Storage
+               const materialData = [];
+               '<% data.forEach((material) => { %>'
+               materialData.push({
+                  id: '<%- material.id %>',
+                  name: '<%- material.name %>',
+                  manufacturer: '<%- material.manufacturer %>'
+               });
+               '<% }); %>';
+               localStorage.setItem('materialData', JSON.stringify(materialData));
+               const data = localStorage.getItem('materialData');
+               const parseData = JSON.parse(data);
+               console.log(parseData);
+          </script>
           <!-- /.card-header -->
           <div class="card-body p-0 my-2 mx-4" id="materialTable">
              <div class="table-responsive">
@@ -178,3 +193,40 @@
             .catch(error => toastr.error(`Error delete ${id} Cause ${error}.`, "Error"));
          }
  </script>
+ <!-- <script>
+   // Mendefinisikan data yang akan disimpan atau di-cache
+const newEmployeeData = [
+  { id: 1, name: 'John Doe', department: 'HR' },
+  { id: 2, name: 'Jane Smith', department: 'Finance' },
+  // Tambahkan data lain jika diperlukan
+];
+
+// Mendapatkan data yang ada di Local Storage
+const cachedData = localStorage.getItem('employeesData');
+
+if (cachedData === null) {
+  // Data tidak ada di Local Storage, simpan data baru
+  localStorage.setItem('employeesData', JSON.stringify(newEmployeeData));
+  console.log('Data baru disimpan di Local Storage');
+} else {
+  // Data ditemukan di Local Storage, bandingkan dengan data baru
+  const cachedEmployeeData = JSON.parse(cachedData);
+
+  // Bandingkan data yang ada di Local Storage dengan data baru
+  if (JSON.stringify(cachedEmployeeData) !== JSON.stringify(newEmployeeData)) {
+    // Data berbeda, perbarui data di Local Storage
+    localStorage.setItem('employeesData', JSON.stringify(newEmployeeData));
+    console.log('Data diperbarui di Local Storage');
+  } else {
+    // Data sama, gunakan data dari Local Storage
+    console.log('Data diambil dari Local Storage');
+  }
+}
+
+// Mengambil data dari Local Storage (bisa data baru atau yang telah ada)
+const finalEmployeeData = JSON.parse(localStorage.getItem('employeesData'));
+
+// Gunakan data yang telah diambil dari Local Storage
+console.log('Data yang digunakan:', finalEmployeeData);
+
+ </script> -->
