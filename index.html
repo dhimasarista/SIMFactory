@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Login Page</title>
+    <title>Login</title>
     <style>
 * {
     margin: 0px;
@@ -152,6 +152,23 @@
 .LoginFormContainer .LoginFormInnerContainer .LoginButton:active {
     background-color: #4520ff;
 }
+.LoginFormContainer .LoginFormInnerContainer .GuestButton {
+    text-align: center;
+    margin-top: 30px;
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    color: black;
+    opacity: 0.9;
+    border: 0px;
+    outline: 0px;
+    cursor: pointer;
+}
+
+.LoginFormContainer .LoginFormInnerContainer .GuestButton:hover {
+    
+    color: #3f3f45;
+}
 
 
 @media only screen and (max-width: 1200px) {
@@ -184,6 +201,14 @@
 .LoginPageContainer::-webkit-scrollbar-thumb:hover {
     background: #4520ff;
 }
+#guest-button{
+            margin: 40px;
+            /* text-decoration: none; */
+            color: white;
+}
+#guest-button:hover{
+    background-color: black;
+}
     </style>
 </head>
 <body>
@@ -204,7 +229,7 @@
                     <header class="header">Log in</header>
                     <header class="subHeader">Welcome to <b>SIMFactory</b>. Please Enter your Details</header>
     
-                    <form>
+                    <form method="post" action="/login">
                         <div class="inputContainer">
                             <label class="label" for="username">
                                 <i class="labelIcon">
@@ -219,7 +244,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><circle cx="33.4" cy="14.8" r="3.9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M20.4 20.4a11.47 11.47 0 0 1 5.2-13.3a11.31 11.31 0 0 1 14.1 2.3a11.32 11.32 0 0 1-13 17.9"/><path fill="none" stroke="currentColor" d="M20.4 20.4L5.5 37v5.4h6.1l.7-4.2l6.5-.4l.5-5.5l5.5-.1l1.8-4.8"/></svg>
                                 </i>
                                 <span>Password</span></label>
-                            <input type="password" class="input" id="password" placeholder="Enter your Password">
+                            <input type="password" name="password" class="input" id="password" placeholder="Enter your Password">
                         </div>
                         <div class="OptionsContainer">
                             <div class="checkboxContainer">
@@ -228,7 +253,8 @@
                             </div>
                             <a href="#" class="ForgotPasswordLink">Forgot Password?</a>
                         </div>
-                        <button class="LoginButton">Login</button>
+                        <button class="LoginButton" type="submit">Login</button>
+                        <a href="/guest" class="GuestButton">Guest</a>
                     </form>
                 </div>
             </div>
