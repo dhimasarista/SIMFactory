@@ -123,6 +123,23 @@
                         <th style="width: 20%;">Actions</th>
                      </tr>
                   </thead>
+                  <script>
+                     // Web Storage
+                     const employeesData = [];
+                     '<% employees.forEach((data) => { %>'
+                     employeesData.push({
+                        id: '<%- data.id %>',
+                        name: '<%- data.name %>',
+                        department: '<%- data.department_name %>',
+                        is_user: '<%- data.is_user %>',
+                        is_request: '<%- data.is_request %>',
+                     });
+                     '<% }); %>';
+                     localStorage.setItem('employeesData', JSON.stringify(employeesData));
+                     const data = localStorage.getItem('employeesData');
+                     const parseData = JSON.parse(data);
+                     console.log(parseData);
+                </script>
                   <tbody>
                      <% employees.forEach((data) => { %>
                      <tr id="employee-data">

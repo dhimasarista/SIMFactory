@@ -12,6 +12,7 @@ module.exports = {
         try {
             // Menghitung total karyawan
             const totalEmployees = await queryAsync("SELECT COUNT(*) AS total FROM employees"); // Array of Object
+            const totalModels = await queryAsync("SELECT COUNT(*) AS total FROM models");
             
             // (MVC) Rendering views: index.ejs
             res.render("dashboard", {
@@ -19,6 +20,7 @@ module.exports = {
                 user: user,
                 path: path,
                 totalEmployees: totalEmployees[0].total,
+                totalModels: totalModels[0].total
             });
         } catch (error) {
             errorHandling(res, user, path, error);
