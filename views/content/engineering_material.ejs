@@ -181,16 +181,27 @@
          }
 
          const deleteData = (id) => {
-
-            fetch(`/engineering/material/${id}`, {
-               method: "DELETE"
-            })
-            .then(response => response.json())
-            .then(results => {
-               document.getElementById(`material-${id}`).remove();
-               toastr.warning(`Success Delete ${id}.`, `Warning!`);
-            })
-            .catch(error => toastr.error(`Error delete ${id} Cause ${error}.`, "Error"));
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: "Yes, Delete it!"
+               }).then((result) => {
+                  if (result.isConfirmed) {
+                     fetch(`/engineering/material/${id}`, {
+                        method: "DELETE"
+                     })
+                     .then(response => response.json())
+                     .then(results => {
+                        document.getElementById(`material-${id}`).remove();
+                        toastr.warning(`Success Delete ${id}.`, `Warning!`);
+                     })
+                     .catch(error => toastr.error(`Error delete ${id} Cause ${error}.`, "Error"));    
+                  }
+               })
          }
  </script>
  <script>
