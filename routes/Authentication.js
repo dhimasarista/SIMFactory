@@ -39,7 +39,7 @@ class Login{
                 });
             }
             // Selanjutnya, arahkan pengguna ke "/"
-            res.redirect("/");
+            res.redirect("/monitoring");
         });
 
         this.app.route("/login")

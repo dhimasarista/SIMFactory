@@ -21,6 +21,9 @@ const userAuthorization = (app) => {
           if (currentPath === "/logout") {
             return next(); // Lanjutkan ke middleware berikutnya
           }
+          if (currentPath === "/") {
+            return next(); // Lanjutkan ke middleware berikutnya
+          }
 
           // Path /monitoring akan dialihkan ke /monitoring/production
           if (currentPath === "/monitoring") {
