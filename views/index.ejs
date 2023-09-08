@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gambar Background Responsif</title>
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+      @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 *
 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
-}
-body{
-    background-image: url('https://i.makeagif.com/media/3-17-2018/3DWjOw.gif');
-    background-size: cover;
 }
 header
 {
@@ -64,7 +60,7 @@ header .logo
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background: #111; */
+  background: #111;
   transition: 0.5s;
   z-index: 2;
 }
@@ -75,6 +71,8 @@ header .logo
 
 .showcase video
 {
+  background-image: url('https://i.makeagif.com/media/3-17-2018/3DWjOw.gif');
+      background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -227,11 +225,9 @@ header .logo
         <div class="text">
           <h2>Never Stop To </h2> 
           <h3>Exploring The World</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <a href="#">Explore</a>
+          <p>"Welcome to SimFactory, the System Information and Production Management Platform.
+            SimFactory is a platform designed to provide innovative functions and features for you. We are committed to delivering quality solutions that support the growth of your business. With SimFactory, you can easily manage your system information and production management while leveraging various advanced features we offer. Created by Dhimasarista and the Dart2JS team."</p>
+          <a href="/dashboard">Dashboard</a>
         </div>
         <ul class="social">
           <li><a href="#"><img src="https://i.ibb.co/x7P24fL/facebook.png"></a></li>
@@ -241,10 +237,9 @@ header .logo
       </section>
       <div class="menu">
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">News</a></li>
-          <li><a href="#">Destination</a></li>
-          <li><a href="#">Blog</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="#">Company Profile</a></li>
+          <li><a href="#">Partners</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </div>
