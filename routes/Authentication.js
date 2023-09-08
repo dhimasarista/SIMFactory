@@ -61,10 +61,6 @@ class Login{
                 const username = req.body.username;
                 const password = req.body.password;
                 const stayLoggedIn = req.body.stay;
-                console.log(username);
-                console.log(password);
-                console.log(stayLoggedIn);
-                console.log(typeof stayLoggedIn);
     
                 try {
                     // Mengambil data dari Tabel Admins dan menyimpannya dalam bentuk Array of Object
@@ -105,9 +101,9 @@ class Login{
                             // Lalu di alihkan ke halaman utama
                             return res.redirect("/administrator");
                         } else {
-                            let maxAge = 1000;
+                            let maxAge = 3600000;
                             // jika users akan disimpan di cookise
-                            if (stayLoggedIn === "on") {
+                            if (stayLoggedIn !== undefined) {
                                 maxAge = undefined;
                             }
                             res.cookie("user", {id: idUser, username: cookiesChecking, role: "employee", department: user.department_id}, { maxAge: maxAge }); // 1 Jam
