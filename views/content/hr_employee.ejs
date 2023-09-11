@@ -2,13 +2,51 @@
    .red {
    color: red;
    }
+   /* Mengatur style pada form-group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Mengatur style pada select */
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* Mengatur style pada option yang terpilih */
+.form-group select option[hidden] {
+  display: none;
+}
+
+/* Mengatur style pada option */
+.form-group select option {
+  padding: 10px;
+}
+
+/* Efek hover pada select */
+.form-group select:hover {
+  border-color: #007bff; /* Ubah warna border saat dihover */
+}
+
+/* Efek focus pada select */
+.form-group select:focus {
+  border-color: #007bff; /* Ubah warna border saat difokuskan */
+  outline: none; /* Hilangkan outline bawaan dari beberapa browser */
+}
+
 </style>
 <div id="employee-profile" style="display: none;">
    <div class="row">
+
       <div class="col-md-12">
          <div class="card">
             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-               <h3 class="card-title">Employee Profile</h3>
+               <h3 class="card-title">Employee Profile</h3> 
                <span style="margin-left: auto;">
                   <a href="#" class="mt-1 mr-1 badge badge-secondary" onclick="backButton()">
                      <script>
@@ -27,30 +65,48 @@
                </span>
             </div>
             <div class="row" style="margin: 40px 15px;">
-               <div class="col-md-3">
+               <div class="col-md-4">
+                  <div class="card card-user">
+                    <div class="image" style="position: relative;">
+                       <!-- Gambar Pertama (gambar latar belakang) -->
+                       <img style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;" src="https://images.unsplash.com/photo-1485083269755-a7b559a4fe5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80g">
+                     
+                       <!-- Gambar Kedua (gambar profil) -->
+                       <img  src="../img/profile.jpg" id="photo-employee" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: center; position: absolute; top: 200px; left: 50%; transform: translateX(-50%);" alt="...">
+                       <div class="card-body" style="margin-top: 80px;">
+                          <div class="author text-center" >
+                             <a href="#">
+                                <h4 style="margin-top: 10px;" ></h4>
+                                <h5 class="title" id="name-employee"></h5>
+                             </a>
+                             <div class="card-footer bg-white">
+                               <hr>
+                               <div class="card-body text-center">
+                                 <!-- <h4>Documents</h4> -->
+                                 <div class="text-left">
+                                    <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
+                                    <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
+                                    <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
+                                    <p><a href="#" id="contract-employee">Contract Not Found</a></p>
+                                    <p>MCU: <span id="mcu-employee"></span></p>
+                                    <p>Criminal History: <span id="crimhistory-employee"></span></p>
+                                 </div>
+                              </div>
+                             </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div> 
+                  </div>
+
+               <div class="col-md-8">
                   <div class="card">
                      <div class="card-body">
-                        <div class="text-center">
-                           <img src="../img/Loading_icon.gif" id="photo-employee" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: center; " alt="User Image">
-                           <h4 style="margin-top: 10px;" id="name-employee"></h4>
-                           <h6 id="id-employee"></h6>
-                           <p>Department: <span id="department-employee"></span></p>
-                        </div>
-                        <div class="card-body text-center">
-                           <!-- <h4>Documents</h4> -->
-                           <div class="text-left">
-                              <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
-                              <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
-                              <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
-                              <p><a href="#" id="contract-employee">Contract Not Found</a></p>
-                              <p>MCU: <span id="mcu-employee"></span></p>
-                              <p>Criminal History: <span id="crimhistory-employee"></span></p>
-                           </div>
-                        </div>
+                        <h4>Employee Information</h4>
+                        <p>ID Employee: <span id="id-employee"></span></p>
+                        <p>Department: <a id="department-employee"></a></p>
                      </div>
                   </div>
-               </div>
-               <div class="col-md-9">
                   <div class="card">
                      <div class="card-body">
                         <h4>Informasi Pribadi</h4>
@@ -908,8 +964,8 @@
       }).then((response => response.json()))
       .then((results) => {
          // Menampilkan Tabel dan Button New
-         employeeTable.style.display = 'block';
-         newButton.style.display = "inline";
+         // employeeTable.style.display = 'block';
+         // newButton.style.display = "inline";
       
          // Menghilangkan form employee & button employee
          Swal.fire({
