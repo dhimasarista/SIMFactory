@@ -15,11 +15,13 @@ const user = {
         if (user.id === 1 && path === "/user/profile"){
             res.redirect("/dashboard");
         } else {
+            const photo = await queryAsync("SELECT photo FROM employees where id = ?", [id]);
             const query = getDataEmployee() + " WHERE employees.id = ?";
             try {
                 const results = await queryAsync(query, [id]); // Array of Object
                 res.render("profile", { 
                     user, 
+                    photo,
                     path, 
                     data: results[0]
                 });
