@@ -75,8 +75,8 @@
                    <label for="name">Name</label>
                    <input type="text" class="form-control" id="name" name="name">
                 </div>
-                <div class="form-group">
-                  <form id="materialForm">
+                <div class="form-group" id="materialForm">
+                  <form>
                      <div class="row">
                          <% materials.forEach((material) => { %>
                              <div class="col-md-3">
@@ -89,7 +89,7 @@
                      </div>
                  </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" id="submit-model" class="btn btn-primary">Submit</button>
              </form>
           </div>
           <!-- /.card-body -->
@@ -123,21 +123,34 @@
          modelTable.style.display = 'table';
          modelButton.style.display = "none";
          newButton.style.display = "inline";
-        })
-
-        var form = document.getElementById("materialForm");
-
-         // Mendapatkan semua elemen input checkbox dalam formulir
-         var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-         function showSelectedItems() {
+        });
+        
+        const modelMaterials = [];
+        function showSelectedItems() {
             var checkboxes = document.querySelectorAll('input[name="item-material"]:checked');
-            var selectedItems = [];
+            modelMaterials.length = 0; // Mengosongkan array sebelum menambahkan item
             for (var i = 0; i < checkboxes.length; i++) {
-                selectedItems.push(checkboxes[i].value);
+               const value = checkboxes[i].value;
+               if (!modelMaterials.includes(value)) {
+                  modelMaterials.push(value);
+               }
             }
-            var selectedItemsDiv = document.getElementById("selectedItems");
-            // selectedItemsDiv.innerHTML = "Item terpilih: " + selectedItems.join(", ");
-            console.log(selectedItems);
         }
+
+        document.getElementById("submit-model").addEventListener("click", () => {
+            showSelectedItems()
+            Swal.fire({
+                  title: "Are you sure?",
+                  text: modelMaterials.join(', '),
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: "Yes, Delete it!"
+               }).then((result) => {
+                  if (result.isConfirmed) {   
+                  }
+               })
+        });
+
  </script>
