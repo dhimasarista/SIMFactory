@@ -38,13 +38,22 @@ class Engineering {
             const { id, name, materials } = req.body;
 
             const modelData = {
-                id: id,
-                name: name
+                id: parseInt(id),
+                name: name,
             }
 
             try {
-                const query = await queryAsync("INSERT INTO models SET ?", modelData);
-                res.json(query);
+                console.log(modelData);
+                // await queryAsync("INSERT INTO models SET ?", modelData);
+                materials.forEach(async (element) => {
+                    const materialId = parseInt(element);
+                    const dataMaterial = {
+                        model_id: id,
+                        material_id: materialId,
+                    }
+                    await queryAsync("INSERT INTO models_materials SET ?", dataMaterial);    
+                });
+                res.sendStatus(200);
             } catch (error) {
                 errorLogging(error);
             }
