@@ -15,15 +15,20 @@ class Engineering {
         .get(async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
-            const query = `SELECT * FROM models`;
+            const queryModels = `SELECT * FROM models`;
+            const queryMaterials = `SELECT * FROM materials`;
 
             // kode awal model 024682
             try {
-                const results = await queryAsync(query);
+                const [resultModels, resultMaterials] = await Promise.all([
+                    queryAsync(queryModels),
+                    queryAsync(queryMaterials),
+                ]);
                 res.render("engineering_model", {
                     user,
                     path,
-                    data: results
+                    models: resultModels,
+                    materials: resultMaterials
                 });
             } catch (error) {
                 errorHandling(res, user, path, error);
