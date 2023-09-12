@@ -7,8 +7,8 @@
              <button type="button" class="btn btn-secondary" id="newButton">
              New
              </button>
-             <button type="button" class="btn btn-secondary" id="departmentButton" style="display: none;"> 
-             Departments
+             <button type="button" class="btn btn-secondary" id="modelButton" style="display: none;"> 
+             Models
              </button>
              <button type="button" class="btn btn-secondary" onclick="printContent()">
              Print
@@ -16,19 +16,19 @@
              </span>
           </div>
           <!-- /.card-header -->
-          <div class="card-body p-0 my-2 mx-4" id="departmentTable">
+          <div class="card-body p-0 my-2 mx-4" id="modelTable">
              <div class="table-responsive">
                 <table class="table m-0" id="department">
                    <thead>
                       <tr>
-                         <th>Code</th>
+                         <th>Model ID</th>
                          <th>Name</th>
                          <th>Material</th>
                          <th></th>
                       </tr>
                    </thead>
-                   <tbody id="departmentTableBody">
-                     <% data.forEach((model) => { %>
+                   <tbody id="modelsTabelBody">
+                     <% models.forEach((model) => { %>
                       <tr>
                          <td><%- model.id %></td>
                          <td><a href="#"><%- model.name %></a></td>
@@ -65,11 +65,29 @@
              </div>
              <!-- /.table-responsive -->
           </div>
-          <div class="card-body" id="departmentForm" style="display: none;">
-             <form id="addDepartmentForm">
+          <div class="card-body" id="modelForm" style="display: none;">
+             <form id="addModelForm">
                 <div class="form-group">
-                   <label for="departmentName">Name</label>
+                   <label for="id">Model ID</label>
+                   <input type="text" class="form-control" id="id" name="id">
+                </div>
+                <div class="form-group">
+                   <label for="name">Name</label>
                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="form-group">
+                  <form id="materialForm">
+                     <div class="row">
+                         <% materials.forEach((material) => { %>
+                             <div class="col-md-3">
+                                 <label for="<%- material.id %>">
+                                     <input type="checkbox" id="<%- material.id %>" name="item-material" value="<%- material.id %>">
+                                     <%- material.name %>
+                                 </label>
+                             </div>
+                         <% }); %>
+                     </div>
+                 </form>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
              </form>
@@ -86,4 +104,40 @@
             processing: true,  // Show a processing indicator while waiting for data
             sort: false
         });
+
+        const newButton = document.getElementById('newButton');
+        const modelButton= document.getElementById('modelButton');
+        const modelTable = document.getElementById('modelTable');
+        const modelForm = document.getElementById('modelForm');
+        const addModelForm = document.getElementById('addModelForm');
+
+        newButton.addEventListener("click", () => {
+         modelTable.style.display = 'none';
+         modelForm.style.display = 'block';
+         modelButton.style.display = "inline";
+         newButton.style.display = "none";
+        });
+
+        modelButton.addEventListener("click", () => {
+         modelForm.style.display = 'none';
+         modelTable.style.display = 'table';
+         modelButton.style.display = "none";
+         newButton.style.display = "inline";
+        })
+
+        var form = document.getElementById("materialForm");
+
+         // Mendapatkan semua elemen input checkbox dalam formulir
+         var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+         function showSelectedItems() {
+            var checkboxes = document.querySelectorAll('input[name="item-material"]:checked');
+            var selectedItems = [];
+            for (var i = 0; i < checkboxes.length; i++) {
+                selectedItems.push(checkboxes[i].value);
+            }
+            var selectedItemsDiv = document.getElementById("selectedItems");
+            // selectedItemsDiv.innerHTML = "Item terpilih: " + selectedItems.join(", ");
+            console.log(selectedItems);
+        }
  </script>
