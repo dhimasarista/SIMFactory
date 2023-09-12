@@ -39,7 +39,6 @@ class Engineering {
                 name: name,
             }
             try {
-                console.log(modelData);
                 await queryAsync("INSERT INTO models SET ?", modelData);
                 res.sendStatus(200);
             } catch (error) {
