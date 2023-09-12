@@ -16,43 +16,31 @@ class Engineering {
             const user = req.cookies.user;
             const path = req.path;
             const queryModels = `SELECT * FROM models`;
-            const queryMaterials = `SELECT * FROM materials`;
 
             // kode awal model 024682
             try {
-                const [resultModels, resultMaterials] = await Promise.all([
+                const [resultModels] = await Promise.all([
                     queryAsync(queryModels),
-                    queryAsync(queryMaterials),
                 ]);
                 res.render("engineering_model", {
                     user,
                     path,
                     models: resultModels,
-                    materials: resultMaterials
                 });
             } catch (error) {
                 errorHandling(res, user, path, error);
             }
         })
         .post(async (req, res) => {
-            const { id, name, materials } = req.body;
+            const { id, name } = req.body;
 
             const modelData = {
                 id: parseInt(id),
                 name: name,
             }
-
             try {
                 console.log(modelData);
-                // await queryAsync("INSERT INTO models SET ?", modelData);
-                materials.forEach(async (element) => {
-                    const materialId = parseInt(element);
-                    const dataMaterial = {
-                        model_id: id,
-                        material_id: materialId,
-                    }
-                    await queryAsync("INSERT INTO models_materials SET ?", dataMaterial);    
-                });
+                await queryAsync("INSERT INTO models SET ?", modelData);
                 res.sendStatus(200);
             } catch (error) {
                 errorLogging(error);
