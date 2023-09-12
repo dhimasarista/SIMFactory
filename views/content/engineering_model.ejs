@@ -69,11 +69,11 @@
              <form id="addModelForm">
                 <div class="form-group">
                    <label for="id">Model ID</label>
-                   <input type="text" class="form-control" id="modelId" name="id">
+                   <input type="text" class="form-control" id="modelId" name="id" required>
                 </div>
                 <div class="form-group">
                    <label for="name">Name</label>
-                   <input type="text" class="form-control" id="modelName" name="name">
+                   <input type="text" class="form-control" id="modelName" name="name" required>
                 </div>
                </form>
                <button type="submit" id="submit-model" class="btn btn-primary">Submit</button>
@@ -126,6 +126,15 @@
         document.getElementById("submit-model").addEventListener("click", () => {
             const id = document.getElementById('modelId').value;
             const name = document.getElementById('modelName').value;
+            
+            if (id === "") {
+               Swal.fire("Error", "Model ID is Empty!", "error");
+               return;
+            }
+            if (name === "") {
+               Swal.fire("Error", "Model Name is Empty!", "error");
+               return;
+            }
 
             const data = {
                id: id,
