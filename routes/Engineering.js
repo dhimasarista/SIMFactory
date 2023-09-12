@@ -33,7 +33,22 @@ class Engineering {
             } catch (error) {
                 errorHandling(res, user, path, error);
             }
-        });
+        })
+        .post(async (req, res) => {
+            const { id, name, materials } = req.body;
+
+            const modelData = {
+                id: id,
+                name: name
+            }
+
+            try {
+                const query = await queryAsync("INSERT INTO models SET ?", modelData);
+                res.json(query);
+            } catch (error) {
+                errorLogging(error);
+            }
+        })
 
         this.app.route("/engineering/material")
         .get(async (req, res) => {
