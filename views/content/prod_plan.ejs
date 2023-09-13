@@ -36,7 +36,7 @@
 }
 </style>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
               <h3 class="card-title">Production</h3>
@@ -62,21 +62,23 @@
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Line</th>
-                        <th>Model</th>
-                        <th>Shift</th>
+                        <th>Model Name</th>
+                        <th>Materials</th>
+                        <th>Target</th>
                         <th>Control</th>
                       </tr>
                     </thead>
                     <tbody>
                       <% modelsMaterials.forEach((data) => { %>
                         <tr>
-                          <td><%- data.id %></td>
                           <td><%- data.model_id %></td>
-                          <td><%- data.material_id %></td>
-                          <td>Change</span></td>
+                          <td><%- data.model_name %></td>
+                          <td><%- data.materials_text %></td>
+                          <td><%- data.model_target %></td>
+                          <td><span>Change</span></td>
                         </tr>
                       <% }); %>
+                      
                     </tbody>
                   </table>
                 </div>
@@ -114,40 +116,6 @@
           
 
        <!-- /.card -->
-    </div>
-    <div class="col-md-4">
-        
-        <div class="card">
-            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 class="card-title">Models</h3>
-                
-              </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-               <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                     <tr>
-                        <th>Model ID</th>
-                        <th>Product Name</th>
-                        <th>Target</th>
-                        <th>Inventory</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                      <% models.forEach((model) => { %>
-                          <tr>
-                             <td><%- model.id %></td>
-                             <td><%- model.name %></td>
-                             <td><%- model.target_quantity %></td>
-                             <td>Not</span></td>
-                          </tr>
-                          <% }); %>
-                  </tbody>
-               </table>
-               
-            </div>
-            <!-- /.card-body -->
-         </div>
     </div>
     <!-- /.col -->
  </div>

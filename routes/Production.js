@@ -32,7 +32,6 @@ class Production{
             const path = req.path;
             const queryModels = `SELECT * FROM models`;
             const queryMaterials = `SELECT * FROM materials`;
-            const queryModelsMaterials = `SELECT * FROM models_materials`;
             const query = `
             SELECT
                 models.id AS model_id,
