@@ -1,4 +1,7 @@
-const {errorHandling} = require("../utils/errorHandling");
+const { errorHandling, errorLogging} = require('../utils/errorHandling');
+const { promisify } = require('util');
+const pool = require("../configs/database");
+const queryAsync = promisify(pool.query).bind(pool);
 
 class Production{
     constructor(app){
@@ -22,6 +25,24 @@ class Production{
                 errorHandling(res, user, path, error);
             }
         });
+        this.app.route("/production/plan")
+        .get(async (req, res) => {
+            // Mengambil user dari cookie
+            const user = req.cookies.user;
+            const path = req.path;
+            const query = `SELECT * FROM models`;
+            try {
+                const result = await queryAsync(query)
+                // Rendering views: prod_control.ejs
+                res.render("prod_plan", {
+                    path: path, 
+                    user: user,
+                    data: result
+                });
+            } catch (error) {
+                errorHandling(res, user, path, error);
+            }
+        })
     }
 }
 
