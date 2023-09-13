@@ -30,7 +30,7 @@
                    <tbody id="modelsTabelBody">
                      <% models.forEach((model) => { %>
                       <tr>
-                         <td><%- model.id %></td>
+                         <td class="id_model"><%- model.id %></td>
                          <td><a href="#"><%- model.name %></a></td>
                          <td></td>
                          <td style="display: flex; justify-content: flex-end;">
@@ -85,6 +85,12 @@
     <!-- /.col -->
  </div>
  <script>
+      const idArray = [];
+      document.querySelectorAll(".id_model").forEach((data) => {
+        idArray.push(parseInt(data.textContent));
+      });
+
+
         let table = new DataTable('#department', {
             deferRender: true, // This option defers rendering of the table until required
             processing: true,  // Show a processing indicator while waiting for data
@@ -123,59 +129,72 @@
       //       }
       //   }
 
-        document.getElementById("submit-model").addEventListener("click", () => {
-            const id = document.getElementById('modelId').value;
-            const name = document.getElementById('modelName').value;
-            
-            if (id === "") {
-               Swal.fire("Error", "Model ID is Empty!", "error");
-               return;
+      document.getElementById("submit-model").addEventListener("click", () => {
+         const id = document.getElementById('modelId').value;
+         const name = document.getElementById('modelName').value;
+         
+         let isExist;
+         idArray.forEach(element => {
+            console.log('Element', element);
+            if (parseInt(id) === element) {
+               isExist = true;
+               Swal.fire("Error", "Model ID is Existed!", "error");
             }
-            if (name === "") {
-               Swal.fire("Error", "Model Name is Empty!", "error");
-               return;
-            }
+         });
+         if (id === "") {
+            Swal.fire("Error", "Model ID is Empty!", "error");
+            return;
+         }
+         if (name === "") {
+            Swal.fire("Error", "Model Name is Empty!", "error");
+            return;
+         }
+         
 
-            const data = {
-               id: id,
-               name: name,
-            }
+         const data = {
+            id: id,
+            name: name,
+         }
+
+         if (!isExist) {
             Swal.fire({
-                  title: "Are you sure?",
-                  text: `Adding ${name} as Model.`,
-                  icon: "info",
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: "Yes, Add New Model."
-               }).then((result) => {
-                  if (result.isConfirmed) {   
-                     fetch("/engineering/model", {
-                        method: "POST",
-                        headers: {
-                           'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                     })
-                     .then(response => response.json)
-                     .then(results => {
-                        Swal.fire({
-                           title: "Success",
-                           text: `${name} added.`,
-                           icon: "success",
-                           confirmButtonText: "OK"
-                        }).then((result) => {
-                           // Jika tombol OK ditekan
-                           if (result.isConfirmed) {
-                              // Reload halaman
-                              location.reload();
-                           }
-                        })
-                        .catch(error => console.log(error));
+               title: "Are you sure?",
+               text: `Adding ${name} as Model.`,
+               icon: "info",
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: "Yes, Add New Model."
+            }).then((result) => {
+               if (result.isConfirmed) {   
+                  fetch("/engineering/model", {
+                     method: "POST",
+                     headers: {
+                        'Content-Type': 'application/json'
+                     },
+                     body: JSON.stringify(data)
+                  })
+                  .then(response => response.json())
+                  .then(results => {
+                     console.log(results);
+                     Swal.fire({
+                        title: "Success",
+                        text: `${name} added.`,
+                        icon: "success",
+                        confirmButtonText: "OK"
+                     }).then((result) => {
+                        // Jika tombol OK ditekan
+                        if (result.isConfirmed) {
+                           // Reload halaman
+                           location.reload();
+                        }
                      })
                      .catch(error => console.log(error));
-                  }
-               })
-        });
+                  })
+                  .catch(error => console.log(error));
+               }
+            });
+         }
+      });
 
  </script>
