@@ -6,6 +6,7 @@ const models = async (queryAsync) => {
             `CREATE TABLE IF NOT EXISTS models(
                 id BIGINT(64) AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
+                target_quantity BIGINT(64) NULL,
                 created_at TIMESTAMP
             )`
         );
