@@ -30,17 +30,34 @@ class Production{
             // Mengambil user dari cookie
             const user = req.cookies.user;
             const path = req.path;
-            const query = `SELECT * FROM models`;
+            const queryModels = `SELECT * FROM models`;
+            const queryMaterials = `SELECT * FROM materials`;
+            const queryModelsMaterials = `SELECT * FROM models_materials`;
             try {
-                const result = await queryAsync(query)
+                const [models, materials, modelsMaterials] = await Promise.all([
+                    await queryAsync(queryModels), queryAsync(queryMaterials), queryAsync(queryModelsMaterials)
+                ]);
                 // Rendering views: prod_control.ejs
                 res.render("prod_plan", {
                     path: path, 
                     user: user,
-                    data: result
+                    models: models,
+                    materials: materials,
+                    modelsMaterials: modelsMaterials
                 });
             } catch (error) {
                 errorHandling(res, user, path, error);
+            }
+        })
+        .post(async (req, res) => {
+            const { modelId, materials } = req.body;
+            try {
+                materials.forEach(async element => {
+                    await queryAsync("INSERT INTO `models_materials` (`model_id`, `material_id`) VALUES (?, ?)", [modelId, element]);
+                });
+                res.json({ success: true, message: 'Data success inserted.' });
+            } catch (error) {
+                errorLogging(error);
             }
         })
     }
