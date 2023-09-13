@@ -33,9 +33,24 @@ class Production{
             const queryModels = `SELECT * FROM models`;
             const queryMaterials = `SELECT * FROM materials`;
             const queryModelsMaterials = `SELECT * FROM models_materials`;
+            const query = `
+            SELECT
+                models.id AS model_id,
+                models.name AS model_name,
+                models.target_quantity AS model_target,
+                GROUP_CONCAT(materials.name SEPARATOR ', ') AS materials_text
+            FROM
+                models
+            LEFT JOIN
+                models_materials ON models.id = models_materials.model_id
+            LEFT JOIN
+                materials ON models_materials.material_id = materials.id
+            GROUP BY
+                models.id, models.name, models.target_quantity;
+            `;
             try {
                 const [models, materials, modelsMaterials] = await Promise.all([
-                    await queryAsync(queryModels), queryAsync(queryMaterials), queryAsync(queryModelsMaterials)
+                    await queryAsync(queryModels), queryAsync(queryMaterials), queryAsync(query)
                 ]);
                 // Rendering views: prod_control.ejs
                 res.render("prod_plan", {
@@ -51,6 +66,7 @@ class Production{
         })
         .post(async (req, res) => {
             const { modelId, materials } = req.body;
+            
             try {
                 materials.forEach(async element => {
                     await queryAsync("INSERT INTO `models_materials` (`model_id`, `material_id`) VALUES (?, ?)", [modelId, element]);
