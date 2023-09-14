@@ -1,15 +1,18 @@
 const { promisify } = require('util');
 const pool = require("../configs/database");
-const { errorLogging } = require('../utils/errorHandling');
+const { errorLogging, errorHandling } = require('../utils/errorHandling');
 const queryAsync = promisify(pool.query).bind(pool);
 
 class Material{
     constructor(app){
         this.app = app;
+
+        this.setupRoutes();
     }
 
-    render(){
-        this.app.get("/warehouse/material", async (req, res) => {
+    setupRoutes(){
+        this.app.route("/warehouse/material")
+        .get(async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
             const query = `
@@ -37,9 +40,19 @@ class Material{
                     data: results
                 })
             } catch (error) {
+                errorHandling(res, user, path, error);
+            }
+        })
+        .put(async (req, res) => {
+            const { id, stocks } = req.body;
+            const query = `UPDATE materials SET stocks = ? WHERE id = ?`;
+            try {
+                const results = await queryAsync(query, [stocks, id]);
+                res.json(results);
+            } catch (error) {
                 errorLogging(error);
             }
-        });
+        })
     }
 }
 

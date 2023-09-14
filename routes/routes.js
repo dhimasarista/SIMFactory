@@ -20,7 +20,7 @@ const setupRoutes = (app) => {
   new Login(app);
   new Logout(app);
   new Errors(app);
-  new Material(app).render();
+  new Material(app);
   new Uploads(app);
   new Monitoring(app);
   new Engineering(app);
