@@ -13,7 +13,7 @@ async function users (queryAsync){
         id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(255) NOT NULL,
         password VARCHAR(255) NOT NULL,
-        department_id INT 902,
+        department_id INT,
         created_at TIMESTAMP,
         FOREIGN KEY (department_id) REFERENCES departments(id)
       )
