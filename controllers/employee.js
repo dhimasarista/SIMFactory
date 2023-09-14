@@ -5,6 +5,7 @@ const batchingData = require("../utils/batchingData");
 const getDataEmployee = require('../models/query/getDataEmployee');
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const fs = require("fs");
+const { green, symbol } = require('../utils/logging');
 
 const employee = {
     renderPage: async (req, res) => {
@@ -28,14 +29,57 @@ const employee = {
         }
     },
     addEmployee: async (req, res) => {
-        const { name, department_id } = req.body;
+        const { 
+            name, 
+            department_id,
+            address, 
+            number_phone, 
+            email, 
+            last_education, 
+            major, 
+            title, 
+            work_experience, 
+            skills, 
+            mcu, criminal_history,
+            // file
+            photo,
+            application_letter,
+            CV,
+            portfolio,
+            employment_contract 
+         } = req.body;
+
+
         const resultMaxIdEmployee = await queryAsync("SELECT MAX(id) as maxId FROM employees");
         const currentMaxId = resultMaxIdEmployee[0].maxId || "2000"; // Jike belum ada, mulai dari 00999
+        
+        const imageFile = photo === undefined ? null : fs.readFileSync(`uploads/images/${photo}`);
+        const appLetterFile = application_letter === undefined ? null : fs.readFileSync(`uploads/pdfs/${application_letter}`);
+        const CVFile = CV === undefined ? null : fs.readFileSync(`uploads/pdfs/${CV}`);
+        const portfolioFile = portfolio === undefined ? null : fs.readFileSync(`uploads/pdfs/${portfolio}`);
+        const contractFile = employment_contract === undefined ? null : fs.readFileSync(`uploads/pdfs/${employment_contract}`);
+        
         const newId = parseInt(currentMaxId) + 1;
         const data = {
             id: newId,
-            name: name,
-            department_id: department_id
+            name,
+            department_id,
+            address,
+            number_phone,
+            email,
+            last_education,
+            major,
+            title,
+            work_experience,
+            skills,
+            mcu,
+            criminal_history,
+            // File
+            photo,
+            application_letter,
+            CV,
+            portfolio,
+            employment_contract
         }
 
         try {
@@ -70,29 +114,27 @@ const employee = {
         }
     },
     updateEmploye: async (req, res) => {
+        const idToUpdate = req.params.id;
+        const { 
+            name, 
+            department_id, 
+            address, 
+            number_phone, 
+            email, 
+            last_education, 
+            major, 
+            title, 
+            work_experience, 
+            skills, 
+            mcu, criminal_history,
+            // file
+            photo,
+            application_letter,
+            CV,
+            portfolio,
+            employment_contract 
+        } = req.body;
         try {
-            const idToUpdate = req.params.id;
-            const { 
-                name, 
-                department_id, 
-                address, 
-                number_phone, 
-                email, 
-                last_education, 
-                major, 
-                title, 
-                work_experience, 
-                skills, 
-                mcu, criminal_history,
-                // file
-                photo,
-                application_letter,
-                CV,
-                portfolio,
-                employment_contract 
-            } = req.body;
-            
-
             // Kueri
             const queryUsers = `UPDATE users SET department_id = ? WHERE id = ?`;
             const queryEmployee = `SELECT * FROM employees WHERE id = ?`;

@@ -922,7 +922,77 @@
    }
    
    const saveData = () => {
-      submitSwal("");
+      const photoName = photo.files[0] == undefined ? undefined : photo.files[0]["name"];
+      const appLetterName = appLetter.files[0] === undefined ? undefined : appLetter.files[0]["name"];
+      const CVName = CV.files[0] === undefined ? undefined : CV.files[0]["name"];
+      const portfolioName = portfolio.files[0] === undefined ? undefined : portfolio.files[0]["name"];
+      const contractName = contract.files[0] === undefined ? undefined : contract.files[0]["name"];
+
+      const newData = {
+        name: name.value,
+        department_id: department.value,
+        address: address.value,
+        number_phone: numberPhone.value,
+        email: email.value,
+        last_education: lastEducation.value,
+        major: major.value,
+        title: title.value,
+        work_experience: workExperience.value,
+        skills: skilss.value,
+        mcu: mcu.value,
+        criminal_history: crimHistory.value,
+        photo: photoName,
+        application_letter: appLetterName,
+        CV: CVName,
+        portfolio: portfolioName,
+        employment_contract: contractName
+      };
+
+      const departValue = document.getElementById("formDepartments").value;
+      if (departValue === "Select First") {
+         Swal.fire({
+            title: "Warning",
+            text: "Please select department!",
+            icon: "warning",
+            confirmButtonText: "OK"
+         })
+         return;
+      }
+
+      Swal.fire({
+         title: "Is the data correct?",
+         text: `Add ${newData.name} to ${departValue}`,
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: "Yes, Update it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            fetch("/hr/employee", {
+               method: "POST", 
+               body: JSON.stringify(newData),
+               headers: {
+                  'Content-Type': 'application/json'
+               }
+            }).then(response => response.json())
+            .then(results => {
+               Swal.fire({
+                  title: "Success",
+                  text: "Add new employee successfully",
+                  icon: "success",
+                  confirmButtonText: "OK"
+               }).then((result) => {
+                  // Jika tombol OK ditekan
+                  if (result.isConfirmed) {
+                     location.reload();
+                  }
+               });
+            })
+            .catch(error => Swal.fire("Error", error.message, "error"))
+         }
+      })
+      
    }
    
    
