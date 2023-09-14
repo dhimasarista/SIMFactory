@@ -19,6 +19,8 @@
                   Engineering
                <% } else if(path.startsWith("/user")) {  %>
                   Profile
+               <% } else if(path.startsWith("/monitoring")) {  %>
+                  Monitoring
                <% } else {  %>
                   Error
                <% } %>
@@ -45,6 +47,8 @@
                      Engineering
                   <% } else if(path.startsWith("/user")) {  %>
                      User
+                  <% } else if(path.startsWith("/monitoring")) {  %>
+                     Monitoring
                   <% } else {  %>
                      Error
                   <% } %>
