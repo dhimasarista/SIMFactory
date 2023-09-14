@@ -8,6 +8,7 @@ const materials = async (queryAsync) => {
                 name VARCHAR(255) NOT NULL,
                 manufacturer VARCHAR(255) NULL,
                 stocks BIGINT(64) NULL,
+                updated_by VARCHAR(64) NULL,
                 created_at TIMESTAMP
             )`
         );
