@@ -25,6 +25,7 @@
                          <th>Name</th>
                          <th>Model</th>
                          <th>Stocks</th>
+                         <th>Updated By</th>
                          <th></th>
                       </tr>
                    </thead>
@@ -35,9 +36,10 @@
                          <td><a href="#"><%- material.name %></a></td>
                          <td><%- material.models_text %></td>
                          <td><input type="number" id="stocks-<%- material.material_id %>" name="stocks" step="<%- material.stocks %>" value="<%- material.stocks %>"></td>
+                         <td id="updated_by-<%- material.material_id %>"><%- material.updated_by %></td>
                          <td style="display: flex; justify-content: flex-end;">
-                            <button type="submit" class="btn btn-primary" onclick="updateStocks('<%- material.name %>', parseInt('<%- material.material_id %>'))">Update</button>
-                         </td>
+                           <button type="submit" class="btn btn-primary" onclick="updateStocks('<%- material.name %>', parseInt('<%- material.material_id %>'))">Update</button>
+                        </td>
                       </tr>
                       <% }); %>
                    </tbody>
@@ -67,7 +69,10 @@
             sort: false
         });
 
+        const updatedBy = '<%- user.username %>';
+
         const updateStocks = (name, id) => {
+         document.getElementById(`updated_by-${id}`).innerHTML = updatedBy; 
          const stocksValue = document.getElementById(`stocks-${id}`).value;
          const data = {
             id: id,

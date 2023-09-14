@@ -20,6 +20,7 @@ class Material{
                 materials.id AS material_id,
                 materials.name,
                 materials.stocks,
+                materials.updated_by,
             GROUP_CONCAT(models.name SEPARATOR ', ') AS models_text
             FROM
                 materials
@@ -45,9 +46,10 @@ class Material{
         })
         .put(async (req, res) => {
             const { id, stocks } = req.body;
-            const query = `UPDATE materials SET stocks = ? WHERE id = ?`;
+            const user = req.cookies.user;
+            const query = `UPDATE materials SET stocks = ?, updated_by = ? WHERE id = ?`;
             try {
-                const results = await queryAsync(query, [stocks, id]);
+                const results = await queryAsync(query, [stocks, user.username, id]);
                 res.json(results);
             } catch (error) {
                 errorLogging(error);
