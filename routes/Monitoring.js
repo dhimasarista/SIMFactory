@@ -28,6 +28,18 @@ class Monitoring{
                 path,
                 errors: ["Belum dibuat"]
             });
+        });
+
+        this.app.route("/monitoring/schedules")
+        .get(async (req, res) => {
+            const user = req.cookies.user;
+            const path = req.path;
+
+            res.render("monitoring_schedules", {
+                user,
+                path,
+                errors: ["Belum dibuat"]
+            });
         })
     }
 }
