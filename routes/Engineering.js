@@ -45,11 +45,12 @@ class Engineering {
             }
         })
         .post(async (req, res) => {
-            const { id, name } = req.body;
+            const { id, name, target } = req.body;
 
             const modelData = {
                 id: parseInt(id),
                 name: name,
+                target_quantity: target
             }
             try {
                 const results = await queryAsync("INSERT INTO models SET ?", modelData);
