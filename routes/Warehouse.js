@@ -54,6 +54,40 @@ class Material{
             } catch (error) {
                 errorLogging(error);
             }
+        });
+
+        this.app.route("/warehouse/inventory")
+        .get(async (req, res) => {
+            const user = req.cookies.user;
+            const path = req.path;
+
+            const query = 'SELECT * FROM models';
+
+            try {
+                const results = await queryAsync(query)
+                res.render("wh_inventory", {
+                    path, user,
+                    data: results
+                })
+            } catch (error) {
+                errorHandling(res, user, path, error);
+            }
+        })
+        .put(async (req, res) => {
+            const { id, stocks } = req.body;
+            const user = req.cookies.user;
+
+            const data = {
+                total_output: stocks,
+                updated_by: user.username
+            }
+            console.log(data);
+            try {
+                const results = await queryAsync("UPDATE models SET ? WHERE id = ?", [data, id]);
+                res.json(results);
+            } catch (error) {
+                errorLogging(error);
+            }
         })
     }
 }

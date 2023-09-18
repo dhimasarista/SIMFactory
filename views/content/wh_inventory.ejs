@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-12">
+       <div class="card ">
+          <!-- /.card-header -->
+          <div class="card-body p-0 my-4 mx-4" id="modelInventoryTable">
+             <div class="table-responsive">
+                <table class="table m-0" id="modelInventory">
+                   <thead>
+                      <tr>
+                         <th>Code ID</th>
+                         <th>Name</th>
+                         <th>Stocks</th>
+                         <th>Updated By</th>
+                         <th></th>
+                      </tr>
+                   </thead>
+                   <tbody id="departmentTableBody">
+                     <% data.forEach((model) => { %>
+                      <tr>
+                         <td><%- model.id %></td>
+                         <td><a href="#"><%- model.name %></a></td>
+                         <td><input type="number" id="stocks-<%- model.id %>" name="stocks" min='0' step='1' value="<%- model.total_output %>"></td>
+                         <td id="updated_by-<%- model.id %>"><%- model.updated_by %></td>
+                         <td style="display: flex; justify-content: flex-end;">
+                           <button type="submit" class="btn btn-primary" onclick="updateStocks('<%- model.name %>', parseInt('<%- model.id %>'))">Update</button>
+                        </td>
+                      </tr>
+                      <% }); %>
+                   </tbody>
+                </table>
+             </div>
+             <!-- /.table-responsive -->
+          </div>
+          <div class="card-body" id="departmentForm" style="display: none;">
+             <form id="add">
+                <div class="form-group">
+                   <label for="departmentName">Name</label>
+                   <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+             </form>
+          </div>
+          <!-- /.card-body -->
+       </div>
+       <!-- /.card -->
+    </div>
+    <!-- /.col -->
+ </div>
+ <script>
+        let table = new DataTable('#modelInventory', {
+            deferRender: true, // This option defers rendering of the table until required
+            processing: true,  // Show a processing indicator while waiting for data
+            sort: false
+        });
+
+        const updatedBy = '<%- user.username %>';
+
+        const updateStocks = (name, id) => {
+         document.getElementById(`updated_by-${id}`).innerHTML = updatedBy; 
+         const stocksValue = document.getElementById(`stocks-${id}`).value;
+         const data = {
+            id: id,
+            stocks: parseInt(stocksValue)
+         }
+         fetch('/warehouse/inventory', {
+            method: "PUT",
+            body: JSON.stringify(data),
+            headers: {
+               'Content-Type': 'application/json'
+            }
+         }).then(response => response.json())
+         .then(results => {
+            toastr.success(`Models ${name} Stocks Updated.`, "Success");
+         })
+         .catch(error => {
+            toastr.error(`Models ${name} Stocks Issue.`, "Error");
+         })
+        }
+ </script>
