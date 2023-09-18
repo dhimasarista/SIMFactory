@@ -12,7 +12,6 @@
         height: 333px;
     }
 </style>
-<link rel="shortcut icon" href="../public/img/hexagon-multiple.svg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <div class="row">
     <div class="col-12 col-sm-6 col-md-3">
@@ -111,7 +110,7 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-7">
                         <p class="text-center">
                             <strong>Today: 1 May 2045</strong>
                         </p>
@@ -122,42 +121,40 @@
                         </div>
                         <!-- /.chart-responsive -->
                     </div>
+                    
                     <!-- /.col -->
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <p class="text-center">
                             <strong>Quantity Target</strong>
                         </p>
-                        <div class="progress-group">
-                            Model 1
-                            <span class="float-right"><b>19835</b>/32000</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-primary" style="width: 62%"></div>
+                        <% var bgClasses = ["bg-primary", "bg-success", "bg-danger", "bg-warning"]; %>
+                        <% var classIndex = 0; %>
+
+                        <% models.forEach((model) => { %>
+                            <div class="progress-group">
+                                <%- model.name %>
+                                <span class="float-right"><b><%- model.total_output %></b>/<%- model.target_quantity %></span>
+                                <div class="progress progress-sm">
+                                    <div id="target_quantity-<%- model.id %>" class="progress-bar <%= bgClasses[classIndex] %>" style="width: 0%;" ></div>
+                                </div>
                             </div>
-                        </div>
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            Model 2
-                            <span class="float-right"><b>13842</b>/28000</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-danger" style="width: 49%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            <span class="progress-text">Model 3</span>
-                            <span class="float-right"><b>15239</b>/28000</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-success" style="width: 54%"></div>
-                            </div>
-                        </div>
-                        <!-- /.progress-group -->
-                        <div class="progress-group">
-                            Model 4
-                            <span class="float-right"><b>36398</b>/40000</span>
-                            <div class="progress progress-sm">
-                                <div class="progress-bar bg-warning" style="width: 91%"></div>
-                            </div>
-                        </div>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    const progress = parseInt(((parseInt('<%- model.total_output %>') / parseInt('<%- model.target_quantity %>')) * 100).toFixed(1));
+                                    const element = document.getElementById("target_quantity-<%- model.id %>");
+                                    element.style.width = `${progress}%`;
+                                });
+                            </script>
+                            <% 
+                            // Perbarui indeks kelas untuk digunakan pada iterasi berikutnya
+                            classIndex++;
+                            
+                            // Jika indeks kelas melebihi panjang daftar, kembalikan ke 0
+                            if (classIndex >= bgClasses.length) {
+                                classIndex = 0;
+                            }
+                            %>
+                        <% }); %>  
                         <!-- /.progress-group -->
                     </div>
                     <!-- /.col -->
@@ -170,8 +167,8 @@
                     <div class="col-sm-3 col-6">
                         <div class="description-block border-right">
                             <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
-                            <h5 class="description-header">$35,210.43</h5>
-                            <span class="description-text">TOTAL REVENUE</span>
+                            <h5 class="description-header"><%- totalProduced %></h5>
+                            <span class="description-text">TOTAL PRODUCED</span>
                         </div>
                         <!-- /.description-block -->
                     </div>
