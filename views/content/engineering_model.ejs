@@ -24,22 +24,24 @@
                          <th>Model ID</th>
                          <th>Name</th>
                          <th>Material</th>
+                         <th>Target</th>
                          <th></th>
                       </tr>
                    </thead>
                    <tbody id="modelsTabelBody">
                      <% models.forEach((model) => { %>
                       <tr>
-                         <td class="id_model"><%- model.id %></td>
-                         <td><a href="#"><%- model.name %></a></td>
-                         <td></td>
+                         <td class="id_model"><%- model.model_id %></td>
+                         <td><a href="#"><%- model.model_name %></a></td>
+                         <td><%- model.materials_text %></td>
+                         <td id="target-<%- model.model_id %>"><%- model.model_target %></td>
                          <td style="display: flex; justify-content: flex-end;">
-                           <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button" onclick="">
+                           <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button">
                               <i>
                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M17.75 20.25q-1.575 0-2.663-1.088T14 16.5q0-1.575 1.088-2.663t2.662-1.087q1.575 0 2.663 1.088T21.5 16.5q0 1.575-1.088 2.663T17.75 20.25ZM4 17.5v-2h8v2H4Zm2.25-6.25q-1.575 0-2.663-1.088T2.5 7.5q0-1.575 1.088-2.663T6.25 3.75q1.575 0 2.663 1.088T10 7.5q0 1.575-1.088 2.663T6.25 11.25ZM12 8.5v-2h8v2h-8Z"/></svg>
                               </i>
                            </a>
-                            <a href="#" class="mt-1 mr-1 badge badge-warning">
+                            <a href="#" class="mt-1 mr-1 badge badge-warning" onclick="editData(parseInt('<%- model.model_id %>'), '<%- model.model_name %>', '<%- model.model_target %>')">
                                <i>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                      <g fill="none">
@@ -75,8 +77,12 @@
                    <label for="name">Name</label>
                    <input type="text" class="form-control" id="modelName" name="name" required>
                 </div>
+                <div class="form-group">
+                  <label fomodel_targetr="target_quantity">Target Quantity</label>
+                  <input type="text" class="form-control" id="targetQuantity" name="target_quantity" required>
+               </div>
                </form>
-               <button type="submit" id="submit-model" class="btn btn-primary">Submit</button>
+               <div class="button-submit-model"></div>
           </div>
           <!-- /.card-body -->
        </div>
@@ -103,19 +109,45 @@
         const modelForm = document.getElementById('modelForm');
         const addModelForm = document.getElementById('addModelForm');
 
+        const modelIdForm = document.getElementById("modelId")
+        const modelNameForm = document.getElementById("modelName");
+        const modelTargetForm = document.getElementById("targetQuantity");
+
+        // Membuat Submit Button untuk data baru maupun data lama
+         const createSubmitButton = (params) => {
+            // Menambahkan tombol submit ke dalam elemen dengan class "submit-button"
+            const submitButtonContainer = document.querySelector('.button-submit-model');
+            submitButtonContainer.innerHTML = `<button type="button" class="btn btn-primary" onclick="${params}">Submit</button>`;
+         }
+
+         function showForm() {
+            modelTable.style.display = 'none';
+            modelForm.style.display = 'block';
+            modelButton.style.display = "inline";
+            newButton.style.display = "none";
+         }
+         function showTable() {
+            modelForm.style.display = 'none';
+            modelTable.style.display = 'table';
+            modelButton.style.display = "none";
+            newButton.style.display = "inline";   
+         }
+
         newButton.addEventListener("click", () => {
-         modelTable.style.display = 'none';
-         modelForm.style.display = 'block';
-         modelButton.style.display = "inline";
-         newButton.style.display = "none";
+         showForm();
+         createSubmitButton("saveData()");
         });
 
         modelButton.addEventListener("click", () => {
-         modelForm.style.display = 'none';
-         modelTable.style.display = 'table';
-         modelButton.style.display = "none";
-         newButton.style.display = "inline";
+         showTable()
+         clearForm();
         });
+
+        function clearForm() {
+            modelIdForm.value = "";
+            modelNameForm.value = "";
+            modelTargetForm.value = "";
+        }
         
       //   const modelMaterials = [];
       //   function showSelectedItems() {
@@ -129,7 +161,7 @@
       //       }
       //   }
 
-      document.getElementById("submit-model").addEventListener("click", () => {
+      function saveData() {
          const id = document.getElementById('modelId').value;
          const name = document.getElementById('modelName').value;
          
@@ -149,10 +181,6 @@
             Swal.fire("Error", "Model Name is Empty!", "error");
             return;
          }
-         
-
-    
-
          if (!isExist) {
             Swal.fire({
                title: "Are you sure?",
@@ -199,6 +227,45 @@
                }
             });
          }
-      });
+      }
+
+      function editData(id, name, targetQuantity) {
+         modelTable.style.display = 'none';
+         modelForm.style.display = 'block';
+         modelButton.style.display = "inline";
+         newButton.style.display = "none";
+
+         modelIdForm.value = id;
+         modelNameForm.value = name;
+         modelTargetForm.value = targetQuantity;
+
+         createSubmitButton("saveEditData()");
+      }
+
+      function saveEditData() {
+         const data = {
+            id: modelIdForm.value,
+            name: modelNameForm.value,
+            target: modelTargetForm.value
+         }
+         fetch("/engineering/model", {
+            method: "PUT",
+            body: JSON.stringify(data),
+            headers: {
+               "Content-Type": "application/json"
+            }
+         }).then(response => response.json())
+         .then(results => {
+            toastr.success(`${data.name} Success Updated.`, "Success");
+            console.log(data.id);
+            document.getElementById(`target-${data.id}`).innerHTML = modelTargetForm.value;
+            showTable();
+            clearForm();
+         })
+         .catch(error => {
+            toastr.error(`${error}.`, "Error");
+            console.log(error);
+         })
+      }
 
  </script>
