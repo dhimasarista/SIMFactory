@@ -11,7 +11,9 @@
              Models
              </button>
              <button type="button" class="btn btn-secondary" onclick="printContent()">
-             Print
+             <i>
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="2 4" stroke-dashoffset="6" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21"><animate attributeName="stroke-dashoffset" dur="0.6s" repeatCount="indefinite" values="6;0"/></path><path stroke-dasharray="30" stroke-dashoffset="30" d="M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.1s" dur="0.3s" values="30;0"/></path><path stroke-dasharray="10" stroke-dashoffset="10" d="M12 8v7.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.2s" values="10;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 15.5l3.5 -3.5M12 15.5l-3.5 -3.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.2s" values="6;0"/></path></g></svg>
+             </i>
              </button>
              </span>
           </div>
@@ -32,7 +34,7 @@
                      <% models.forEach((model) => { %>
                       <tr>
                          <td class="id_model"><%- model.model_id %></td>
-                         <td><a href="#"><%- model.model_name %></a></td>
+                         <td id="model-name-<%- model.model_name %>"><a href="#"><%- model.model_name %></a></td>
                          <td><%- model.materials_text %></td>
                          <td id="target-<%- model.model_id %>"><%- model.model_target %></td>
                          <td style="display: flex; justify-content: flex-end;">
@@ -135,6 +137,9 @@
 
         newButton.addEventListener("click", () => {
          showForm();
+         if (modelIdForm.disabled) {
+            modelIdForm.disabled = !modelIdForm.disabled;
+         }
          createSubmitButton("saveData()");
         });
 
@@ -239,6 +244,8 @@
          modelNameForm.value = name;
          modelTargetForm.value = targetQuantity;
 
+         modelIdForm.disabled = !modelIdForm.disabled;
+
          createSubmitButton("saveEditData()");
       }
 
@@ -257,14 +264,13 @@
          }).then(response => response.json())
          .then(results => {
             toastr.success(`${data.name} Success Updated.`, "Success");
-            console.log(data.id);
-            document.getElementById(`target-${data.id}`).innerHTML = modelTargetForm.value;
+            document.getElementById(`target-${data.id}`).innerHTML = data.target;
+            document.getElementById(`model-name-${data.name}`).innerHTML = data.name
             showTable();
             clearForm();
          })
          .catch(error => {
             toastr.error(`${error}.`, "Error");
-            console.log(error);
          })
       }
 
