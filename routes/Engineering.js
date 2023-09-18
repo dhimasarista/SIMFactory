@@ -15,7 +15,20 @@ class Engineering {
         .get(async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
-            const queryModels = `SELECT * FROM models`;
+            const queryModels = `SELECT
+            models.id AS model_id,
+            models.name AS model_name,
+            models.target_quantity AS model_target,
+            GROUP_CONCAT(materials.name SEPARATOR ', ') AS materials_text
+            FROM
+                models
+            LEFT JOIN
+                models_materials ON models.id = models_materials.model_id
+            LEFT JOIN
+                materials ON models_materials.material_id = materials.id
+            GROUP BY
+                models.id, models.name, models.target_quantity;
+        `;
 
             // kode awal model 024682
             try {
@@ -41,6 +54,22 @@ class Engineering {
             try {
                 const results = await queryAsync("INSERT INTO models SET ?", modelData);
                 res.json(results);
+            } catch (error) {
+                errorLogging(error);
+            }
+        })
+        .put(async (req, res) => {
+            const { id, name, target } = req.body;
+
+            const modelData = {
+                name: name,
+                target_quantity: target
+            }
+
+            console.log(modelData);
+            try {
+                const results = await queryAsync("UPDATE models SET ? WHERE id = ?", [modelData, parseInt(id)]);
+                res.status(200).send(results);
             } catch (error) {
                 errorLogging(error);
             }
