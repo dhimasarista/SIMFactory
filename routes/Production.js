@@ -30,7 +30,9 @@ class Production{
             // Mengambil user dari cookie
             const user = req.cookies.user;
             const path = req.path;
-            const queryModels = `SELECT * FROM models`;
+            const queryModels = `SELECT * FROM models WHERE NOT EXISTS(
+                SELECT 1 FROM models_materials WHERE models_materials.model_id = models.id
+            )`;
             const queryMaterials = `SELECT * FROM materials`;
             const query = `
             SELECT
