@@ -65,11 +65,26 @@ class Engineering {
                 name: name,
                 target_quantity: target
             }
-
-            console.log(modelData);
             try {
                 const results = await queryAsync("UPDATE models SET ? WHERE id = ?", [modelData, parseInt(id)]);
                 res.status(200).send(results);
+            } catch (error) {
+                errorLogging(error);
+            }
+        })
+        .delete(async (req, res) => {
+            const { id } = req.body;
+
+            try {
+                const queryDeleteModelsMaterials = 'DELETE FROM models_materials WHERE model_id = ?';
+                const queryDeleteModel = 'DELETE FROM models WHERE id = ?';
+
+                const [results] = await Promise.all([
+                    queryAsync(queryDeleteModelsMaterials, [id]),
+                    queryAsync(queryDeleteModel, [id])
+                ]);
+
+                res.json(results);
             } catch (error) {
                 errorLogging(error);
             }
@@ -107,7 +122,25 @@ class Engineering {
             } catch (error) {
                 errorLogging(error);
             }
-        });
+        })
+        .put(async (req, res) => {
+            const { id, name, manufacturer} = req.body;
+
+            const data = {
+                name: name,
+                manufacturer: manufacturer
+            }
+
+            const query = "UPDATE materials SET ? WHERE id = ?";
+
+            try {
+                const results = await queryAsync(query, [data, parseInt(id)]);
+                res.json(results);
+            } catch (error) {
+                errorLogging(error);
+            }
+        })
+        
         // this.app.delete("/engineering/material/:id", async (req, res) => {
         //     const id = req.params.id;
 
