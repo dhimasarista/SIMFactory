@@ -32,7 +32,7 @@
                    </thead>
                    <tbody id="modelsTabelBody">
                      <% models.forEach((model) => { %>
-                      <tr>
+                      <tr id="table-<%- model.model_id %>">
                          <td class="id_model"><%- model.model_id %></td>
                          <td id="model-name-<%- model.model_name %>"><a href="#"><%- model.model_name %></a></td>
                          <td><%- model.materials_text %></td>
@@ -54,7 +54,7 @@
                                </i>
                             </a>
 
-                            <a href="#" class="mt-1 mr-1 badge badge-danger" onclick="deleteData()">
+                            <a href="#" class="mt-1 mr-1 badge badge-danger" onclick="deleteData(parseInt('<%- model.model_id %>'))">
                                <i>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                      <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
@@ -272,6 +272,38 @@
          .catch(error => {
             toastr.error(`${error}.`, "Error");
          })
+      }
+
+      function deleteData(id) {
+         const data = {
+            id: parseInt(id)
+         }
+
+         Swal.fire({
+            title: "Are you sure?",
+            text: `Delete ${id}, you can't revert this!`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Yes, Delete it!"
+         }).then(results => {
+            if (results.isConfirmed) {
+               fetch("/engineering/model", {
+                  method: "DELETE",
+                  body: JSON.stringify(data),
+                  headers: {
+                     "Content-Type": "application/json"
+                  }
+               }).then(response => response.json)
+               .then(results => {
+                  toastr.success(`${data.id} Success delete.`, "Success");
+                  document.getElementById(`table-${id}`).remove();
+               })
+               .catch(error => toastr.error(`${error}.`, "Error"));               
+               }
+         })
+
       }
 
  </script>
