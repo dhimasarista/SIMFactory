@@ -108,17 +108,16 @@ class Engineering {
                 errorLogging(error);
             }
         });
+        // this.app.delete("/engineering/material/:id", async (req, res) => {
+        //     const id = req.params.id;
 
-        this.app.delete("/engineering/material/:id", async (req, res) => {
-            const id = req.params.id;
-
-            try {
-                const results = await queryAsync("DELETE FROM materials WHERE id = ?", [id]);
-                res.json(results);
-            } catch (error) {
-                errorLogging(error);
-            }
-        })
+        //     try {
+        //         const results = await queryAsync("DELETE FROM materials WHERE id = ?", [id]);
+        //         res.json(results);
+        //     } catch (error) {
+        //         errorLogging(error);
+        //     }
+        // });
     }
 }
 
