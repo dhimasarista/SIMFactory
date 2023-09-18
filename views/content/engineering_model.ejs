@@ -167,8 +167,9 @@
       //   }
 
       function saveData() {
-         const id = document.getElementById('modelId').value;
-         const name = document.getElementById('modelName').value;
+         const id = modelIdForm.value;
+         const name = modelNameForm.value;
+         const target = modelTargetForm.value
          
          let isExist;
          idArray.forEach(element => {
@@ -200,6 +201,7 @@
                   const data = {
                      id: id,
                      name: name,
+                     target: target
                   }
                   fetch("/engineering/model", {
                      method: "POST",
