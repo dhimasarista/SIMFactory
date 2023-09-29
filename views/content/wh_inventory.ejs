@@ -10,6 +10,7 @@
                          <th>Code ID</th>
                          <th>Name</th>
                          <th>Stocks</th>
+                         <th>Total</th>
                          <th>Updated By</th>
                          <th></th>
                       </tr>
@@ -19,7 +20,8 @@
                       <tr>
                          <td><%- model.id %></td>
                          <td><a href="#"><%- model.name %></a></td>
-                         <td><input type="number" id="stocks-<%- model.id %>" name="stocks" min='0' step='1' value="<%- model.total_output %>"></td>
+                         <td><input type="number" id="stocks-<%- model.id %>" name="stocks" min='0' step='1' value="<%- model.stocks %>"></td>
+                         <td><%- model.total_output %></td>
                          <td id="updated_by-<%- model.id %>"><%- model.updated_by %></td>
                          <td style="display: flex; justify-content: flex-end;">
                            <button type="submit" class="btn btn-primary" onclick="updateStocks('<%- model.name %>', parseInt('<%- model.id %>'))">Update</button>

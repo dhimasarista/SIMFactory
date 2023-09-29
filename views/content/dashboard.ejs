@@ -133,7 +133,7 @@
                         <% models.forEach((model) => { %>
                             <div class="progress-group">
                                 <%- model.name %>
-                                <span class="float-right"><b><%- model.total_output %></b>/<%- model.target_quantity %></span>
+                                <span class="float-right"><b><%= model.total_output === null ? '0' : model.total_output %></b>/<%- model.target_quantity %></span>
                                 <div class="progress progress-sm">
                                     <div id="target_quantity-<%- model.id %>" class="progress-bar <%= bgClasses[classIndex] %>" style="width: 0%;" ></div>
                                 </div>

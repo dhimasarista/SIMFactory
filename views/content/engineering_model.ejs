@@ -34,7 +34,7 @@
                      <% models.forEach((model) => { %>
                       <tr id="table-<%- model.model_id %>">
                          <td class="id_model"><%- model.model_id %></td>
-                         <td id="model-name-<%- model.model_name %>"><a href="#"><%- model.model_name %></a></td>
+                         <td><a href="#" id="model-name-<%- model.model_name %>"><%- model.model_name %></a></td>
                          <td><%- model.materials_text %></td>
                          <td id="target-<%- model.model_id %>"><%- model.model_target %></td>
                          <td style="display: flex; justify-content: flex-end;">
