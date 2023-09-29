@@ -78,7 +78,7 @@ class Material{
             const user = req.cookies.user;
 
             const data = {
-                total_output: stocks,
+                stocks: stocks,
                 updated_by: user.username
             }
             console.log(data);
