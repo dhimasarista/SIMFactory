@@ -78,13 +78,19 @@ class Material{
             const user = req.cookies.user;
 
             const data = {
-                stocks: stocks,
+                stocks  : stocks,
                 updated_by: user.username
             }
-            console.log(data);
             try {
-                const results = await queryAsync("UPDATE models SET ? WHERE id = ?", [data, id]);
-                res.json(results);
+                const checkData = await queryAsync("SELECT * FROM models_materials WHERE model_id = ?", [id]);
+                if (checkData.length != 0) {
+                    let queryResult = await queryAsync("UPDATE models SET ? WHERE id = ?", [data, id]);
+                    const results = checkData != [] ? queryResult : 0;
+                    res.json(results);    
+                } else {
+                    res.json("404");
+                }
+                
             } catch (error) {
                 errorLogging(error);
             }
