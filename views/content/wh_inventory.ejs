@@ -72,7 +72,11 @@
             }
          }).then(response => response.json())
          .then(results => {
-            toastr.success(`Models ${name} Stocks Updated.`, "Success");
+            if (results !== "404") {
+               toastr.success(`Models ${name} Stocks Updated.`, "Success");
+            } else {
+               toastr.error(`Models ${name} Parts Nothing.`, "Not Ready for Production");   
+            }
          })
          .catch(error => {
             toastr.error(`Models ${name} Stocks Issue.`, "Error");
