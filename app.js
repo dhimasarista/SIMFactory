@@ -5,6 +5,8 @@ const express = require("express");
 // const flash = require('express-flash');
 const path = require('path');
 const compression = require('compression');
+const cors = require("cors");
+const http = require('http'); // Import http module
 
 // Import Kode lainnya
 const { blue, symbol, magenta, qm } = require("./utils/logging");
@@ -13,13 +15,7 @@ const setupRoutes = require("./routes/routes");
 const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
 const metrics = require('./middlewares/metrics');
-const cors = require("cors");
-const http = require('http'); // Import http module
-
-// Cluster Module
-const cluster = require("cluster");
 const { unMatchedRoutes, internalServer } = require('./middlewares/error');
-const numCPUs = require("os").cpus().length;
 
 const app = express(); // Inisialisasi Aplikasi Express
 const server = http.createServer(app); // Create HTTP server
@@ -28,21 +24,10 @@ dotenv.config(); // Load variabel environment dari file .env
 // Menggunakan Socket 
 // setupSocketIO(server);
 
-if (cluster.isMaster) {
-  // Fork workers setiap CPU core
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
-  // Penanganan Worker
-  cluster.on("exit", (worker, code, signal) => {
-    console.log(`Worker ${worker.process.pid} died`);
-  });
-} else {
-
+function main() {
   // Logging
   console.clear();
   console.log(dhim);
-  console.log(magenta, `${qm} Starting ${numCPUs} workers...`);
 
   // Middlewares
   app.use(cors({
@@ -76,4 +61,4 @@ if (cluster.isMaster) {
   server.listen(port, () => {
     console.log(blue, `${symbol} Server started on http://localhost:${port}`);
   });
-}
+}main();
