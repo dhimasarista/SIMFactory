@@ -419,58 +419,49 @@
         metricsItem.textContent = event.data;
         metrics.appendChild(metricsItem);
     }
+
+    // Quarter
+
+    '<% var bgClasses = ["bg-primary", "bg-success", "bg-danger", "bg-warning"]; %>'    
+    '<% var classIndex = 0; %>'
+    let dataModels = []
+    let label = [];
+    let backgroundColor = ['rgba(60,141,188,0.9)', 'rgba(19,156,117,1)', 'rgba(255, 200, 0, 1)', 'rgba(255, 0, 64, 1)'];
+    let colorIndex = 0;
+
+    // Membuat data acak dibawah 10K
+
+    const randomData = () => {
+        return Math.floor(Math.random() * 10000)
+    }
+
+    '<% models.forEach((model) => { %>'
+        colorIndex++;
+        if (colorIndex >= backgroundColor.length) {
+            colorIndex = 0;
+        }
+        dataModels.push({
+            label: '<%- model.name %>',
+            backgroundColor: backgroundColor[colorIndex],
+            borderColor: 'rgba(60,141,188,0.8)',
+            pointRadius: false,
+            pointStrokeColor: 'rgba(60,141,188,1)',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data: [randomData(), randomData(), randomData(), randomData(), 0]
+
+        })
+    '<% }); %> '
+
+    console.log(dataModels);
+    
     
     $(function () {
     var salesChartCanvas = $('#salesChart').get(0).getContext('2d')
     
     var salesChartData = {
      labels: ['Q1', 'Q2', 'Q3', 'Q4',],
-     datasets: [
-       {
-         label: 'Model1',
-         backgroundColor: 'rgba(60,141,188,0.9)',
-         borderColor: 'rgba(60,141,188,0.8)',
-         pointRadius: false,
-         pointColor: '#3b8bba',
-         pointStrokeColor: 'rgba(60,141,188,1)',
-         pointHighlightFill: '#fff',
-         pointHighlightStroke: 'rgba(60,141,188,1)',
-         data: [8000, 5323, 3894, 7340, 0]
-       },
-       {
-         label: 'Model2',
-         backgroundColor: 'rgba(19,156,117,1)',
-         borderColor: 'rgba(210, 214, 222, 1)',
-         pointRadius: false,
-         pointColor: 'rgba(210, 214, 222, 1)',
-         pointStrokeColor: '#c1c7d1',
-         pointHighlightFill: '#fff',
-         pointHighlightStroke: 'rgba(220,220,220,1)',
-         data: [6172, 7373, 7218, 5698, 0]
-       },
-       {
-         label: 'Model3',
-         backgroundColor: 'rgba(255, 200, 0, 1)',
-         borderColor: 'rgba(210, 214, 222, 1)',
-         pointRadius: false,
-         pointColor: 'rgba(210, 214, 222, 1)',
-         pointStrokeColor: '#c1c7d1',
-         pointHighlightFill: '#fff',
-         pointHighlightStroke: 'rgba(220,220,220,1)',
-         data: [7438, 5343, 6873, 6291, 0]
-       },
-       {
-         label: 'Model4',
-         backgroundColor: 'rgba(255, 0, 64, 1)',
-         borderColor: 'rgba(210, 214, 222, 1)',
-         pointRadius: false,
-         pointColor: 'rgba(210, 214, 222, 1)',
-         pointStrokeColor: '#c1c7d1',
-         pointHighlightFill: '#fff',
-         pointHighlightStroke: 'rgba(220,220,220,1)',
-         data: [7838, 5694 , 5963, 8000, 0]
-       }
-     ]
+     datasets: dataModels
     }
     
     var salesChartOptions = {
@@ -505,3 +496,4 @@
 
 
 </script>
+
