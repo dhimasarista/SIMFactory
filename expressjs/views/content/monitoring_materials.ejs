@@ -5,6 +5,8 @@
              <h3 class="card-title">Materials in Stocks</h3>
              <span style="margin-left: auto;">Today's Date: <span id="realTime"></span></span> <!-- Example Date -->
           </div>
+
+          <script>console.log("<%= materials['ID'] %>")</script>
           <!-- /.card-header -->
           <div class="card-body">
              <table id="materials-table" class="table table-bordered table-hover">
@@ -20,11 +22,11 @@
                 <tbody>
                   <% materials.forEach((data) => { %>
                    <tr>
-                      <td><%= data.id %></td>
-                      <td><%= data.name %></td>
-                      <td><%= data.manufacturer %></td>
-                      <td><%= data.stocks %></span></td>
-                      <td><%= data.updated_by %></span></td>
+                      <td><%= data.id["Int64"] %></td>
+                      <td><%= data.name["String"] %></td>
+                      <td><%= data.manufacturer["String"] %></td>
+                      <td><%= data.stocks["Int64"] %></span></td>
+                      <td><%= data.updatedBy["String"] %></span></td>
                    </tr>
                    <% }); %>
              </table>
