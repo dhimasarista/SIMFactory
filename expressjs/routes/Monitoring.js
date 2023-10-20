@@ -25,50 +25,46 @@ class Monitoring{
             });
         });
 
-        this.app.get("/monitoring/materials", async (req, res) => {
-            const user = req.cookies.user;
+        this.app.route("/monitoring/materials")
+        .get(async (req, res) => {
             const path = req.path;
-            const apiToken = '210401010174'; // Ganti dengan API Token yang sesuai
-          
+            const user = req.cookies.user;
+            const apiKey = "210401010174"
+
             try {
-                const response = await axios.get('http://localhost:8080/materials/data', {
+                const response = await axios.get("http://localhost:8080/materials/data", {
                     headers: {
-                        'Authorization': `Bearer ${apiToken}`
+                        "Authorization": `Bearer ${apiKey}`
                     }
                 })
-          
-              const materialData = response.data;
-          
-              res.render("monitoring_materials", {
-                user,
-                path,
-                materials: materialData
-              });
-            } catch (error) {
-            console.log(error);
-              errorHandling(res, user, path, error);
-            }
-          });
 
-        /*
-        this.app.route("/monitoring/materials")
-        .get( async (req, res) => {
-            const user = req.cookies.user;
-            const path = req.path;
+                const materialData = response.data;
 
-            const queryMaterials = "SELECT * FROM materials";
-            try {
-                const results = await queryAsync(queryMaterials)
                 res.render("monitoring_materials", {
-                    user,
-                    path,
-                    materials: results
-                });   
+                    user, path, materials: materialData
+                })
             } catch (error) {
                 errorHandling(res, user, path, error);
             }
-        });
-        */
+        })
+        
+        // this.app.route("/monitoring/materials")
+        // .get( async (req, res) => {
+        //     const user = req.cookies.user;
+        //     const path = req.path;
+
+        //     const queryMaterials = "SELECT * FROM materials";
+        //     try {
+        //         const results = await queryAsync(queryMaterials)
+        //         res.render("monitoring_materials", {
+        //             user,
+        //             path,
+        //             materials: results
+        //         });   
+        //     } catch (error) {
+        //         errorHandling(res, user, path, error);
+        //     }
+        // });
 
         this.app.route("/monitoring/schedules")
         .get(async (req, res) => {
