@@ -432,7 +432,9 @@
     // Membuat data acak dibawah 10K
 
     const randomData = () => {
-        return Math.floor(Math.random() * 10000)
+        const minimun = 4500;
+        const random = Math.floor(Math.random() * 10000);
+        return Math.max(random, minimun)
     }
 
     '<% models.forEach((model) => { %>'
