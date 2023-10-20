@@ -7,7 +7,6 @@ import (
 	"golang-api/config"
 	"log"
 	"net/http"
-	"time"
 
 	_ "github.com/go-sql-driver/mysql" // Import driver MySQL
 	"github.com/gorilla/mux"
@@ -44,28 +43,26 @@ func ValidateToken(tokenString string) bool {
 }
 
 type Material struct {
-	ID             int64         `json:"id"`
-	Name           string        `json:"name"`
-	UpdatedBy      string        `json:"updatedBy"`
-	TargetQuantity int64         `json:"targetQuantity"`
-	TotalOutput    sql.NullInt64 `json:"totalOutput"`
-	Stocks         sql.NullInt64 `json:"stocks"`
-	CreatedAt      time.Time     `json:"createdAt"`
+	ID           sql.NullInt64  `json:"id"`
+	Name         sql.NullString `json:"name"`
+	Manufacturer sql.NullString `json:"manufacturer"`
+	Stocks       sql.NullInt64  `json:"stocks"`
+	UpdatedBy    sql.NullString `json:"updatedBy"`
 }
 
 func getMaterialsData(w http.ResponseWriter, r *http.Request) {
 	// Anda dapat menghapus blok kode berikut yang memeriksa token otorisasi:
 	// Mendapatkan token dari header permintaan
-	tokenString := r.Header.Get("Authorization")
+	// tokenString := r.Header.Get("Authorization")
 
-	if !ValidateToken(tokenString) {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		return
-	}
+	// if !ValidateToken(tokenString) {
+	// 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
+	// 	return
+	// }
 
 	// Mengambil data pengguna dari database MySQL
 	db := config.GetDBConnect()
-	script := "SELECT id, name, updated_by, target_quantity, total_output, stocks, created_at FROM models"
+	script := "SELECT id, name, manufacturer, stocks, updated_by FROM materials"
 	rows, err := db.Query(script)
 	if err != nil {
 		log.Println(err)
@@ -78,7 +75,7 @@ func getMaterialsData(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var material Material
-		err := rows.Scan(&material.ID, &material.Name, &material.UpdatedBy, &material.TargetQuantity, &material.TotalOutput, &material.Stocks, &material.CreatedAt)
+		err := rows.Scan(&material.ID, &material.Name, &material.Manufacturer, &material.Stocks, &material.UpdatedBy)
 		if err != nil {
 			log.Println(err)
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
