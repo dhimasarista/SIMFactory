@@ -53,12 +53,12 @@ type Material struct {
 func getMaterialsData(w http.ResponseWriter, r *http.Request) {
 	// Anda dapat menghapus blok kode berikut yang memeriksa token otorisasi:
 	// Mendapatkan token dari header permintaan
-	// tokenString := r.Header.Get("Authorization")
+	tokenString := r.Header.Get("Authorization")
 
-	// if !ValidateToken(tokenString) {
-	// 	http.Error(w, "Unauthorized", http.StatusUnauthorized)
-	// 	return
-	// }
+	if !ValidateToken(tokenString) {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
 
 	// Mengambil data pengguna dari database MySQL
 	db := config.GetDBConnect()
