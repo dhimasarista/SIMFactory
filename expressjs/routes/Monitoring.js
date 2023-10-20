@@ -1,7 +1,9 @@
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const { promisify } = require('util');
 const pool = require("../configs/database");
-const queryAsync = promisify(pool.query).bind(pool);
+// const queryAsync = promisify(pool.query).bind(pool);
+const axios = require("axios");
+const { log } = require('console');
 
 class Monitoring{
     constructor(app) {
@@ -23,13 +25,38 @@ class Monitoring{
             });
         });
 
+        this.app.get("/monitoring/materials", async (req, res) => {
+            const user = req.cookies.user;
+            const path = req.path;
+            const apiToken = '210401010174'; // Ganti dengan API Token yang sesuai
+          
+            try {
+                const response = await axios.get('http://localhost:8080/materials/data', {
+                    headers: {
+                        'Authorization': `Bearer ${apiToken}`
+                    }
+                })
+          
+              const materialData = response.data;
+          
+              res.render("monitoring_materials", {
+                user,
+                path,
+                materials: materialData
+              });
+            } catch (error) {
+            console.log(error);
+              errorHandling(res, user, path, error);
+            }
+          });
+
+        /*
         this.app.route("/monitoring/materials")
         .get( async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
 
             const queryMaterials = "SELECT * FROM materials";
-
             try {
                 const results = await queryAsync(queryMaterials)
                 res.render("monitoring_materials", {
@@ -41,6 +68,7 @@ class Monitoring{
                 errorHandling(res, user, path, error);
             }
         });
+        */
 
         this.app.route("/monitoring/schedules")
         .get(async (req, res) => {
