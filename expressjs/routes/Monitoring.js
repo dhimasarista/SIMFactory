@@ -1,7 +1,9 @@
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
 // const queryAsync = promisify(pool.query).bind(pool);
 const axios = require("axios");
-const { log } = require('console');
+const { promisify } = require('util');
+const pool = require("../config/database");
+const queryAsync = promisify(pool.query).bind(pool);
 
 class Monitoring{
     constructor(app) {
@@ -12,14 +14,23 @@ class Monitoring{
 
     setupRoutes(){
         this.app.route("/monitoring/production")
-        .get((req, res) => {
+        .get(async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
 
             try {
+                const results = await queryAsync(`
+                SELECT lt.*, pl.name AS production_line_name, t.name AS team_name, m.name AS models_name
+                FROM lines_teams AS lt
+                JOIN production_lines AS pl ON lt.production_lines_id = pl.id
+                JOIN models AS m ON lt.models_id = m.id
+                JOIN teams AS t ON lt.teams_id = t.id
+                ORDER BY pl.id;
+                `);
                 res.render("monitoring_production", {
                     user,
                     path,
+                    lines: results
                 });
             } catch (error) {
                 errorHandling(res, user, path, error);
