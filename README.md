@@ -1,9 +1,9 @@
-# SIMFactory | ExpressJS-MySQL
+# SIMFactory | Sistem Informasi & Manajemen Produksi
 
 ## Running the Application
-| <strong>Environment</strong> | <strong>DBMS</strong> | 
-|----------|----------|
-| NodeJS | MySQL/MariaDB |
+| <strong>Node/ExpressJS</strong> | Backend Framework |
+| <strong>Golang</strong> | RestFul-API |
+| <strong>MySQL</strong> | Database MS |
 
 1. Start MySQL:
    - <b>Windows</b>: If you are using XAMPP, start it as usual, or use PowerShell/CMD and type ```net start mysql```
@@ -18,7 +18,7 @@
 
 
 
-### File Naming Rules, Variable/Function, and Class
+### File Naming Rules, Variable/Function, and Class/Struct
 - v/f: calonProgrammer | calonProgrammer.js
 - class: CalonProgrammer | CalonProgrammer.js
 - ejs/html: calon_programmer.ejs | content-header.ejs
