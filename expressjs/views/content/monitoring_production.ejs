@@ -1,129 +1,74 @@
 <div class="row">
     <div class="col-12">
        <div class="card">
-          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-             <h3 class="card-title">Production</h3>
-             <span style="margin-left: auto;">Today's Date: <span id="realTime"></span></span> <!-- Example Date -->
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-             <table id="example2" class="table m-0 border-lr table-striped">
-                <thead>
-                   <tr>
-                      <th>Team</th>
-                      <th>Line</th>
-                      <th>Model</th>
-                      <th>Shift</th>
-                      <th>Control</th>
-                   </tr>
-                </thead>
-                <tbody>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   <tr>
-                      <td>A</td>
-                      <td>1</td>
-                      <td>Model 1</td>
-                      <td>1st</span></td>
-                      <td>Change</span></td>
-                   </tr>
-                   </tfoot>
-             </table>
-          </div>
-          <!-- /.card-body -->
-       </div>
-       <div class="card">
-          <!-- <div class="card-header">
-             <h3 class="card-title">DataTable with default features</h3>
-             </div> -->
-          <!-- /.card-header -->
-          <div class="card-body">
-             <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                   <tr>
-                      <th>Model ID</th>
-                      <th>Product Name</th>
-                      <th>Target</th>
-                      <th>Status</th>
-                   </tr>
-                </thead>
-                <tbody>
-                   <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                         Explorer 4.0
-                      </td>
-                      <td>Win 95+</td>
-                      <td> 4</td>
-                   </tr>
-                   <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                         Explorer 5.0
-                      </td>
-                      <td>Win 95+</td>
-                      <td>5</td>
-                   </tr>
-                   <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                         Explorer 5.5
-                      </td>
-                      <td>Win 95+</td>
-                      <td>5.5</td>
-                   </tr>
-                </tbody>
-             </table>
-          </div>
-          <!-- /.card-body -->
-       </div>
+         <div class="card-header ">
+             <h5 class="card-title">Production</h5>
+             <div class="card-tools">
+                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                 <i class="fas fa-minus"></i>
+                 </button>
+                 <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+                 <!-- <li class="nav-item">
+                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                     </a>
+                     </li> -->
+                 <!-- <button type="button" class="btn btn-tool" data-card-widget="remove">
+                     <i class="fas fa-times"></i>
+                     </button> -->
+             </div>
+         </div>
+         <!-- /.card-header -->
+         <div class="card-body p-0">
+             <div class="table-responsive">
+                 <table class="table m-0">
+                     <thead>
+                         <tr>
+                             <th>Line</th>
+                             <th>Model</th>
+                             <th>Status</th>
+                             <th>Team/Shift</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                        <% lines.forEach((data) => { %>
+                         <tr>
+                             <td><a href="#"><%- data.production_line_name %></a></td>
+                             <td><%- data.models_name %></td>
+                              <% if (data.status === "processing") { %>
+                                 <td><span class="badge badge-info">Processing</span>
+                              <% } else if (data.status === "finished") { %>
+                                 <td><span class="badge badge-success">Finished</span></td>
+                              <% } else if (data.status === "notproduction") { %>
+                                 <td><span class="badge badge-dark">Not-Production</span></td>
+                              <% } else if (data.status === "finished-not-target") { %>
+                                 <td><span class="badge badge-warning">Finished</span></td>
+                              <% } else if (data.status === "stopped") { %>
+                                 <td><span class="badge badge-danger">Stopped</span></td>
+                              <% } else { %>
+                                 <td><span class="badge badge-secondary">Error</span></td>
+                              <% } %>
+                             <td>
+                                 <div class="sparkbar" data-color="#00a65a" data-height="20"><%- data.team_name %>/<% if (data.shift == 1) { %>
+                                    <%= data.shift %>st
+                                  <% } else { %>
+                                    <%= data.shift %>nd
+                                  <% } %> </div>
+                             </td>
+                         </tr>
+                         <% }); %>
+                     </tbody>
+                 </table>
+             </div>
+             <!-- /.table-responsive -->
+         </div>
+         <!-- /.card-body -->
+         <div class="card-footer clearfix">
+             
+             <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">Print</a>
+         </div>
+         <!-- /.card-footer -->
+     </div>
+
        <!-- /.card -->
     </div>
     <!-- /.col -->
