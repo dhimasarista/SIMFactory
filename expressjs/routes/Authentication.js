@@ -16,7 +16,7 @@
 const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
-const pool = require("../configs/database");
+const pool = require("../config/database");
 const promisePool = pool.promise();
 
 class Login{
@@ -62,17 +62,12 @@ class Login{
                 const password = req.body.password;
                 const stayLoggedIn = req.body.stay;
     
-                try {
-                    // Mengambil data dari Tabel Admins dan menyimpannya dalam bentuk Array of Object
-                    const [adminResults] = await promisePool.query("SELECT * FROM admins WHERE username = ?", [username]);
-                    // Menyimpannya ke variabel user dalam bentuk objek
-                    const admin = adminResults[0];
-    
+                try {    
                     const [userResults] = await promisePool.query("SELECT * FROM users WHERE username = ? OR id = ?", [username, username]);
                     const user = userResults[0];
                     
                     // Jika data tidak cocok disalah satu tabel
-                    if (!admin && !user) {
+                    if (!user) {
                         // Maka akan menampilkan username atau password salah
                         return res.render("login", {
                             errors: [{message: "Username salah!"}]
@@ -80,20 +75,16 @@ class Login{
                     }
     
                     // inisiasi password dengan operator ternary
-                    const passwordChecking = (admin == undefined) ? user.password: admin.password;
-                    const cookiesChecking = (admin == undefined) ? user.username: admin.username;
-                    // Menyimpan id
-                    const idUser = (admin == undefined) ? user.id : admin.id;
                     
                     // Memeriksa password apakah cocok dengan username dari tabel
-                    const passwordMatch = await bcrypt.compare(password, passwordChecking);
+                    const passwordMatch = await bcrypt.compare(password, user.password);
                     // Jika passowrd benar | passwordMatch = true
                     if (passwordMatch) {
                         // Apakah admin tidak undefined
-                        if (admin) {
+                        if (user.username === "admin") {
                             // jika iya, akan disimpan di cookie
                             res.cookie(
-                                "user", {id: idUser, username: cookiesChecking, role: "admin"}, 
+                                "user", {id: user.id, username: user.username, role: "admin"}, 
                                 { maxAge: 3600000 }
                             ); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
@@ -106,7 +97,7 @@ class Login{
                             if (stayLoggedIn !== undefined) {
                                 maxAge = undefined;
                             }
-                            res.cookie("user", {id: idUser, username: cookiesChecking, role: "employee", department: user.department_id}, { maxAge: maxAge }); // 1 Jam
+                            res.cookie("user", {id: user.id, username: user.username, role: "employee", department: user.department_id}, { maxAge: maxAge }); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
     
                             // Lalu di alihkan ke halaman utama

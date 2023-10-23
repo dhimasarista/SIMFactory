@@ -1,5 +1,5 @@
 const { promisify } = require('util');
-const pool = require("../configs/database");
+const pool = require("../config/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
 const getDataEmployee = require("../models/query/getDataEmployee");

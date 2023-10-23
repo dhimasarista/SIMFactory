@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const dbConfig = require("./config.json");
+const dbConfig = require("../config/db_config.json");
 
 const config = dbConfig["development"]["mysql"];
 // Create database pool

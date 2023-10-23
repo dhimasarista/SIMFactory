@@ -1,5 +1,5 @@
 const { promisify } = require('util');
-const pool = require("../configs/database");
+const pool = require("../config/database");
 const { errorLogging, errorHandling } = require('../utils/errorHandling');
 const queryAsync = promisify(pool.query).bind(pool);
 

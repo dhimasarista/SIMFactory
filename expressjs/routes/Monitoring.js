@@ -1,6 +1,4 @@
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
-const { promisify } = require('util');
-const pool = require("../configs/database");
 // const queryAsync = promisify(pool.query).bind(pool);
 const axios = require("axios");
 const { log } = require('console');
