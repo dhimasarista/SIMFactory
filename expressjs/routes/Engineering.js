@@ -109,9 +109,10 @@ class Engineering {
             }
         })
         .post(async (req, res) => {
-            const { id, name, manufacturer } = req.body;
+            const { id, typeCode, name, manufacturer } = req.body;
             const data = {
                 id: id,
+                type_code: typeCode,
                 name: name,
                 manufacturer: manufacturer
             }
@@ -125,10 +126,11 @@ class Engineering {
             }
         })
         .put(async (req, res) => {
-            const { id, name, manufacturer} = req.body;
+            const { id, name, typeCode, manufacturer} = req.body;
 
             const data = {
                 name: name,
+                type_code: typeCode,
                 manufacturer: manufacturer
             }
 
