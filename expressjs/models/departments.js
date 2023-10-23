@@ -1,48 +1,35 @@
-const { red, qm, symbol, green } = require("../utils/logging");
+const { promisify } = require('util');
+const pool = require("../configs/database");
+const queryAsync = promisify(pool.query).bind(pool);
 
-const createDepartmentsTable = async (queryAsync) => {
-    try {
-        // Membuat tabel baru jika tidak ada
-        const departmentTable = await queryAsync(`CREATE TABLE IF NOT EXISTS departments (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(255) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )`);
-        const result = (departmentTable !== 0) ? "Already Exist" : "Created";
-        console.log(green, `${symbol} Departments Table: ${result}`);
-        
-        // Membuat default data untuk tabel departments
-        const defaultDepartments = [
-            { name: "engineering", id: 901 },
-            { name: "human resource", id: 902 },
-            { name: "warehouse", id: 903 },
-            { name: "production", id: 904 },
-            { name: "IT", id: 905 }
-        ];
-        
-        // Memeriksa data
-        const selectQuery = "SELECT id FROM departments WHERE id = ?";
-        defaultDepartments.forEach(async department => {
-            try {
-                const results = await queryAsync(selectQuery, [department.id]);
-                // Jika data tidak ada, insert
-                if (results.length === 0) {
-                    const insertQuery = "INSERT INTO departments (id, name) VALUES (?, ?)";
-                    try {
-                        await queryAsync(insertQuery, [department.id, department.name]);
-                    } catch(error) {
-                        console.log(red, `${qm} Error inserting data into departments table: ${error}`);
-                    }
-                }
-            } catch(error) {
-                console.log(red, `${qm} Error checking data in departments table: ${error}`);
-            }
-        });
-    } catch(error) {
-        // Terminasi Program dan Keluar
-        console.log(red, `${qm} Error creating departments table: `, error);
-        process.exit(1);
+class Department {
+    async findAll(){
+        const query = `
+        SELECT d.*, COALESCE(de.dept_total, 0) AS total_employees
+        FROM departments d
+        LEFT JOIN (
+            SELECT department_id, COUNT(id) AS dept_total
+            FROM employees
+            GROUP BY department_id
+        ) de ON d.id = de.department_id`; // ORDER BY d.created_at DESC
+
+        const results = await queryAsync(query); // Array of Object
+
+        return results;
     }
-};
 
-module.exports = createDepartmentsTable;
+    async addData(name){
+        const resultMaxIdDepart = await queryAsync("SELECT MAX(id) as maxId FROM departments")
+        const maxIdDepart = resultMaxIdDepart[0].maxId || 900;
+        const newIdDepart = maxIdDepart + 1;
+
+        const data = {
+            id: newIdDepart,
+            name: name
+        }
+        const query = "INSERT INTO `departments` SET ? ";
+        return await queryAsync(query, data);
+    }
+}
+
+module.exports = Department
