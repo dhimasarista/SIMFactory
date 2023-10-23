@@ -1,5 +1,5 @@
 const employee = require('../controllers/employee');
-const department = require('../controllers/department');
+const departmentHandler = require('../controllers/department');
 
 class Employee {
     constructor(app, io){
@@ -32,8 +32,8 @@ class Department{
 
     setupRoutes(){
         this.app.route("/hr/department")
-        .get(department.render)
-        .post(department.addDepartment)
+        .get(departmentHandler.render)
+        .post(departmentHandler.addDepartment)
     }
 }
 
