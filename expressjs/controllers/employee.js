@@ -7,6 +7,8 @@ const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const fs = require("fs");
 const { green, symbol } = require('../utils/logging');
 
+const EmployeeModel = require("../models/employees");
+
 const employee = {
     renderPage: async (req, res) => {
         const user = req.cookies.user;
@@ -92,11 +94,10 @@ const employee = {
     },
     getById: async (req, res) => {
         const id = req.params.id;
-
-        const query = `SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id WHERE employees.id = ?`;
+        const employeeData = new EmployeeModel(id)
         try {
-            const results = await queryAsync(query, [id]);
-            res.json(results[0]);
+            const results = await employeeData.findById();
+            res.json(...results);
         } catch(error) {
             errorLogging(error);
         }

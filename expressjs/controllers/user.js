@@ -3,7 +3,9 @@ const pool = require("../configs/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
 const {errorHandling, errorLogging} = require('../utils/errorHandling');
-const getDataEmployee = require("../models/query/getDataEmployee");
+
+const UserModel = require("../models/users");
+const userData = new UserModel();
 
 const user = {
     render: async (req, res) => {
@@ -11,19 +13,21 @@ const user = {
         const path = req.path;
         const id = user.id;
 
+        userData.id = id;
+
         // user dengan id 1 adalah admin dan user(default)
         if (user.id === 1 && path === "/user/profile"){
             res.redirect("/dashboard");
         } else {
             const photo = await queryAsync("SELECT photo FROM employees where id = ?", [id]);
-            const query = getDataEmployee() + " WHERE employees.id = ?";
+            const data = await userData.findData("findById");
+            
             try {
-                const results = await queryAsync(query, [id]); // Array of Object
                 res.render("profile", { 
                     user, 
                     photo,
                     path, 
-                    data: results[0]
+                    data: data[0]
                 });
             } catch (error) {
                 errorHandling(res, user, path, error);
@@ -36,20 +40,11 @@ const user = {
         const username = req.body.username;
         const password = req.body.password;
 
-        const querySelect = `SELECT * FROM users WHERE id = ?`;
-        const queryUpdate = `UPDATE users SET username = ?, password = ? WHERE id = ?`;
+        userData.username = username;
+        userData.password = password;
 
         try {
-            const selectData = await queryAsync(querySelect, [id]);
-
-            if (!selectData || selectData.length === 0) {
-                return res.status(404).json({ error: 'User not found' });
-            }
-
-            const updatedUsername = username || selectData[0].username;
-            const updatedPassword = password ? await bcrypt.hash(password, 10) : selectData[0].password;
-
-            const updateData = await queryAsync(queryUpdate, [updatedUsername, updatedPassword, id]);
+            const updateData = userData.changeData("updateUser");
             res.clearCookie('user');
             // res.cookie("user", {id: id, username: updatedUsername, role: "employee", department: selectData[0].department_id} , { maxAge: 3600000 }); // 1 Jam
             res.status(200).json(updateData)
