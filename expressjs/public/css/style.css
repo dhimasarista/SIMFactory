@@ -19,4 +19,13 @@
     background-color: #d1d1d1; /* Warna thumb (batang scrollbar horizontal) */
     border-radius: 5px; /* Bentuk thumb horizontal */
   }
-  
+
+
+  /* CSS kustom untuk mengatur border */
+  .border-lr {
+    border-left: 1px solid #DEE2E6; /* Border kiri */
+    border-right: 1px solid  #DEE2E6; /* Border kanan */
+    border-top: 1px solid #DEE2E6;
+    border-bottom: 1px solid #DEE2E6;
+}
+
