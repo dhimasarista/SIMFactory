@@ -6,7 +6,6 @@ const Index = require("./Index");
 const Errors = require("./Erros");
 const Uploads= require("./Uploads");
 const { Material } = require("./Warehouse");
-const Testing = require("./Testing");
 const Monitoring = require("./Monitoring");
 const Engineering = require("./Engineering");
 
@@ -24,9 +23,6 @@ const setupRoutes = (app) => {
   new Uploads(app);
   new Monitoring(app);
   new Engineering(app);
-
-  // Testing
-  new Testing(app);
 };
 
 module.exports = setupRoutes;
