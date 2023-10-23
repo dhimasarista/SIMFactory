@@ -19,6 +19,6 @@
 
 
 ### File Naming Rules, Variable/Function, and Class/Struct
-- v/f: calonProgrammer | calonProgrammer.js
-- class: CalonProgrammer | CalonProgrammer.js
-- ejs/html: calon_programmer.ejs | content-header.ejs
+> HTML/EJS: nama-elemen
+> JS/GOLANG: namaVarFunc, NamaClass, NamaStruct
+> SQL: nama_table
