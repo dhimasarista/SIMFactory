@@ -270,55 +270,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><a href="#">1</a></td>
-                                <td>Model 1</td>
-                                <td><span class="badge badge-info">Processing</span></td>
+                            <% linesTeams.forEach((data) => { %>
+                                <tr>
+                                <td><a href="#"><%- data.production_line_name  %></a></td>
+                                <td><%- data.models_name %></td>
+                                <% if (data.status === "processing") { %>
+                                    <td><span class="badge badge-info">Processing</span>
+                                <% } else if (data.status === "finished") { %>
+                                    <td><span class="badge badge-success">Finished</span></td>
+                                <% } else if (data.status === "notproduction") { %>
+                                    <td><span class="badge badge-dark">Not-Production</span></td>
+                                <% } else if (data.status === "finished-not-target") { %>
+                                    <td><span class="badge badge-warning">Finished</span></td>
+                                <% } else if (data.status === "stopped") { %>
+                                    <td><span class="badge badge-danger">Stopped</span></td>
+                                <% } else if (data.status === "waiting") { %>
+                                    <td><span class="badge badge-secondary">Waiting</span></td>
+                                <% } else { %>
+                                    <td><span class="badge badge-secondary">Error</span></td>
+                                <% } %>
                                 <td>
-                                    <div class="sparkbar" data-color="#00a65a" data-height="20">B/2nd</div>
+                                    <div class="sparkbar" data-color="#00a65a" data-height="20"><%- data.team_name %>/
+                                        <% if (data.shift == 1) { %>
+                                            <%= data.shift %>st
+                                        <% } else { %>
+                                            <%= data.shift %>nd
+                                        <% } %>
+                                    </div>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">2</a></td>
-                                <td>Model 2</td>
-                                <td><span class="badge badge-danger">Stopped</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">D/2nd</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">3</a></td>
-                                <td>Model 3</td>
-                                <td><span class="badge badge-info">Processing</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f56954" data-height="20">F/2nd</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">4</a></td>
-                                <td>Model 4</td>
-                                <td><span class="badge badge-success">Finished</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#00c0ef" data-height="20">G/1st</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">5</a></td>
-                                <td>Model 4</td>
-                                <td><span class="badge badge-warning">Finished</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f39c12" data-height="20">H/1st</div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><a href="#">6</a></td>
-                                <td>Empty</td>
-                                <td><span class="badge badge-dark">Not-Production</span></td>
-                                <td>
-                                    <div class="sparkbar" data-color="#f56954" data-height="20">None</div>
-                                </td>
-                            </tr>
-                            <tr>
+                                </tr>
+                            <% }); %>
                         </tbody>
                     </table>
                 </div>

@@ -35,27 +35,29 @@
                          <tr>
                              <td><a href="#"><%- data.production_line_name %></a></td>
                              <td><%- data.models_name %></td>
-                              <% if (data.status === "processing") { %>
-                                 <td><span class="badge badge-info">Processing</span>
-                              <% } else if (data.status === "finished") { %>
-                                 <td><span class="badge badge-success">Finished</span></td>
-                              <% } else if (data.status === "notproduction") { %>
-                                 <td><span class="badge badge-dark">Not-Production</span></td>
-                              <% } else if (data.status === "finished-not-target") { %>
-                                 <td><span class="badge badge-warning">Finished</span></td>
-                              <% } else if (data.status === "stopped") { %>
-                                 <td><span class="badge badge-danger">Stopped</span></td>
-                              <% } else { %>
-                                 <td><span class="badge badge-secondary">Error</span></td>
-                              <% } %>
+                               <% if (data.status === "processing") { %>
+                                <td><span class="badge badge-info">Processing</span>
+                                <% } else if (data.status === "finished") { %>
+                                    <td><span class="badge badge-success">Finished</span></td>
+                                <% } else if (data.status === "notproduction") { %>
+                                    <td><span class="badge badge-dark">Not-Production</span></td>
+                                <% } else if (data.status === "finished-not-target") { %>
+                                    <td><span class="badge badge-warning">Finished</span></td>
+                                <% } else if (data.status === "stopped") { %>
+                                    <td><span class="badge badge-danger">Stopped</span></td>
+                                <% } else if (data.status === "waiting") { %>
+                                    <td><span class="badge badge-secondary">Waiting</span></td>
+                                <% } else { %>
+                                    <td><span class="badge badge-secondary">Error</span></td>
+                                <% } %>
                              <td>
                                  <div class="sparkbar" data-color="#00a65a" data-height="20"><%- data.team_name %></div>
                              </td>
                              <td>
                                 <% if (data.shift == 1) { %>
-                                    <span class="badge badge-dark"><%= data.shift %>st</span>
+                                    <span class="badge badge-success"><%= data.shift %>st</span>
                                   <% } else { %>
-                                    <span class="badge badge-secondary"><%= data.shift %>nd</span>
+                                    <span class="badge badge-warning"><%= data.shift %>nd</span>
                                   <% } %>
                              </td>
                          </tr>
