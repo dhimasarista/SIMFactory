@@ -26,7 +26,8 @@
                              <th>Line</th>
                              <th>Model</th>
                              <th>Status</th>
-                             <th>Team/Shift</th>
+                             <th>Team</th>
+                             <th>Shift</th>
                          </tr>
                      </thead>
                      <tbody>
@@ -48,11 +49,14 @@
                                  <td><span class="badge badge-secondary">Error</span></td>
                               <% } %>
                              <td>
-                                 <div class="sparkbar" data-color="#00a65a" data-height="20"><%- data.team_name %>/<% if (data.shift == 1) { %>
-                                    <%= data.shift %>st
+                                 <div class="sparkbar" data-color="#00a65a" data-height="20"><%- data.team_name %></div>
+                             </td>
+                             <td>
+                                <% if (data.shift == 1) { %>
+                                    <span class="badge badge-dark"><%= data.shift %>st</span>
                                   <% } else { %>
-                                    <%= data.shift %>nd
-                                  <% } %> </div>
+                                    <span class="badge badge-secondary"><%= data.shift %>nd</span>
+                                  <% } %>
                              </td>
                          </tr>
                          <% }); %>
