@@ -6,59 +6,45 @@
  <section class="content">
     <div class="container-fluid">
        <div class="row">
-         <div class="col-md-4">
-            <div class="card card-user">
-              <div class="image" style="position: relative;">
-                 <!-- Gambar Pertama (gambar latar belakang) -->
-                 <img style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;" src="../img/bg1.jpg">
-               
-                 <!-- Gambar Kedua (gambar profil) -->
-                 <img class="img-circle elevation-2" id="photo" style="width: 160px; height: 160px; object-fit: cover; object-position: center; position: absolute; top: 150px; left: 50%; transform: translateX(-50%);" src="data:image/jpeg;base64, <%= photo  %>" alt="...">
-                 
-                 <div class="card-body" style="margin-top: 50px;">
-                    <div class="author text-center" >
-                       <a href="#">
-                          <h5 class="title"><%= data.name %></h5>
-                       </a>
-                       <p class="description">
-                          <%= user.username %>
-                       </p>
-                       <div class="row">
-                          <div class="col-md-6">
-                             <div id="employeeId">
-                                <h6 ><b>Employee ID</b></h6>
-                                <p><%= data.id %></p>
-                             </div>
-                          </div>
-                          <div class="col-md-6">
-                             <h6><b>Department</b></h6>
-                             <p><%= data.department_name %></p>
-                          </div>
-                       </div>
-                       
-                   </div>
-                 </div>
-               </div>
-             </div> 
-            </div>
-          <div class="col-md-8">
+          <div class="col-md-12">
              <div class="card">
                 <div class="card-header">
-                   <h3 class="card-title">Edit Profile</h3>
+                   <h3 class="card-title">Profile</h3>
                 </div>
-                <div class="card-body">
-                   <div class="form-group">
-                      <label for="new-username">New Username</label>
-                      <input type="text" class="form-control" id="new-username" placeholder="Enter new username">
-                   </div>
-                   <div class="form-group">
-                      <label for="new-username">New Password</label>
-                      <input type="password" class="form-control" id="new-password" placeholder="Enter new password">
-                   </div>
-                   <p class="warning">
-                    *If you forget your password, please contact the administrator.
-                   </p>
-                   <button type="button" class="btn btn-primary" onClick="saveEdit(parseInt('<%= data.id %>'))">Save Changes</button>
+                
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <div class="card-body row">
+                        <div class="form-group col-md-6">
+                           <label>Employee ID</label>
+                           <p><%= data.id %></p>
+                           <label>Username</label>
+                           <p><%= user.username %></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label>Name</label>
+                           <p><%= data.name %></p>
+                           <label>Department</label>
+                           <p><%= data.department_name %></p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                     <div class="card-body">
+                        <div class="form-group">
+                           <label for="new-username">New Username</label>
+                           <input type="text" class="form-control" id="new-username" placeholder="Enter new username">
+                        </div>
+                        <div class="form-group">
+                           <label for="new-username">New Password</label>
+                           <input type="password" class="form-control" id="new-password" placeholder="Enter new password">
+                        </div>
+                        <p class="warning">
+                         *If you forget your password, please contact the administrator.
+                        </p>
+                        <button type="button" class="btn btn-primary" onClick="saveEdit(parseInt('<%= data.id %>'))">Save Changes</button>
+                     </div>
+                  </div>
                 </div>
              </div>
           </div>
