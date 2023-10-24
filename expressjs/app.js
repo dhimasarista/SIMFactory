@@ -37,7 +37,7 @@ function main() {
 
   metrics(app);
   app.use(compression()); // Kompresi HTTP Resources yang dikirimkan ke klien
-  // sessionSetup(app); // Session
+  sessionSetup(app); // Session
   app.set('view engine', 'ejs'); // Mengatur View Engine ke EJS
   app.set('views', path.join(__dirname, 'views')); // Mengatur path ke folder views
   app.use(express.static(path.join(__dirname, 'public'))); // Serve static files dari folder "public" 
