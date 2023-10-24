@@ -194,7 +194,7 @@
                      localStorage.setItem('employeesData', JSON.stringify(employeesData));
                      const data = localStorage.getItem('employeesData');
                      const parseData = JSON.parse(data);
-                     console.log(parseData);
+                     // console.log(parseData);
                 </script>
                   <tbody>
                      <% employees.forEach((data) => { %>
@@ -262,83 +262,16 @@
          <!-- Form Data karyawan -->
          <div class="card-body" id="employeeFormData" style="display: none;">
             <form id="employeeForm">
-               <input type="hidden" id="employeeIdForm" name="employeeIdForm">
-               <!-- 1 -->
-               <div class="form-group">
-                  <label for="formName">Name</label>
-                  <input type="text" class="form-control" id="formName" name="formName">
-               </div>
-               <!-- 2 -->
-               <div class="form-group">
-                  <label for="formDepartments">Departments</label><br>
-                  <select name="formDepartments" id="formDepartments">
-                     <option hidden>Select First</option>
-                     <% departments.forEach((data) => { %>
-                     <option value="<%= data.id %>"><%= data.name %></option>
-                     <% }); %>
-                  </select>
-               </div>
-               <!-- 3 -->
-               <div class="form-group">
-                  <label for="formAddress">Address</label>
-                  <input type="text" class="form-control" id="formAddress" name="formAddress">
-               </div>
-               <!-- 4 -->
-               <div class="form-group">
-                  <label for="formNumberPhone">Number Phone</label>
-                  <input type="text" class="form-control" id="formNumberPhone" name="formNumberPhone">
-               </div>
-               <!-- 5 -->
-               <div class="form-group">
-                  <label for="formEmail">Email</label>
-                  <input type="email" class="form-control" id="formEmail" name="formEmail">
-               </div>
-               <!-- 6 -->
-               <div class="form-group">
-                  <label for="formLastEducation">Last Education</label>
-                  <input type="text" class="form-control" id="formLastEducation" name="formLastEducation">
-               </div>
-               <!-- 7 -->
-               <div class="form-group">
-                  <label for="formMajor">Major</label>
-                  <input type="text" class="form-control" id="formMajor" name="formMajor">
-               </div>
-               <!-- 8 -->
-               <div class="form-group">
-                  <label for="formTitle">Title</label>
-                  <input type="text" class="form-control" id="formTitle" name="formTitle">
-               </div>
-               <!-- 9 -->
-               <div class="form-group">
-                  <label for="formWorkExperience">Work Experience</label>
-                  <textarea class="form-control" id="formWorkExperience" name="formWorkExperience"></textarea>
-               </div>
-               <!-- 10 -->
-               <div class="form-group">
-                  <label for="formSkills">Skills</label>
-                  <textarea class="form-control" id="formSkills" name="formSkills"></textarea>
-               </div>
-               <!-- 11 -->
-               <div class="form-group">
-                  <label for="formMCU">MCU</label>
-                  <select class="form-control" id="formMCU" name="formMCU">
-                     <option value="1">Yes</option>
-                     <option value="0">No</option>
-                  </select>
-               </div>
-               <!-- 12 -->
-               <div class="form-group">
-                  <label for="formCriminalHistory">Criminal History</label>
-                  <select class="form-control" id="formCriminalHistory" name="formCriminalHistory">
-                     <option value="1">Yes</option>
-                     <option value="0">No</option>
-                  </select>
-               </div>
-               <!-- 13 -->
-               <div class="form-group">
+               <!-- <input type="hidden" id="employeeIdForm" name="employeeIdForm"> -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <img src="../img/profile.jpg" alt="image" width="200px" id="profile-image-uploader">
+                  </div>
+                  <!-- 13 -->
+               <div class="form-group col-md-6">
                   <label for="formPhoto">Photo</label><br>
                   <div class="input-image">
-                     <input type="file" id="formPhoto" name="formPhoto">
+                     <input type="file" id="formPhoto" name="formPhoto" class="upload-button">
                      <p class="red">*JPEG/JPG/PNG - 200KB</p>
                   </div>
                   <div class="button-delete-image" style="display: none;">
@@ -352,76 +285,162 @@
                      <span id="image-file-name"></span>
                   </div>
                </div>
+               </div>
+               <!-- 1 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formName">Name</label>
+                     <input type="text" class="form-control" id="formName" name="formName">
+                  </div>
+                  <!-- 2 -->
+                  <div class="form-group col-md-6">
+                     <label for="formDepartments">Departments</label><br>
+                     <select name="formDepartments" id="formDepartments">
+                        <option hidden>Select First</option>
+                        <% departments.forEach((data) => { %>
+                        <option value="<%= data.id %>"><%= data.name %></option>
+                        <% }); %>
+                     </select>
+                  </div>
+               </div>
+               <!-- 3 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formAddress">Address</label>
+                     <input type="text" class="form-control" id="formAddress" name="formAddress">
+                  </div>
+                  <!-- 4 -->
+                  <div class="form-group col-md-6">
+                     <label for="formNumberPhone">Number Phone</label>
+                     <input type="text" class="form-control" id="formNumberPhone" name="formNumberPhone">
+                  </div>
+               </div>
+               <!-- 5 -->
+              <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="formEmail">Email</label>
+                  <input type="email" class="form-control" id="formEmail" name="formEmail">
+               </div>
+               <!-- 6 -->
+               <div class="form-group col-md-6">
+                  <label for="formLastEducation">Last Education</label>
+                  <input type="text" class="form-control" id="formLastEducation" name="formLastEducation">
+               </div>
+              </div>
+               <!-- 7 -->
+              <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="formMajor">Major</label>
+                  <input type="text" class="form-control" id="formMajor" name="formMajor">
+               </div>
+               <!-- 8 -->
+               <div class="form-group col-md-6">
+                  <label for="formTitle">Title</label>
+                  <input type="text" class="form-control" id="formTitle" name="formTitle">
+               </div>
+              </div>
+               <!-- 9 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formWorkExperience">Work Experience</label>
+                     <textarea class="form-control" id="formWorkExperience" name="formWorkExperience"></textarea>
+                  </div>
+                  <!-- 10 -->
+                  <div class="form-group col-md-6">
+                     <label for="formSkills">Skills</label>
+                     <textarea class="form-control" id="formSkills" name="formSkills"></textarea>
+                  </div>
+               </div>
+               <!-- 11 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formMCU">MCU</label>
+                     <select class="form-control" id="formMCU" name="formMCU">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                     </select>
+                  </div>
+                  <!-- 12 -->
+                  <div class="form-group col-md-6">
+                     <label for="formCriminalHistory">Criminal History</label>
+                     <select class="form-control" id="formCriminalHistory" name="formCriminalHistory">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                     </select>
+                  </div>
+               </div>
                <!-- 14 -->
-               <div class="form-group">
-                  <label for="formApplicationLetter">Application Letter</label><br>
-                  <div class="input-appletter">
-                     <input type="file" id="formApplicationLetter" name="formApplicationLetter">
-                     <p class="red">*PDF - 200KB</p>
+               <div class="form-row">
+                  <div class="form-group col-md-3">
+                     <label for="formApplicationLetter">Application Letter</label><br>
+                     <div class="input-appletter">
+                        <input type="file" id="formApplicationLetter" name="formApplicationLetter">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-appletter" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="appletter-file-name"></span>
+                     </div>
                   </div>
-                  <div class="button-delete-appletter" style="display: none;">
-                     <a type="button" class="mt-1 mr-1 badge badge-danger">
-                        <i>
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
-                           </svg>
-                        </i>
-                     </a>
-                     <span id="appletter-file-name"></span>
+                  <!-- 15 -->
+                  <div class="form-group col-md-3">
+                     <label for="formCV">CV</label><br>
+                     <div class="input-cv">
+                        <input type="file" id="formCV" name="formCV">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-cv" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="cv-file-name"></span>
+                     </div>
                   </div>
-               </div>
-               <!-- 15 -->
-               <div class="form-group">
-                  <label for="formCV">CV</label><br>
-                  <div class="input-cv">
-                     <input type="file" id="formCV" name="formCV">
-                     <p class="red">*PDF - 200KB</p>
+                  <!-- 16 -->
+                  <div class="form-group col-md-3">
+                     <label for="formPortfolio">Portfolio</label><br>
+                     <div class="input-portfolio">
+                        <input type="file" id="formPortfolio" name="formPortfolio">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-portfolio" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="portfolio-file-name"></span>
+                     </div>
                   </div>
-                  <div class="button-delete-cv" style="display: none;">
-                     <a type="button" class="mt-1 mr-1 badge badge-danger">
-                        <i>
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
-                           </svg>
-                        </i>
-                     </a>
-                     <span id="cv-file-name"></span>
-                  </div>
-               </div>
-               <!-- 16 -->
-               <div class="form-group">
-                  <label for="formPortfolio">Portfolio</label><br>
-                  <div class="input-portfolio">
-                     <input type="file" id="formPortfolio" name="formPortfolio">
-                     <p class="red">*PDF - 200KB</p>
-                  </div>
-                  <div class="button-delete-portfolio" style="display: none;">
-                     <a type="button" class="mt-1 mr-1 badge badge-danger">
-                        <i>
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
-                           </svg>
-                        </i>
-                     </a>
-                     <span id="portfolio-file-name"></span>
-                  </div>
-               </div>
-               <!-- 17 -->
-               <div class="form-group">
-                  <label for="formEmploymentContract">Employment Contract</label><br>
-                  <div class="input-contract">
-                     <input type="file" id="formEmploymentContract" name="formEmploymentContract">
-                     <p class="red">*PDF - 200KB</p>
-                  </div>
-                  <div class="button-delete-contract" style="display: none;">
-                     <a type="button" class="mt-1 mr-1 badge badge-danger">
-                        <i>
-                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
-                           </svg>
-                        </i>
-                     </a>
-                     <span id="contract-file-name"></span>
+                  <!-- 17 -->
+                  <div class="form-group col-md-3">
+                     <label for="formEmploymentContract">Employment Contract</label><br>
+                     <div class="input-contract">
+                        <input type="file" id="formEmploymentContract" name="formEmploymentContract">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-contract" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="contract-file-name"></span>
+                     </div>
                   </div>
                </div>
                <div class="add-submit-button"></div>
@@ -582,12 +601,15 @@
          toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
          return;
       }
-   }
-   
+   }  
+
+   const photoProfileUploader = document.getElementById("profile-image-uploader");
+   const defaultProfileSrc = photoProfileUploader.src;
    // Melakukan pemeriksaan, jika file tidak sesuai
    photo.addEventListener("change", function () {
       checkFileType(this.files[0], ["image/jpeg", "image/jpg", "image/png"], 'Change the image format.', photo);
       checkFileSize(photo);
+      photoProfileUploader.src = URL.createObjectURL(photo.files[0]);
    });
    appLetter.addEventListener("change", function () {
       checkFileType(this.files[0], pdfType, 'Its Not PDF', appLetter);
@@ -633,6 +655,7 @@
    const inputImage = document.querySelector(".input-image")
    const buttonDeleteImage = document.querySelector(".button-delete-image");
    const imageFileName = document.querySelector("#image-file-name");
+   
    // Photo
    photo.addEventListener("change", (event) => {
       if (photo.files[0]) {
@@ -648,8 +671,8 @@
          imageFileName.textContent = photo.files[0]["name"]
       }
    
-      if (selectedFile !== undefined) {
-      }
+      // if (selectedFile !== undefined) {
+      // }
    });
    // Delete buttons
    buttonDeleteImage.addEventListener("click", () => {
@@ -659,7 +682,11 @@
          inputImage.style.display = "inline";
          buttonDeleteImage.style.display = "none"; 
          imageFileName.textContent = null;
-         photo.value = null;
+         photo.value = '';
+
+         
+         photoProfileUploader.src = defaultProfileSrc;
+         
       } catch (error) {
          toastr.error(error, "Error");
       }
@@ -809,6 +836,8 @@
       // Inisialisasi form data
       const formData = new FormData();
       formData.append(dataName, file);
+
+
    
       try {
          fetch(path, {
