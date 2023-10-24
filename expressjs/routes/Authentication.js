@@ -18,6 +18,8 @@ const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
 const pool = require("../config/database");
 const promisePool = pool.promise();
+const jwt = require('jsonwebtoken');
+const secretCode = require("../utils/secretCode");
 
 class Login{
     constructor(app){
@@ -73,11 +75,7 @@ class Login{
                             errors: [{message: "Username salah!"}]
                         });
                     }
-    
-                    // inisiasi password dengan operator ternary
-                    
-                    // Memeriksa password apakah cocok dengan username dari tabel
-                    const passwordMatch = await bcrypt.compare(password, user.password);
+                    const passwordMatch = await bcrypt.compare(password, user.password); // Memeriksa password apakah cocok dengan username dari tabel
                     // Jika passowrd benar | passwordMatch = true
                     if (passwordMatch) {
                         // Apakah admin tidak undefined
@@ -88,7 +86,6 @@ class Login{
                                 { maxAge: 3600000 }
                             ); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
-    
                             // Lalu di alihkan ke halaman utama
                             return res.redirect("/administrator");
                         } else {
@@ -99,7 +96,7 @@ class Login{
                             }
                             res.cookie("user", {id: user.id, username: user.username, role: "employee", department: user.department_id}, { maxAge: maxAge }); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
-    
+
                             // Lalu di alihkan ke halaman utama
                             return res.redirect("/dashboard");
                         }
