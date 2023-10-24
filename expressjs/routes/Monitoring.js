@@ -5,6 +5,9 @@ const { promisify } = require('util');
 const pool = require("../config/database");
 const queryAsync = promisify(pool.query).bind(pool);
 
+const LineTeam = require("../models/LineTeam");
+const lineTeam = new LineTeam();
+
 class Monitoring{
     constructor(app) {
         this.app = app;
@@ -17,16 +20,8 @@ class Monitoring{
         .get(async (req, res) => {
             const user = req.cookies.user;
             const path = req.path;
-
             try {
-                const results = await queryAsync(`
-                SELECT lt.*, pl.name AS production_line_name, t.name AS team_name, m.name AS models_name
-                FROM lines_teams AS lt
-                JOIN production_lines AS pl ON lt.production_lines_id = pl.id
-                JOIN models AS m ON lt.models_id = m.id
-                JOIN teams AS t ON lt.teams_id = t.id
-                ORDER BY pl.id;
-                `);
+                const results = await lineTeam.findAll();
                 res.render("monitoring_production", {
                     user,
                     path,
@@ -41,7 +36,7 @@ class Monitoring{
         .get(async (req, res) => {
             const path = req.path;
             const user = req.cookies.user;
-            const apiKey = "210401010174"
+            const apiKey = "210401010174";
 
             try {
                 const response = await axios.get("http://localhost:8080/materials/data", {
