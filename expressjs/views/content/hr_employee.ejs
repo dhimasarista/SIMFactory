@@ -64,81 +64,90 @@
                   </a>
                </span>
             </div>
+            <style>
+               label{
+                  color: rgb(0, 140, 255);
+               }
+            </style>
             <div class="row" style="margin: 40px 15px;">
-               <div class="col-md-4">
-                  <div class="card card-user">
-                    <div class="image" style="position: relative;">
-                       <!-- Gambar Pertama (gambar latar belakang) -->
-                       <img style="width: 100%; border-top-left-radius: 10px; border-top-right-radius: 10px;" src="https://images.unsplash.com/photo-1485083269755-a7b559a4fe5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80g">
-                     
-                       <!-- Gambar Kedua (gambar profil) -->
-                       <img  src="../img/profile.jpg" id="photo-employee" class="img-circle elevation-2" style="width: 160px; height: 160px; object-fit: cover; object-position: center; position: absolute; top: 200px; left: 50%; transform: translateX(-50%);" alt="...">
-                       <div class="card-body" style="margin-top: 20px;">
-                          <div class="author text-center" >
-                             <a href="#">
-                                
-                                <h5 style="margin-top: 80px;" class="title" id="name-employee"></h5>
-                             </a>
-                             <div class="card-footer bg-white">
-                               <hr>
-                               <div class="card-body text-center">
-                                 <!-- <h4>Documents</h4> -->
-                                 <div class="text-left">
-                                    <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
-                                    <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
-                                    <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
-                                    <p><a href="#" id="contract-employee">Contract Not Found</a></p>
-                                    <p>MCU: <span id="mcu-employee"></span></p>
-                                    <p>Criminal History: <span id="crimhistory-employee"></span></p>
-                                 </div>
-                              </div>
-                             </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div> 
+               <div class="col-md-6">
+                  <img  src="../img/profile.jpg" id="photo-employee" class="elevation-2" style="width: 160px; height: 160px; object-fit: cover; margin-bottom: 40px;" alt="...">
+                  <div id="block-nama" class="row bord-bottom">
+                     <label for="nama" class="col-md-5">Full Name</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="name-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
-
-               <div class="col-md-8">
-                  <div class="card">
-                     <div class="card-body">
-                        <h4>Employee Information</h4>
-                        <p>ID Employee: <span id="id-employee"></span></p>
-                        <p>Department: <a id="department-employee"></a></p>
-                     </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">ID Employee</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="id-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
-                  <div class="card">
-                     <div class="card-body">
-                        <h4>Informasi Pribadi</h4>
-                        <p>Address: <span id="address-employee"></span></p>
-                        <p>No. Phone: <a id="nophone-employee"></a></p>
-                        <p>
-                           Email: 
-                           <a id="email-employee">
-                              </span>
-                        </p>
-                        <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
-                     </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Department</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="department-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
-                  <div class="card">
-                  <div class="card-body">
-                  <h4>Background</h4>
-                  <p>Last Education: <span id="last_education-employee"></span></p>
-                  <p>Major: <span id="major-employee"></span></p>
-                  <p>Title: <span id="title-employee"></span></p>
-                  <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Last Education</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="last_education-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Major</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="major-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
-                  <div class="card">
-                  <div class="card-body">
-                  <h4>Work Experience</h4>
-                  <p id="work_experience-employee"></p>
-                  <h4>Skills</h4>
-                  <p id="skills-employee"></p>
-                  <!-- Tambahkan informasi lainnya sesuai kebutuhan -->
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Title</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="title-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
+               </div>
+               <div class="col-md-6">
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Address</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="address-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
                   </div>
-                  <!-- Tambahkan bagian lainnya sesuai dengan informasi yang ingin ditampilkan -->
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Number Phone</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="nophone-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Email</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="email-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Work Experience</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="work_experience-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Skills</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="skills-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div class="text-left">
+                     <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
+                     <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
+                     <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
+                     <p><a href="#" id="contract-employee">Contract Not Found</a></p>
+                     <p>MCU: <span id="mcu-employee"></span></p>
+                     <p>Criminal History: <span id="crimhistory-employee"></span></p>
+                  </div>
                </div>
             </div>
          </div>
@@ -474,16 +483,16 @@
       .then(results => {
          document.getElementById("name-employee").textContent = results.name;
          document.getElementById("id-employee").textContent = results.id;
-         document.getElementById("nophone-employee").textContent = results.number_phone;
-         document.getElementById("email-employee").textContent = results.email;
-         document.getElementById("email-employee").href = `mailto:${results.email}`;
-         document.getElementById("address-employee").textContent = results.address;
+         document.getElementById("nophone-employee").textContent = results.number_phone !== "" ? results.number_phone : "Empty";
+         document.getElementById("email-employee").textContent = results.email !== "" ? results.email : "Empty";
+         document.getElementById("email-employee").href = results.email !== "" ? `mailto:${results.email}` : "";
+         document.getElementById("address-employee").textContent = results.address !== "" ? results.address : "Empty";
          document.getElementById("department-employee").textContent = results.department_name;
-         document.getElementById("last_education-employee").textContent = results.last_education;
-         document.getElementById("major-employee").textContent = results.major;
-         document.getElementById("work_experience-employee").textContent = results.work_experience;
-         document.getElementById("skills-employee").textContent = results.skills;
-         document.getElementById("title-employee").textContent = results.title;
+         document.getElementById("last_education-employee").textContent = results.last_education !== "" ? results.last_education : "Empty";
+         document.getElementById("major-employee").textContent = results.major !== "" ? results.major : "Empty";
+         document.getElementById("work_experience-employee").textContent = results.work_experience !== "" ? results.work_experience : "Empty";
+         document.getElementById("skills-employee").textContent = results.skills !== "" ? results.skills : "Empty";
+         document.getElementById("title-employee").textContent = results.title !== "" ? results.title : "Empty";
    
          // Photo: arrayBufferToBase64() dari script.js
          if (results.photo === null) {
