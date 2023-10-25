@@ -69,7 +69,7 @@
                   color: rgb(0, 140, 255);
                }
             </style>
-            <div class="row" style="margin: 40px 15px;">
+            <div class="row" style="margin: 40px 15px;" id="employee-detail-data">
                <div class="col-md-6">
                   <img  src="../img/profile.jpg" id="photo-employee" class="elevation-2" style="width: 160px; height: 160px; object-fit: cover; margin-bottom: 40px;" alt="...">
                   <div id="block-nama" class="row bord-bottom">
@@ -140,13 +140,29 @@
                            <p class="help-block"><span id="error-field-nama"></span></p>                
                         </div>
                   </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Medical Checkup</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="mcu-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Criminal History</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="crimhistory-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
                   <div class="text-left">
+                     <div id="block-nama" class="row bord-bottom ">
+                        <label for="nama" class="col-md-5">Documents</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="skills-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                     </div>
                      <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
                      <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
                      <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
                      <p><a href="#" id="contract-employee">Contract Not Found</a></p>
-                     <p>MCU: <span id="mcu-employee"></span></p>
-                     <p>Criminal History: <span id="crimhistory-employee"></span></p>
                   </div>
                </div>
             </div>
@@ -276,7 +292,7 @@
                   <div class="form-group col-md-6">
                      <img src="../img/profile.jpg" alt="image" width="200px" id="profile-image-uploader">
                   </div>
-                  <!-- 13 -->
+               <!-- 13 -->
                <div class="form-group col-md-6">
                   <label for="formPhoto">Photo</label><br>
                   <div class="input-image">
