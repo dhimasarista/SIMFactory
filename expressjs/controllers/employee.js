@@ -97,7 +97,8 @@ const employee = {
         const employeeData = new EmployeeModel(id)
         try {
             const results = await employeeData.findById();
-            res.json(...results);
+            console.log(results[0]);
+            res.json(results[0]);
         } catch(error) {
             errorLogging(error);
         }
@@ -108,7 +109,6 @@ const employee = {
 
         try {
             const results = await queryAsync(query, [idToDelete]);
-            res.status(200).send(results);
             console.log(green, `${symbol} Employee: ${idToDelete} Succesfully Deleted`);
         } catch (error) {
             errorLogging(error);
