@@ -97,7 +97,6 @@ const employee = {
         const employeeData = new EmployeeModel(id)
         try {
             const results = await employeeData.findById();
-            console.log(results[0]);
             res.json(results[0]);
         } catch(error) {
             errorLogging(error);
