@@ -24,6 +24,9 @@ const userAuthorization = (app) => {
           if (currentPath === "/") {
             return next(); // Lanjutkan ke middleware berikutnya
           }
+          if (currentPath === "/error") {
+            return next();
+          }
 
           // Path /monitoring akan dialihkan ke /monitoring/production
           if (currentPath === "/monitoring") {
@@ -48,7 +51,7 @@ const userAuthorization = (app) => {
               return next(); // Dan, lanjutkan ke middlware berikutnya
             }
             // Jika `administrator` mengakses path lain
-            return res.redirect("/administrator");
+            // return res.redirect("/administrator");
           }
           
           // Jika bukan admin, dan mengakses /administrator

@@ -12,7 +12,7 @@ class Index{
         this.app.get("/", (req, res) => {
             // const user = req.cookies.user;
             // res.render("index", { user });
-            res.redirect("/dashboard");
+            res.redirect("/monitoring/production");
         });
         this.app.get("/dashboard", render);
     }
