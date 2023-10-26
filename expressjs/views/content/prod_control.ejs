@@ -50,31 +50,93 @@
                                <span class="badge badge-danger">Error</span>
                            <% } %>
                         </td>
-                        <td>
-                           <a type="button" class="mt-1 mr-1 badge badge-danger" onclick="buttonLineControl(`<%- data.teams_id %>`)">
+                        <td id="control-<%- data.teams_id %>">
+                           <a type="button" id="button-line-stop-<%- data.teams_id %>" class="mt-1 mr-1 badge badge-danger" onclick="buttonLineStop(`<%- data.teams_id %>`)">
                               <i>
                                  STOP
                               </i>
                            </a>
+                           <a type="button" id="button-line-continue-<%- data.teams_id %>" class="mt-1 mr-1 badge badge-success" onclick="buttonLineContinue(`<%- data.teams_id %>`)">
+                              <i>
+                                 CONTINUE
+                              </i>
+                           </a>
+                           
                         </td>
                      </tr>   
+                     <script>
+                        "<% if (data.status === 'processing') { %>"
+                           document.getElementById("button-line-continue-<%- data.teams_id %>").setAttribute("hidden", "true")
+                        "<% } else if (data.status === 'stopped') { %>"
+                           document.getElementById("button-line-stop-<%- data.teams_id %>").setAttribute("hidden", "true")
+                        "<% } else { %>"
+                           document.getElementById("button-line-continue-<%- data.teams_id %>").setAttribute("hidden", "true")
+                           document.getElementById("button-line-stop-<%- data.teams_id %>").setAttribute("hidden", "true")
+                        "<% } %>"
+                     </script>
                   <% }) %>
                   </tfoot>
             </table>
          </div>
          <script>
-            const buttonLineControl = (id) => {
+            const buttonLineStop = (id) => {
                const lineStatus = document.getElementById(`line-status-${id}`);
                if (lineStatus.innerText === "Finished") {
                   toastr.info(`The production line has finished`, "Notice");
                   return;
                }
-               lineStatus.innerHTML = null;
-               lineStatus.innerHTML = `<td><span class="badge badge-danger">Stopped</span>`;
-               toastr.error(`The production line stopped`, "Notice");
+               const data = {
+                  id: id,
+                  status: "stopped"
+               }
+
+               fetch("/production/control/line-status", {
+                  method: "PUT",
+                  body: JSON.stringify(data),
+                  headers: {
+                     'Content-Type': 'application/json'
+                  }
+               })
+               .then(response => response.json())
+               .then(results => {
+                  toastr.error(`The production line stopped`, "Notice");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-danger">Stopped</span>`;
+                  document.getElementById(`button-line-continue-${id}`).removeAttribute("hidden");
+                  document.getElementById(`button-line-stop-${id}`).setAttribute("hidden", "true");
+               });
             }
 
-            
+            const buttonLineContinue = (id) => {
+               const lineStatus = document.getElementById(`line-status-${id}`);
+               if (lineStatus.innerText === "Finished") {
+                  toastr.info(`The production line has finished`, "Notice");
+                  return;
+               }
+
+               const data = {
+                  id: id,
+                  status: "processing"
+               };
+
+               fetch("/production/control/line-status", {
+                  method: "PUT",
+                  body: JSON.stringify(data),
+                  headers: {
+                     'Content-Type': 'application/json'
+                  }
+               })
+               .then(response => response.json())
+               .then(results => {
+                  toastr.success(`The production line continue`, "Notice");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-info">Processing</span>`;
+                  document.getElementById(`button-line-stop-${id}`).removeAttribute("hidden")
+                  document.getElementById(`button-line-continue-${id}`).setAttribute("hidden", "true");
+               });
+
+
+            }
          </script>
          <!-- /.card-body -->
       </div>

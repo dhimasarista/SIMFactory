@@ -31,6 +31,22 @@ class Production{
                 errorHandling(res, user, path, error);
             }
         });
+
+        this.app.put("/production/control/line-status", async (req, res) => {
+            const dataFromClient = req.body;
+
+            const data = {
+                status: dataFromClient.status,
+                id: parseInt(dataFromClient.id)
+            }
+
+            try {
+                const result = await queryAsync("UPDATE lines_teams SET ? where teams_id = ?", [data, data.id])
+                res.json(result);
+            } catch (error) {
+                errorLogging(error);
+            }
+        })
         this.app.route("/production/plan")
         .get(async (req, res) => {
             // Mengambil user dari cookie
