@@ -7,7 +7,6 @@ const path = require('path');
 const compression = require('compression');
 const cors = require("cors");
 const http = require('http'); // Import http module
-const LineTeam = require("./models/LineTeam");
 
 // Import Kode lainnya
 const { blue, symbol, magenta, qm } = require("./utils/logging");
@@ -17,6 +16,7 @@ const userAuthorization = require("./middlewares/userAuthorization");
 const sessionSetup = require("./middlewares/sessionSetup");
 const metrics = require('./middlewares/metrics');
 const { unMatchedRoutes, internalServer } = require('./middlewares/error');
+const LineTeam = require('./models/LineTeam');
 
 const app = express(); // Inisialisasi Aplikasi Express
 const server = http.createServer(app); // Create HTTP server
@@ -50,7 +50,7 @@ function main() {
   
   // Routes
   setupRoutes(app);
-  const lineTeam = new LineTeam();
+  new LineTeam().changeStatus();
 
   // Middleware untuk menangani error
   unMatchedRoutes(app); // 404
