@@ -3,10 +3,6 @@ const pool = require("../config/database");
 const queryAsync = promisify(pool.query).bind(pool);
 
 class LineTeam {
-    constructor(){
-        this.changeStatus();
-    }
-
     async findAll(){
         const query = `
         SELECT lt.*, pl.name AS production_line_name, t.name AS team_name, m.name AS models_name
@@ -51,19 +47,15 @@ class LineTeam {
 
             if (currentTime === firstShiftEnd) {
                 console.log("First Shift End, Change Status");
-                await queryAsync("UPDATE lines_teams SET status = 'finished-not-confirmed' WHERE shift = 1");
+                await queryAsync("UPDATE lines_teams SET status = 'finished' WHERE shift = 1");
                 await queryAsync("UPDATE lines_teams SET status = 'waiting' WHERE shift = 2");
             } else if (currentTime === secondShiftEnd) {
                 console.log("Second Shift End, Change Status");
-                await queryAsync("UPDATE lines_teams SET status = 'finished-not-confirmed' WHERE shift = 2");
+                await queryAsync("UPDATE lines_teams SET status = 'finished' WHERE shift = 2");
                 await queryAsync("UPDATE lines_teams SET status = 'waiting' WHERE shift = 1");
             }
         }, 1000);
         
-    }
-
-    #changeShift(){
-
     }
 }
 
