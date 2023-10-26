@@ -19,6 +19,7 @@ class UserModel {
   async #updateUser(){
         const querySelect = `SELECT * FROM users WHERE id = ?`;
         const queryUpdate = `UPDATE users SET username = ?, password = ? WHERE id = ?`;
+        
 
         try {
             const selectData = await queryAsync(querySelect, [this.id]);
