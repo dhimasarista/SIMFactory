@@ -14,69 +14,68 @@
                      <th>Line</th>
                      <th>Model</th>
                      <th>Shift</th>
+                     <th>Status</th>
                      <th>Control</th>
                   </tr>
                </thead>
-               <tbody>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
-                  <tr>
-                     <td>A</td>
-                     <td>1</td>
-                     <td>Model 1</td>
-                     <td>1st</span></td>
-                     <td>Change</span></td>
-                  </tr>
+
+               <tbody id="body-table-prodcontrol">
+                  <% lines.forEach((data) => { %>
+                     <tr>
+                        <td><%- data.team_name %></td>
+                        <td><%- data.production_line_name %></td>
+                        <td><%- data.models_name %></td>
+                        <td><% if (data.shift == 1) { %>
+                           <span class="badge badge-success"><%= data.shift %>st</span>
+                         <% } else { %>
+                           <span class="badge badge-warning"><%= data.shift %>nd</span>
+                         <% } %>
+                        </td>
+                        <td id="line-status-<%- data.teams_id %>">
+                           <% if (data.status === "processing") { %>
+                              <span class="badge badge-info">Processing</span>
+                           <% } else if (data.status === "finished") { %>
+                               <span class="badge badge-success">Finished</span>
+                           <% } else if (data.status === "notproduction") { %>
+                               <span class="badge badge-dark">Not-Production</span>
+                           <% } else if (data.status === "finished-not-target") { %>
+                               <span class="badge badge-warning">Finished</span>
+                           <% } else if (data.status === "stopped") { %>
+                               <span class="badge badge-danger">Stopped</span>
+                           <% } else if (data.status === "waiting") { %>
+                               <span class="badge badge-warning">Waiting</span>
+                           <% } else if (data.status === "finished-not-confirmed") { %>
+                               <span class="badge badge-warning">Finished Not Confirmed</span>
+                           <% } else { %>
+                               <span class="badge badge-danger">Error</span>
+                           <% } %>
+                        </td>
+                        <td>
+                           <a type="button" class="mt-1 mr-1 badge badge-danger" onclick="buttonLineControl(`<%- data.teams_id %>`)">
+                              <i>
+                                 STOP
+                              </i>
+                           </a>
+                        </td>
+                     </tr>   
+                  <% }) %>
                   </tfoot>
             </table>
          </div>
+         <script>
+            const buttonLineControl = (id) => {
+               const lineStatus = document.getElementById(`line-status-${id}`);
+               if (lineStatus.innerText === "Finished") {
+                  toastr.info(`The production line has finished`, "Notice");
+                  return;
+               }
+               lineStatus.innerHTML = null;
+               lineStatus.innerHTML = `<td><span class="badge badge-danger">Stopped</span>`;
+               toastr.error(`The production line stopped`, "Notice");
+            }
+
+            
+         </script>
          <!-- /.card-body -->
       </div>
       <div class="card">
