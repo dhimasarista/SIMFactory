@@ -6,7 +6,6 @@ const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const LineTeam = require("../models/LineTeam");
 const lineTeam = new LineTeam();
 
-
 module.exports = {
     render: async (req, res) => {
         // Mengambil user dari cookie
