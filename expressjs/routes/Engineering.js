@@ -3,8 +3,6 @@ const { promisify } = require('util');
 const pool = require("../config/database");
 const queryAsync = promisify(pool.query).bind(pool);
 
-const model = require("../models/model");
-
 class Engineering {
     constructor(app) {
         this.app = app;
@@ -15,14 +13,6 @@ class Engineering {
     setupRoutes(){
         this.app.route("/engineering/model")
         .get(async (req, res) => {
-            model.findAll()
-            .then(datas => {
-                datas.forEach(data => {
-                    console.log(data.name, data.stocks);
-                });
-            });
-            
-
             const user = req.cookies.user;
             const path = req.path;
             const queryModels = `SELECT

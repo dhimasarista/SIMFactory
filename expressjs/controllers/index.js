@@ -5,7 +5,6 @@ const { errorHandling, errorLogging} = require('../utils/errorHandling');
 
 const LineTeam = require("../models/LineTeam");
 const lineTeam = new LineTeam();
-
 module.exports = {
     render: async (req, res) => {
         // Mengambil user dari cookie
@@ -14,7 +13,7 @@ module.exports = {
         
         const queryModels = 'SELECT * FROM models';
         let data = [];
-
+            
         try {
             // Menghitung total karyawan
             const [totalProduced, totalEmployees, totalModels, models] = await Promise.all([
