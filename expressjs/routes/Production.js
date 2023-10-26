@@ -2,6 +2,9 @@ const { errorHandling, errorLogging} = require('../utils/errorHandling');
 const { promisify } = require('util');
 const pool = require("../config/database");
 const queryAsync = promisify(pool.query).bind(pool);
+const LineTeam = require("../models/LineTeam");
+
+const lineTeam = new LineTeam();
 
 class Production{
     constructor(app){
@@ -11,15 +14,18 @@ class Production{
     }
 
     prodControlRoutes(){
-        this.app.get("/production/control",(req, res) => {
+        this.app.get("/production/control", async (req, res) => {
             // Mengambil user dari cookie
             const user = req.cookies.user;
             const path = req.path;
+
+            const data = await lineTeam.findAll();
             try {
                 // Rendering views: prod_control.ejs
                 res.render("prod_control", {
                     path: path, 
-                    user: user
+                    user: user,
+                    lines: data
                 });
             } catch (error) {
                 errorHandling(res, user, path, error);
