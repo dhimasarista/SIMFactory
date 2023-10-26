@@ -7,6 +7,7 @@ const path = require('path');
 const compression = require('compression');
 const cors = require("cors");
 const http = require('http'); // Import http module
+const LineTeam = require("./models/LineTeam");
 
 // Import Kode lainnya
 const { blue, symbol, magenta, qm } = require("./utils/logging");
@@ -49,6 +50,7 @@ function main() {
   
   // Routes
   setupRoutes(app);
+  const lineTeam = new LineTeam();
 
   // Middleware untuk menangani error
   unMatchedRoutes(app); // 404
