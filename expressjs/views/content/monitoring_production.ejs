@@ -46,9 +46,11 @@
                                 <% } else if (data.status === "stopped") { %>
                                     <td><span class="badge badge-danger">Stopped</span></td>
                                 <% } else if (data.status === "waiting") { %>
-                                    <td><span class="badge badge-secondary">Waiting</span></td>
+                                    <td><span class="badge badge-info">Waiting</span></td>
+                                <% } else if (data.status === "finished-not-confirmed") { %>
+                                    <td><span class="badge badge-warning">Finished Not Confirmed</span></td>
                                 <% } else { %>
-                                    <td><span class="badge badge-secondary">Error</span></td>
+                                    <td><span class="badge badge-danger">Error</span></td>
                                 <% } %>
                              <td>
                                  <div class="sparkbar" data-color="#00a65a" data-height="20"><%- data.team_name %></div>
