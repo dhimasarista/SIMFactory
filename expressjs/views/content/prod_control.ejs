@@ -1,3 +1,14 @@
+<style>
+   .spinner-border.text-warning {
+      width: 20px; /* Ubah lebar sesuai kebutuhan */
+      height: 20px; /* Ubah tinggi sesuai kebutuhan */
+   }
+   .spinner-border.text-danger {
+      width: 20px; /* Ubah lebar sesuai kebutuhan */
+      height: 20px; /* Ubah tinggi sesuai kebutuhan */
+   }
+
+</style>
 <div class="row">
    <div class="col-12">
       <div class="card">
@@ -6,7 +17,7 @@
             <span style="margin-left: auto;">Today's Date: <span id="realTime"></span></span> <!-- Example Date -->
          </div>
          <!-- /.card-header -->
-         <div class="card-body">
+         <div class="card-body card-prod-control">
             <table id="example2" class="table m-0 border-lr table-striped">
                <thead>
                   <tr>
@@ -85,6 +96,8 @@
                   toastr.info(`The production line has finished`, "Notice");
                   return;
                }
+               lineStatus.innerHTML = null;
+               lineStatus.innerHTML = `<div class="spinner-border text-warning"></div>`;
                const data = {
                   id: id,
                   status: "stopped"
@@ -104,7 +117,12 @@
                   lineStatus.innerHTML = `<td><span class="badge badge-danger">Stopped</span>`;
                   document.getElementById(`button-line-continue-${id}`).removeAttribute("hidden");
                   document.getElementById(`button-line-stop-${id}`).setAttribute("hidden", "true");
-               });
+               })
+               .catch(error => {
+                  toastr.error(error, "Error");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-danger">Error</span>`;
+               })
             }
 
             const buttonLineContinue = (id) => {
@@ -113,6 +131,8 @@
                   toastr.info(`The production line has finished`, "Notice");
                   return;
                }
+               lineStatus.innerHTML = null;
+               lineStatus.innerHTML = `<div class="spinner-border text-danger"></div>`;
 
                const data = {
                   id: id,
@@ -133,6 +153,11 @@
                   lineStatus.innerHTML = `<td><span class="badge badge-info">Processing</span>`;
                   document.getElementById(`button-line-stop-${id}`).removeAttribute("hidden")
                   document.getElementById(`button-line-continue-${id}`).setAttribute("hidden", "true");
+               })
+               .catch(error => {
+                  toastr.error(error, "Error");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-danger">Error</span>`;
                });
 
 
