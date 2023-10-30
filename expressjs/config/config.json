@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "dev_user",
+    "password": "vancouver",
+    "database": "simfactory",
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": 3306,
+    "waitForConnections": true,
+    "connectionLimit": 10,
+    "queueLimit": 0
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

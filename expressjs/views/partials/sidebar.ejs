@@ -1,0 +1,194 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4 mb-3">
+   <!-- Brand Logo -->
+   <div id="branding">
+      <a href="#" class="brand-link">
+         <!-- <img src="../img/database-circle.svg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="height: 250px; "> -->
+         <img src="../img/hexagon-multiple.svg" alt="AdminLTE Logo" class="brand-image" style="height: 250px;">
+         <span class="brand-text font-weight-light">SIMFactory</span>
+         </a>
+   </div>
+   <!-- Sidebar -->
+   <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+               <% if (user.role === 'admin' ){ %>
+                  <li class="nav-item menu-open">
+                     <a href="/" class="nav-link <%= path === '/administrator' ? 'bg-warning' : 'bg-dark' %>">
+                        <i class="nav-icon">
+                           <!-- Size 24 -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="m10 13.75l-1.1-2.2q-.125-.275-.375-.413T8 11H2V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v5h-5.375L14.9 7.55q-.125-.275-.375-.388T14 7.05q-.275 0-.525.113t-.375.387l-3.1 6.2ZM4 20q-.825 0-1.413-.588T2 18v-5h5.375L9.1 16.45q.125.275.375.413T10 17q.275 0 .525-.138t.375-.412l3.1-6.2l1.1 2.2q.125.275.375.413T16 13h6v5q0 .825-.588 1.413T20 20H4Z"/></svg>
+                        </i>
+                        <p>Administrator</p>
+                     </a>
+                  </li>
+                <% } else { %>
+                  <li class="nav-item menu-open">
+                     <a href="/dashboard" class="nav-link <%= path === '/dashboard' ? 'bg-warning' : 'bg-dark' %>">
+                        <i class="nav-icon">
+                           <!-- Size 24 -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="m10 13.75l-1.1-2.2q-.125-.275-.375-.413T8 11H2V6q0-.825.588-1.413T4 4h16q.825 0 1.413.588T22 6v5h-5.375L14.9 7.55q-.125-.275-.375-.388T14 7.05q-.275 0-.525.113t-.375.387l-3.1 6.2ZM4 20q-.825 0-1.413-.588T2 18v-5h5.375L9.1 16.45q.125.275.375.413T10 17q.275 0 .525-.138t.375-.412l3.1-6.2l1.1 2.2q.125.275.375.413T16 13h6v5q0 .825-.588 1.413T20 20H4Z"/></svg>
+                        </i>
+                        <p>Dashboard</p>
+                     </a>
+                  </li>
+                  <li class="nav-header">Monitoring</li>
+                  <li class="nav-item menu-open">
+                     <a href="/monitoring/production" class="nav-link <%= path === '/monitoring/production' ? 'bg-warning' : 'bg-dark' %>">
+                        <i class="nav-icon">
+                           <!-- Size 24 -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="white" d="M5 3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-3Zm6.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3Zm.5 3V4h2v2h-2ZM2 12a4 4 0 0 1 4-4h8a4 4 0 0 1 0 8H6a4 4 0 0 1-4-4Zm5 0a1 1 0 1 0-2 0a1 1 0 0 0 2 0Zm4 0a1 1 0 1 0-2 0a1 1 0 0 0 2 0Zm3 1a1 1 0 1 0 0-2a1 1 0 0 0 0 2Z"/></svg>
+                        </i>
+                        <p>Production</p>
+                     </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                     <a href="/monitoring/materials" class="nav-link <%= path === '/monitoring/materials' ? 'bg-warning' : 'bg-dark' %>">
+                        <i class="nav-icon">
+                           <!-- Size 24 -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"><rect width="6.5" height="6.5" x="5.5" y="3" rx="1"/><path d="M4 12h7.61a1 1 0 0 1 .7.29l1.19 1.21M.5.5h1a1 1 0 0 1 1 1V10M4 11.75A2.11 2.11 0 0 1 4 12a1.74 1.74 0 1 1 0-.25ZM8.5 7h1"/></g></svg>
+                        </i>
+                        <p>Materials</p>
+                     </a>
+                  </li>
+                  <li class="nav-item menu-open">
+                     <a href="/monitoring/schedules" class="nav-link <%= path === '/monitoring/schedules' ? 'bg-warning' : 'bg-dark' %>">
+                        <i class="nav-icon">
+                           <!-- Size 24 -->
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M19 4h-1V3c0-.6-.4-1-1-1s-1 .4-1 1v1H8V3c0-.6-.4-1-1-1s-1 .4-1 1v1H5C3.3 4 2 5.3 2 7v1h20V7c0-1.7-1.3-3-3-3zM2 19c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3v-9H2v9zm15-7c.6 0 1 .4 1 1s-.4 1-1 1s-1-.4-1-1s.4-1 1-1zm0 4c.6 0 1 .4 1 1s-.4 1-1 1s-1-.4-1-1s.4-1 1-1zm-5-4c.6 0 1 .4 1 1s-.4 1-1 1s-1-.4-1-1s.4-1 1-1zm0 4c.6 0 1 .4 1 1s-.4 1-1 1s-1-.4-1-1s.4-1 1-1zm-5-4c.6 0 1 .4 1 1s-.4 1-1 1s-1-.4-1-1s.4-1 1-1zm0 4c.6 0 1 .4 1 1s-.4 1-1 1s-1-.4-1-1s.4-1 1-1z"/></svg>
+                        </i>
+                        <p>Schedules</p>
+                     </a>
+                  </li>
+                  <% if(user.department === 901 || user.department === 905) { %>
+                     <li class="nav-header">Engineering</li>
+                     <li class="nav-item menu-open">
+                        <a href="/engineering/model" class="nav-link <%= path === '/engineering/model' ? 'bg-warning' : 'bg-dark' %>">
+                           <i class="nav-icon">
+                              <!-- Size 24 -->
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M5.12 5h13.75l-.94-1h-12l-.81 1m15.42.23c.29.34.46.77.46 1.27V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5c0-.5.17-.93.46-1.27l1.38-1.68C5.12 3.21 5.53 3 6 3h12c.47 0 .88.21 1.15.55l1.39 1.68M6 18h6v-3H6v3Z"/></svg>
+                           </i>
+                           <p>Models</p>
+                        </a>
+                     </li>
+                     <li class="nav-item menu-open">
+                        <a href="/engineering/material" class="nav-link <%= path === '/engineering/material' ? 'bg-warning' : 'bg-dark' %>">
+                           <i class="nav-icon">
+                              <!-- Size 24 -->
+                              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"><rect width="6.5" height="6.5" x="5.5" y="3" rx="1"/><path d="M4 12h7.61a1 1 0 0 1 .7.29l1.19 1.21M.5.5h1a1 1 0 0 1 1 1V10M4 11.75A2.11 2.11 0 0 1 4 12a1.74 1.74 0 1 1 0-.25ZM8.5 7h1"/></g></svg>
+                           </i>
+                           <p>Materials</p>
+                        </a>
+                     </li>
+                     <% } if(user.department === 904 || user.department === 905){ %>
+                        <li class="nav-header">Production</li>
+                        <li class="nav-item menu-open">
+                           <a href="/production/daily" class="nav-link <%= path === '/production/daily' ? 'bg-warning' : 'bg-dark' %>">
+                              <i class="nav-icon">
+                                 <!-- Size 24 -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M21 6.25A3.25 3.25 0 0 0 17.75 3H6.25A3.25 3.25 0 0 0 3 6.25v11.5A3.25 3.25 0 0 0 6.25 21h11.5A3.25 3.25 0 0 0 21 17.75V6.25ZM7.5 8.744C7.847 8.362 8.415 8 9.25 8c1.152 0 1.894.792 2.155 1.661c.253.847.1 1.895-.62 2.618a8.093 8.093 0 0 1-.793.67l-.04.031c-.28.216-.53.412-.75.63c-.255.256-.464.535-.585.89h2.133a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75c0-1.247.524-2.083 1.144-2.701c.296-.296.618-.545.89-.756l.003-.002c.286-.221.508-.393.685-.57c.272-.274.367-.725.246-1.13c-.115-.381-.37-.591-.718-.591c-.353 0-.535.137-.64.253a.843.843 0 0 0-.148.229v.003a.75.75 0 0 1-1.428-.462l.035-.096a2.343 2.343 0 0 1 .43-.683ZM13.25 8a.75.75 0 0 1 .75.75v2.75h1.5V8.75a.75.75 0 0 1 1.5 0v6.47a.75.75 0 0 1-1.5 0V13h-2.25a.75.75 0 0 1-.75-.75v-3.5a.75.75 0 0 1 .75-.75Z"/></svg>
+                              </i>
+                              <p>Daily Production</p>
+                           </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                           <a href="/production/daily" class="nav-link <%= path === '/production/daily' ? 'bg-warning' : 'bg-dark' %>">
+                              <i class="nav-icon">
+                                 <!-- Size 24 -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32"><path fill="white" d="M15 20h2v4h-2zm5-2h2v6h-2zm-10-4h2v10h-2z"/><path fill="white" d="M25 5h-3V4a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v21a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2ZM12 4h8v4h-8Zm13 24H7V7h3v3h12V7h3Z"/></svg>
+                              </i>
+                              <p>Prodution Report</p>
+                           </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                           <a href="/production/control" class="nav-link <%= path === '/production/control' ? 'bg-warning' : 'bg-dark' %>">
+                              <i class="nav-icon">
+                                 <!-- Size 24 -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024"><path fill="white" d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zM404 683v77c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8v-77c-41.7-13.6-72-52.8-72-99s30.3-85.5 72-99V264c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v221c41.7 13.6 72 52.8 72 99s-30.3 85.5-72 99zm279.6-143.9c.2 0 .3-.1.4-.1v221c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V539c.2 0 .3.1.4.1c-42-13.4-72.4-52.7-72.4-99.1c0-46.4 30.4-85.7 72.4-99.1c-.2 0-.3.1-.4.1v-77c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v77c-.2 0-.3-.1-.4-.1c42 13.4 72.4 52.7 72.4 99.1c0 46.4-30.4 85.7-72.4 99.1zM616 440a36 36 0 1 0 72 0a36 36 0 1 0-72 0zM403.4 566.5l-1.5-2.4c0-.1-.1-.1-.1-.2l-.9-1.2c-.1-.1-.2-.2-.2-.3c-1-1.3-2-2.5-3.2-3.6l-.2-.2c-.4-.4-.8-.8-1.2-1.1c-.8-.8-1.7-1.5-2.6-2.1h-.1l-1.2-.9c-.1-.1-.3-.2-.4-.3c-1.2-.8-2.5-1.6-3.9-2.2c-.2-.1-.5-.2-.7-.4c-.4-.2-.7-.3-1.1-.5c-.3-.1-.7-.3-1-.4c-.5-.2-1-.4-1.5-.5c-.4-.1-.9-.3-1.3-.4l-.9-.3l-1.4-.3c-.2-.1-.5-.1-.7-.2c-.7-.1-1.4-.3-2.1-.4c-.2 0-.4 0-.6-.1c-.6-.1-1.1-.1-1.7-.2c-.2 0-.4 0-.7-.1c-.8 0-1.5-.1-2.3-.1s-1.5 0-2.3.1c-.2 0-.4 0-.7.1c-.6 0-1.2.1-1.7.2c-.2 0-.4 0-.6.1c-.7.1-1.4.2-2.1.4c-.2.1-.5.1-.7.2l-1.4.3l-.9.3c-.4.1-.9.3-1.3.4c-.5.2-1 .4-1.5.5c-.3.1-.7.3-1 .4c-.4.2-.7.3-1.1.5c-.2.1-.5.2-.7.4c-1.3.7-2.6 1.4-3.9 2.2c-.1.1-.3.2-.4.3l-1.2.9h-.1c-.9.7-1.8 1.4-2.6 2.1c-.4.4-.8.7-1.2 1.1l-.2.2a54.8 54.8 0 0 0-3.2 3.6c-.1.1-.2.2-.2.3l-.9 1.2c0 .1-.1.1-.1.2l-1.5 2.4c-.1.2-.2.3-.3.5c-2.7 5.1-4.3 10.9-4.3 17s1.6 12 4.3 17c.1.2.2.3.3.5l1.5 2.4c0 .1.1.1.1.2l.9 1.2c.1.1.2.2.2.3c1 1.3 2 2.5 3.2 3.6l.2.2c.4.4.8.8 1.2 1.1c.8.8 1.7 1.5 2.6 2.1h.1l1.2.9c.1.1.3.2.4.3c1.2.8 2.5 1.6 3.9 2.2c.2.1.5.2.7.4c.4.2.7.3 1.1.5c.3.1.7.3 1 .4c.5.2 1 .4 1.5.5c.4.1.9.3 1.3.4l.9.3l1.4.3c.2.1.5.1.7.2c.7.1 1.4.3 2.1.4c.2 0 .4 0 .6.1c.6.1 1.1.1 1.7.2c.2 0 .4 0 .7.1c.8 0 1.5.1 2.3.1s1.5 0 2.3-.1c.2 0 .4 0 .7-.1c.6 0 1.2-.1 1.7-.2c.2 0 .4 0 .6-.1c.7-.1 1.4-.2 2.1-.4c.2-.1.5-.1.7-.2l1.4-.3l.9-.3c.4-.1.9-.3 1.3-.4c.5-.2 1-.4 1.5-.5c.3-.1.7-.3 1-.4c.4-.2.7-.3 1.1-.5c.2-.1.5-.2.7-.4c1.3-.7 2.6-1.4 3.9-2.2c.1-.1.3-.2.4-.3l1.2-.9h.1c.9-.7 1.8-1.4 2.6-2.1c.4-.4.8-.7 1.2-1.1l.2-.2c1.1-1.1 2.2-2.4 3.2-3.6c.1-.1.2-.2.2-.3l.9-1.2c0-.1.1-.1.1-.2l1.5-2.4c.1-.2.2-.3.3-.5c2.7-5.1 4.3-10.9 4.3-17s-1.6-12-4.3-17c-.1-.2-.2-.4-.3-.5z"/></svg>
+                              </i>
+                              <p>Production Control</p>
+                           </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                           <a href="/production/plan" class="nav-link <%= path === '/production/plan' ? 'bg-warning' : 'bg-dark' %>">
+                              <i class="nav-icon">
+                                 <!-- Size 24 -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="white" fill-rule="evenodd" d="M11.25 1a.75.75 0 0 1 .75.75V3h2a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2V1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 .75-.75ZM2.5 7.5v6h11v-6h-11Zm0-1.5h11V4.5h-11V6Zm7.78 2.97a.75.75 0 0 1 0 1.06l-2.25 2.25a.75.75 0 0 1-1.06 0l-1.25-1.25a.75.75 0 1 1 1.06-1.06l.72.72l1.72-1.72a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
+                              </i>
+                              <p>Production Plan</p>
+                           </a>
+                        </li>
+                     <% } if(user.department === 903 || user.department === 905) { %>
+                        <li class="nav-header">Warehouse</li>
+                        <li class="nav-item menu-open">
+                           <a href="/warehouse/material" class="nav-link <%= path === '/warehouse/material' ? 'bg-warning' : 'bg-dark' %>">
+                              <i class="nav-icon">
+                                 <!-- Size 24 -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14"><g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"><rect width="6.5" height="6.5" x="5.5" y="3" rx="1"/><path d="M4 12h7.61a1 1 0 0 1 .7.29l1.19 1.21M.5.5h1a1 1 0 0 1 1 1V10M4 11.75A2.11 2.11 0 0 1 4 12a1.74 1.74 0 1 1 0-.25ZM8.5 7h1"/></g></svg>
+                              </i>
+                              <p>Materials</p>
+                           </a>
+                        </li>
+                        <li class="nav-item menu-open">
+                           <a href="/warehouse/inventory" class="nav-link <%= path === '/warehouse/inventory' ? 'bg-warning' : 'bg-dark' %>">
+                              <i class="nav-icon">
+                                 <!-- Size 24 -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="m15.5 17.125l4.95-4.95q.275-.275.7-.275t.7.275q.275.275.275.7t-.275.7l-5.65 5.65q-.3.3-.7.3t-.7-.3l-2.85-2.85q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l2.15 2.15ZM5 21q-.825 0-1.413-.588T3 19V5q0-.825.588-1.413T5 3h4.175q.275-.875 1.075-1.438T12 1q1 0 1.788.563T14.85 3H19q.825 0 1.413.588T21 5v4q0 .425-.288.713T20 10q-.425 0-.713-.288T19 9V5h-2v2q0 .425-.288.713T16 8H8q-.425 0-.713-.288T7 7V5H5v14h5q.425 0 .713.288T11 20q0 .425-.288.713T10 21H5Zm7-16q.425 0 .713-.288T13 4q0-.425-.288-.713T12 3q-.425 0-.713.288T11 4q0 .425.288.713T12 5Z"/></svg>
+                              </i>
+                              <p>Inventory</p>
+                           </a>
+                        </li>
+                        <% } if (user.department === 902 || user.department === 905 || user.username === "user"){ %>
+                           <li class="nav-header">Human Resource</li>
+                           <li class="nav-item menu-open">
+                              <a href="/hr/employee" class="nav-link <%= path === '/hr/employee' ? 'bg-warning' : 'bg-dark' %>">
+                                 <i class="nav-icon">
+                                    <!-- Size 24 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><path fill="white" fill-rule="evenodd" d="M6 9a3 3 0 0 1 3-3h30a3 3 0 0 1 3 3v30a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9Zm13 11a3 3 0 1 1-6 0a3 3 0 1 1 6 0Zm-7 7.727c0-.118.047-.276.256-.486c.218-.22.564-.442 1.019-.641c.914-.4 2.028-.6 2.725-.6c.697 0 1.81.2 2.725.6c.455.198.8.42 1.019.64c.21.211.256.369.256.487V31h2v-3.273c0-.788-.37-1.425-.837-1.896c-.459-.461-1.05-.807-1.637-1.064C18.358 24.257 16.971 24 16 24c-.972 0-2.358.257-3.526.767c-.587.257-1.178.603-1.637 1.064c-.467.471-.837 1.108-.837 1.896V31h2v-3.273Zm16.256-.486c-.21.21-.256.368-.256.486V31h-2v-3.273c0-.788.37-1.425.837-1.896c.459-.461 1.05-.807 1.637-1.064C29.642 24.257 31.029 24 32 24c.971 0 2.358.257 3.526.767c.587.257 1.178.603 1.637 1.064c.468.471.837 1.108.837 1.896V31h-2v-3.273c0-.118-.047-.276-.256-.486c-.218-.22-.564-.442-1.019-.641c-.914-.4-2.028-.6-2.725-.6c-.697 0-1.81.2-2.725.6c-.455.198-.8.42-1.019.64ZM32 23a3 3 0 1 0 0-6a3 3 0 1 0 0 6Zm-5-5a3 3 0 1 1-6 0a3 3 0 1 1 6 0Zm-4.754 7.166c.07-.079.168-.143.451-.17a4.69 4.69 0 0 1 .554-.012l.202.005c.17.005.363.011.547.011c.184 0 .377-.006.547-.01l.202-.006a4.72 4.72 0 0 1 .554.011c.283.028.38.092.451.171l1.492-1.332c-.525-.588-1.18-.774-1.748-.83c-.344-.033-.77-.021-1.12-.012c-.142.004-.272.008-.378.008c-.106 0-.236-.004-.378-.008c-.35-.01-.776-.02-1.12.013c-.568.055-1.223.241-1.748.829l1.492 1.332Z" clip-rule="evenodd"/></svg>
+                                 </i>
+                                 <p>Employees</p>
+                              </a>
+                           </li>
+                           <li class="nav-item menu-open">
+                              <a href="/hr/department" class="nav-link <%= path === '/hr/department' ? 'bg-warning' : 'bg-dark' %>">
+                                 <i class="nav-icon">
+                                    <!-- Size 24 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="white" d="M12 3a3 3 0 0 0-1 5.83V11H8a3 3 0 0 0-3 3v1.17a3.001 3.001 0 1 0 2 0V14a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1.17a3.001 3.001 0 1 0 2 0V14a3 3 0 0 0-3-3h-3V8.83A3.001 3.001 0 0 0 12 3Z"/></g></svg>
+                                 </i>
+                                 <p>Departments</p>
+                              </a>
+                           </li>
+                           <li class="nav-item menu-open">
+                              <a href="/hr/teams" class="nav-link <%= path === '/hr/teams' ? 'bg-warning' : 'bg-dark' %>">
+                                 <i class="nav-icon">
+                                    <!-- Size 24 -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><path fill="white" d="M18 11a6 6 0 1 1 12 0a6 6 0 0 1-12 0Zm19-4a5 5 0 1 0 0 10a5 5 0 0 0 0-10ZM11 7a5 5 0 1 0 0 10a5 5 0 0 0 0-10Zm8.25 12A4.25 4.25 0 0 0 15 23.25V34a9 9 0 1 0 18 0V23.25A4.25 4.25 0 0 0 28.75 19h-9.5ZM13 23.25c0-1.6.602-3.061 1.591-4.167A4.272 4.272 0 0 0 13.75 19h-5.5A4.25 4.25 0 0 0 4 23.25V33a7 7 0 0 0 10.293 6.179A10.951 10.951 0 0 1 13 34V23.25ZM35 34c0 1.872-.468 3.635-1.293 5.179A7 7 0 0 0 44 33v-9.75A4.25 4.25 0 0 0 39.75 19h-5.5c-.288 0-.57.029-.842.083A6.227 6.227 0 0 1 35 23.25V34Z"/></svg>
+                                 </i>
+                                 <p>Teams</p>
+                              </a>
+                           </li>
+                     <% } %>  
+                <% } %>
+         </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+   </div>
+   <!-- /.sidebar -->
+</aside>
+<script>
+   document.querySelector('#branding').addEventListener('click',(e) => {
+      e.preventDefault();
+      Swal.fire({
+         title: '<strong>Dhimas Arista</strong>',
+         html:  `<a href="//dhimasarista.github.io" target="_blank">dhimasarista.github.io</a>`,
+         imageUrl: '../../img/tech.svg',
+         imageWidth: 400,
+         imageHeight: 200,
+         imageAlt: 'Custom image',
+         showCloseButton: true,
+         showConfirmButton: false
+      })
+   });
+</script>

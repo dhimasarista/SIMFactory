@@ -1,1 +1,4 @@
-node_modules/
+expressjs/node_modules/
+golang-api/go.mod
+golang-api/go.sum
+golang-api/main.exe

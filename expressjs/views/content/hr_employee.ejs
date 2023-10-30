@@ -1,0 +1,1203 @@
+<style>
+   .red {
+   color: red;
+   }
+   /* Mengatur style pada form-group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Mengatur style pada select */
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* Mengatur style pada option yang terpilih */
+.form-group select option[hidden] {
+  display: none;
+}
+
+/* Mengatur style pada option */
+.form-group select option {
+  padding: 10px;
+}
+
+/* Efek hover pada select */
+.form-group select:hover {
+  border-color: #007bff; /* Ubah warna border saat dihover */
+}
+
+/* Efek focus pada select */
+.form-group select:focus {
+  border-color: #007bff; /* Ubah warna border saat difokuskan */
+  outline: none; /* Hilangkan outline bawaan dari beberapa browser */
+}
+
+</style>
+<div id="employee-profile" style="display: none;">
+   <div class="row">
+
+      <div class="col-md-12">
+         <div class="card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+               <h3 class="card-title">Employee Profile</h3> 
+               <span style="margin-left: auto;">
+                  <a href="#" class="mt-1 mr-1 badge badge-secondary" onclick="backButton()">
+                     <script>
+                        const backButton = () => {
+                           document.getElementById("photo-employee").src = "../img/Loading_icon.gif";
+                           document.getElementById("list-employee").style.display = "block";
+                           document.getElementById("employee-profile").style.display = "none";
+                        }
+                     </script>
+                     <i>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                           <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 11l-4 4l4 4m-4-4h11a4 4 0 0 0 0-8h-1"/>
+                        </svg>
+                     </i>
+                  </a>
+               </span>
+            </div>
+            <style>
+               label{
+                  color: rgb(0, 140, 255);
+               }
+            </style>
+            <div class="row" style="margin: 40px 15px;" id="employee-detail-data">
+               <div class="col-md-6">
+                  <img  src="../img/profile.jpg" id="photo-employee" class="elevation-2" style="width: 160px; height: 160px; object-fit: cover; margin-bottom: 40px;" alt="...">
+                  <div id="block-nama" class="row bord-bottom">
+                     <label for="nama" class="col-md-5">Full Name</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="name-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">ID Employee</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="id-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Department</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="department-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Last Education</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="last_education-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Major</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="major-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Title</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="title-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Address</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="address-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Number Phone</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="nophone-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Email</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="email-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Work Experience</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="work_experience-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Skills</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="skills-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Medical Checkup</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="mcu-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div id="block-nama" class="row bord-bottom ">
+                     <label for="nama" class="col-md-5">Criminal History</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="crimhistory-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                  </div>
+                  <div class="text-left">
+                     <div id="block-nama" class="row bord-bottom ">
+                        <label for="nama" class="col-md-5">Documents</label>
+                        <div class="col-md-7 input-nama" style="display:block;word-wrap:break-word;" id="skills-employee">
+                           <p class="help-block"><span id="error-field-nama"></span></p>                
+                        </div>
+                     </div>
+                     <p><a href="#" id="appletter-employee">AppLetter Not Found</a></p>
+                     <p><a href="#" id="cv-employee">Curriculum Vitae Not Found</a></p>
+                     <p><a href="#" id="portfolio-employee">Portfolio Not Found</a></p>
+                     <p><a href="#" id="contract-employee">Contract Not Found</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div id="list-employee" class="row">
+   <div class="col-12">
+      <div class="card">
+         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="card-title">Employees</h3>
+            <span style="margin-left: auto;">
+            <button type="button" class="btn btn-warning text-light" id="newButton">
+            New
+            </button>
+            <button type="button" class="btn btn-warning text-light" id="employeeButton" style="display: none;">
+            Employees
+            </button>
+            <button type="button" class="btn btn-warning text-light">
+            Print
+            </button>
+            </span></span>
+         </div>
+         <!-- /.card-header -->
+         <div class="card-body " id="employeeTable">
+            <div class="d-flex justify-content-center loading-placeholder">
+               <div class="spinner-border text-warning" role="status">
+                  <span class="sr-only">Loading...</span>
+               </div>
+            </div>
+            <div class="table-responsive">
+               <table id="employee" class="table border-lr table-striped m-0 table-responsive cell-border compact stripe" style="display: none;">
+                  <thead class="bg-gray">
+                     <tr>
+                        <th>ID Employee</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th style="width: 20%;">Actions</th>
+                     </tr>
+                  </thead>
+                  <script>
+                     // Web Storage
+                     const employeesData = [];
+                     '<% employees.forEach((data) => { %>'
+                     employeesData.push({
+                        id: '<%- data.id %>',
+                        name: '<%- data.name %>',
+                        department: '<%- data.department_name %>',
+                        is_user: '<%- data.is_user %>',
+                        is_request: '<%- data.is_request %>',
+                     });
+                     '<% }); %>';
+                     localStorage.setItem('employeesData', JSON.stringify(employeesData));
+                     const data = localStorage.getItem('employeesData');
+                     const parseData = JSON.parse(data);
+                     // console.log(parseData);
+                </script>
+                  <tbody>
+                     <% employees.forEach((data) => { %>
+                     <tr id="employee-data">
+                        <td style="text-align: center; width: 15%;"><%- data.id %></td>
+                        <td style="width: 45%;"><%- data.name %></td>
+                        <td style="width: 20%;"><%- data.department_name %></td>
+                        <td style="display: flex; flex-wrap: wrap;  align-items: center; justify-content: center;">
+                           <!-- Detail Data -->
+                           <a href="#" class="mt-1 mr-1 badge badge-secondary" id="employee-profile-button" onclick="employeProfileButtons(parseInt(`<%- data.id %>`))">
+                              <i>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M11 9c0 1.66-1.34 3-3 3s-3-1.34-3-3s1.34-3 3-3s3 1.34 3 3m3 11H2v-2c0-2.21 2.69-4 6-4s6 1.79 6 4m8-6v2h-9v-2m9-4v2h-9V8m9-4v2h-9V4Z"/>
+                                 </svg>
+                              </i>
+                           </a>
+                           <!-- Edit Data -->
+                           <a href="#" class="mt-1 mr-1 badge badge-warning edit-data" data-id="<%- data.id %>" onclick="editButtons(parseInt('<%- data.id %>'))">
+                              <i>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                       <path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/>
+                                       <path fill="currentColor" d="M13 3a1 1 0 0 1 .117 1.993L13 5H5v14h14v-8a1 1 0 0 1 1.993-.117L21 11v8a2 2 0 0 1-1.85 1.995L19 21H5a2 2 0 0 1-1.995-1.85L3 19V5a2 2 0 0 1 1.85-1.995L5 3h8Zm6.243.343a1 1 0 0 1 1.497 1.32l-.083.095l-9.9 9.899a1 1 0 0 1-1.497-1.32l.083-.094l9.9-9.9Z"/>
+                                    </g>
+                                 </svg>
+                              </i>
+                           </a>
+                           <!-- User Status -->
+                           <% if (data.is_user === 0 && data.is_request === 0) { %>
+                              <span id="request-add-user_<%- data.id %>">
+                                 <a type="button" class="mt-1 mr-1 badge badge-info" onclick="addToBeUser('<%- data.id %>')">
+                                    <i>
+                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M15 14c-2.67 0-8 1.33-8 4v2h16v-2c0-2.67-5.33-4-8-4m-9-4V7H4v3H1v2h3v3h2v-3h3v-2m6 2a4 4 0 0 0 4-4a4 4 0 0 0-4-4a4 4 0 0 0-4 4a4 4 0 0 0 4 4Z"/></svg>
+                                    </i>
+                                 </a>
+                              </span>
+                           <% } else if (data.is_request === 1) { %>
+                              <a type="button" class="mt-1 mr-1 badge badge-dark" onclick='toastr.info("<%- data.name %> already requested to be user.", "Contact Administrator");'>
+                                 <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.63 14.1a6.998 6.998 0 0 1 9.27-3.47a6.998 6.998 0 0 1 3.47 9.27A6.98 6.98 0 0 1 17 24c-2.7 0-5.17-1.56-6.33-4H1v-2c.06-1.14.84-2.07 2.34-2.82S6.72 14.04 9 14c.57 0 1.11.05 1.63.1M9 4c1.12.03 2.06.42 2.81 1.17S12.93 6.86 12.93 8c0 1.14-.37 2.08-1.12 2.83c-.75.75-1.69 1.12-2.81 1.12s-2.06-.37-2.81-1.12C5.44 10.08 5.07 9.14 5.07 8c0-1.14.37-2.08 1.12-2.83C6.94 4.42 7.88 4.03 9 4m8 18a5 5 0 0 0 5-5a5 5 0 0 0-5-5a5 5 0 0 0-5 5a5 5 0 0 0 5 5m-1-8h1.5v2.82l2.44 1.41l-.75 1.3L16 17.69V14Z"/></svg>
+                                 </i>
+                              </a>
+                           <% } else if(data.is_user === 1) { %>
+                              <a type="button" class="mt-1 mr-1 badge badge-success" onclick='toastr.success("<%- data.name %> already to be user.", "Already as User");'>
+                                 <i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m21.1 12.5l1.4 1.41l-6.53 6.59L12.5 17l1.4-1.41l2.07 2.08l5.13-5.17M10 17l3 3H3v-2c0-2.21 3.58-4 8-4l1.89.11L10 17m1-13a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4Z"/></svg>
+                                 </i>
+                              </a>
+                           <% } %>
+                           <!-- Delete Data -->
+                           <a type="button" class="mt-1 mr-1 badge badge-danger" onclick="deleteData(parseInt('<%- data.id %>'))">
+                              <i>
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                                 </svg>
+                              </i>
+                           </a>
+                        </td>
+                     </tr>
+                     <% }); %>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <!-- Form Data karyawan -->
+         <div class="card-body" id="employeeFormData" style="display: none;">
+            <form id="employeeForm">
+               <!-- <input type="hidden" id="employeeIdForm" name="employeeIdForm"> -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <img src="../img/profile.jpg" alt="image" width="200px" id="profile-image-uploader">
+                  </div>
+               <!-- 13 -->
+               <div class="form-group col-md-6">
+                  <label for="formPhoto">Photo</label><br>
+                  <div class="input-image">
+                     <input type="file" id="formPhoto" name="formPhoto" class="upload-button">
+                     <p class="red">*JPEG/JPG/PNG - 200KB</p>
+                  </div>
+                  <div class="button-delete-image" style="display: none;">
+                     <a type="button" class="mt-1 mr-1 badge badge-danger">
+                        <i>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                              <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                           </svg>
+                        </i>
+                     </a>
+                     <span id="image-file-name"></span>
+                  </div>
+               </div>
+               </div>
+               <!-- 1 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formName">Name</label>
+                     <input type="text" class="form-control" id="formName" name="formName">
+                  </div>
+                  <!-- 2 -->
+                  <div class="form-group col-md-6">
+                     <label for="formDepartments">Departments</label><br>
+                     <select name="formDepartments" id="formDepartments">
+                        <option hidden>Select First</option>
+                        <% departments.forEach((data) => { %>
+                        <option value="<%= data.id %>"><%= data.name %></option>
+                        <% }); %>
+                     </select>
+                  </div>
+               </div>
+               <!-- 3 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formAddress">Address</label>
+                     <input type="text" class="form-control" id="formAddress" name="formAddress">
+                  </div>
+                  <!-- 4 -->
+                  <div class="form-group col-md-6">
+                     <label for="formNumberPhone">Number Phone</label>
+                     <input type="text" class="form-control" id="formNumberPhone" name="formNumberPhone">
+                  </div>
+               </div>
+               <!-- 5 -->
+              <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="formEmail">Email</label>
+                  <input type="email" class="form-control" id="formEmail" name="formEmail">
+               </div>
+               <!-- 6 -->
+               <div class="form-group col-md-6">
+                  <label for="formLastEducation">Last Education</label>
+                  <input type="text" class="form-control" id="formLastEducation" name="formLastEducation">
+               </div>
+              </div>
+               <!-- 7 -->
+              <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="formMajor">Major</label>
+                  <input type="text" class="form-control" id="formMajor" name="formMajor">
+               </div>
+               <!-- 8 -->
+               <div class="form-group col-md-6">
+                  <label for="formTitle">Title</label>
+                  <input type="text" class="form-control" id="formTitle" name="formTitle">
+               </div>
+              </div>
+               <!-- 9 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formWorkExperience">Work Experience</label>
+                     <textarea class="form-control" id="formWorkExperience" name="formWorkExperience"></textarea>
+                  </div>
+                  <!-- 10 -->
+                  <div class="form-group col-md-6">
+                     <label for="formSkills">Skills</label>
+                     <textarea class="form-control" id="formSkills" name="formSkills"></textarea>
+                  </div>
+               </div>
+               <!-- 11 -->
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="formMCU">MCU</label>
+                     <select class="form-control" id="formMCU" name="formMCU">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                     </select>
+                  </div>
+                  <!-- 12 -->
+                  <div class="form-group col-md-6">
+                     <label for="formCriminalHistory">Criminal History</label>
+                     <select class="form-control" id="formCriminalHistory" name="formCriminalHistory">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                     </select>
+                  </div>
+               </div>
+               <!-- 14 -->
+               <div class="form-row">
+                  <div class="form-group col-md-3">
+                     <label for="formApplicationLetter">Application Letter</label><br>
+                     <div class="input-appletter">
+                        <input type="file" id="formApplicationLetter" name="formApplicationLetter">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-appletter" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="appletter-file-name"></span>
+                     </div>
+                  </div>
+                  <!-- 15 -->
+                  <div class="form-group col-md-3">
+                     <label for="formCV">CV</label><br>
+                     <div class="input-cv">
+                        <input type="file" id="formCV" name="formCV">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-cv" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="cv-file-name"></span>
+                     </div>
+                  </div>
+                  <!-- 16 -->
+                  <div class="form-group col-md-3">
+                     <label for="formPortfolio">Portfolio</label><br>
+                     <div class="input-portfolio">
+                        <input type="file" id="formPortfolio" name="formPortfolio">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-portfolio" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="portfolio-file-name"></span>
+                     </div>
+                  </div>
+                  <!-- 17 -->
+                  <div class="form-group col-md-3">
+                     <label for="formEmploymentContract">Employment Contract</label><br>
+                     <div class="input-contract">
+                        <input type="file" id="formEmploymentContract" name="formEmploymentContract">
+                        <p class="red">*PDF - 200KB</p>
+                     </div>
+                     <div class="button-delete-contract" style="display: none;">
+                        <a type="button" class="mt-1 mr-1 badge badge-danger">
+                           <i>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                 <path fill="currentColor" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/>
+                              </svg>
+                           </i>
+                        </a>
+                        <span id="contract-file-name"></span>
+                     </div>
+                  </div>
+               </div>
+               <div class="add-submit-button"></div>
+            </form>
+         </div>
+         <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+   </div>
+   <!-- /.col -->
+</div>
+<script>
+   // Menampilkan data employee dalam bentuk tabel
+   let table = new DataTable('#employee',{
+      deferLoading: 10,
+      
+      // Animasi jika file belum sepenuhnya dimuat
+      initComplete: function(settings, json) {
+         $('.loading-placeholder').remove(); // Menghilangkan animasi loading setelah tabel siap
+         $('#employee').css('display', 'table'); // Tampilkan tabel setelah siap
+      }
+   });
+   
+   // Detail Employee
+   const employeProfileButtons = (id) => {
+      document.getElementById("list-employee").style.display = "none";
+      document.getElementById("employee-profile").style.display = "block";
+   
+      fetch(`/hr/employee/${id}`)
+      .then(response =>  response.json())
+      .then(results => {
+         document.getElementById("name-employee").textContent = results.name;
+         document.getElementById("id-employee").textContent = results.id;
+         document.getElementById("nophone-employee").textContent = results.number_phone !== "" ? results.number_phone : "Empty";
+         document.getElementById("email-employee").textContent = results.email !== "" ? results.email : "Empty";
+         document.getElementById("email-employee").href = results.email !== "" ? `mailto:${results.email}` : "";
+         document.getElementById("address-employee").textContent = results.address !== "" ? results.address : "Empty";
+         document.getElementById("department-employee").textContent = results.department_name;
+         document.getElementById("last_education-employee").textContent = results.last_education !== "" ? results.last_education : "Empty";
+         document.getElementById("major-employee").textContent = results.major !== "" ? results.major : "Empty";
+         document.getElementById("work_experience-employee").textContent = results.work_experience !== "" ? results.work_experience : "Empty";
+         document.getElementById("skills-employee").textContent = results.skills !== "" ? results.skills : "Empty";
+         document.getElementById("title-employee").textContent = results.title !== "" ? results.title : "Empty";
+   
+         // Photo: arrayBufferToBase64() dari script.js
+         if (results.photo === null) {
+            document.getElementById("photo-employee").src = "../img/profile.jpg";
+         } else {
+            document.getElementById("photo-employee").src = `data:image/jpeg;base64,${arrayBufferToBase64(results.photo.data)}`
+         }
+   
+         // App Letter
+         let appLetterUrl= `data:application/pdf;base64,${arrayBufferToBase64(results.application_letter.data)}`;
+         document.getElementById("appletter-employee").href = appLetterUrl;
+         document.getElementById("appletter-employee").innerText = `${results.name}_AppLetter.pdf`;
+         document.getElementById("appletter-employee").download = `${results.name}_AppLetter.pdf`;
+   
+         // CV
+         let CVUrl = `data:application/pdf;base64,${arrayBufferToBase64(results.CV.data)}`;
+         document.getElementById("cv-employee").href = CVUrl;
+         document.getElementById("cv-employee").innerText = `${results.name}_CV.pdf`;
+         document.getElementById("cv-employee").download = `${results.name}_CV.pdf`;
+
+         // Portfolio
+         let portfolioUrl = `data:application/pdf;base64,${arrayBufferToBase64(results.portfolio.data)}`;
+         document.getElementById("portfolio-employee").href = portfolioUrl;
+         document.getElementById("portfolio-employee").innerText = `${results.name}_Portfolio.pdf`;
+         document.getElementById("portfolio-employee").download = `${results.name}_Portfolio.pdf`;
+
+         // Portfolio
+         let contractUrl = `data:application/pdf;base64,${arrayBufferToBase64(results.employment_contract.data)}`;
+         document.getElementById("contract-employee").href = contractUrl;
+         document.getElementById("contract-employee").innerText = `${results.name}_Contract.pdf`;
+         document.getElementById("contract-employee").download = `${results.name}_Contract.pdf`;
+   
+         if (results.mcu === 1) {
+            document.getElementById('mcu-employee').textContent = "Yes";
+         } else {
+            document.getElementById('mcu-employee').textContent = "No";
+         }
+   
+         if (results.criminal_history === 0) {
+            document.getElementById('crimhistory-employee').textContent = "Nothing";
+         } else {
+            document.getElementById('crimhistory-employee').textContent = "Any";
+         }
+      });
+   }
+   
+   // Buttons
+   const newButton = document.getElementById('newButton');
+   const employeeButton = document.getElementById("employeeButton");
+   // const editButtons = document.querySelectorAll(".edit-data");
+   
+   // Tables
+   const employeeTable = document.getElementById('employeeTable');
+   const employeeForm = document.getElementById('employeeFormData');
+   
+   // Trigger event button employee ketika diklik
+   employeeButton.addEventListener("click", () => {
+      // Menampilkan Tabel dan Button New
+      employeeTable.style.display = 'block';
+      newButton.style.display = "inline";
+   
+      // Menghilangkan form employee & button employee
+      employeeForm.style.display = 'none';
+      employeeButton.style.display = "none";
+      clearForm();
+   });
+   
+   // Membuat Submit Button untuk data baru maupun data lama
+   const createSubmitButton = (params) => {
+      // Menambahkan tombol submit ke dalam elemen dengan class "submit-button"
+      const submitButtonContainer = document.querySelector('.add-submit-button');
+      submitButtonContainer.innerHTML = `<button type="button" class="btn btn-primary" onclick="${params}">Submit</button>`;
+   }
+   
+   // Button new ketika diklik
+   newButton.addEventListener('click', () => {
+      // Tabel employee & button new di hilangkan
+      employeeTable.style.display = 'none';
+      newButton.style.display = "none";
+      // Tampilkan form employee dan button employee
+      employeeForm.style.display = 'block';
+      employeeButton.style.display = "inline";
+      clearForm();
+   
+      createSubmitButton('saveData()');
+   });
+   
+   // Form Input Element
+   const name = document.getElementById("formName");
+   const department = document.getElementById("formDepartments");
+   const address = document.getElementById("formAddress");
+   const numberPhone =  document.getElementById("formNumberPhone");
+   const email = document.getElementById("formEmail");
+   const lastEducation = document.getElementById("formLastEducation");
+   const major = document.getElementById("formMajor");
+   const title = document.getElementById("formTitle");
+   const workExperience = document.getElementById("formWorkExperience");
+   const skilss = document.getElementById("formSkills");
+   const mcu = document.getElementById("formMCU");
+   const crimHistory = document.getElementById("formCriminalHistory");
+   // Form Input File
+   const photo = document.getElementById("formPhoto");
+   const appLetter = document.getElementById("formApplicationLetter");
+   const CV = document.getElementById("formCV");
+   const portfolio = document.getElementById("formPortfolio");
+   const contract = document.getElementById("formEmploymentContract");
+   
+   // Melakukan pemeriksa format file
+   const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+   const pdfType = ["application/pdf"];
+   // Fungsi untuk memeriksa jenis file
+   function checkFileType(fileInput, expectedTypes, errorMessage, toDelete) {
+      if (!expectedTypes.includes(fileInput.type)) {
+         Swal.fire('Error', errorMessage, 'error');
+         toDelete.value = null;  // Mengosongkan input file jika tipe tidak sesuai
+         return;
+      }
+   }  
+
+   const photoProfileUploader = document.getElementById("profile-image-uploader");
+   const defaultProfileSrc = photoProfileUploader.src;
+   // Melakukan pemeriksaan, jika file tidak sesuai
+   photo.addEventListener("change", function () {
+      checkFileType(this.files[0], ["image/jpeg", "image/jpg", "image/png"], 'Change the image format.', photo);
+      checkFileSize(photo);
+      photoProfileUploader.src = URL.createObjectURL(photo.files[0]);
+   });
+   appLetter.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', appLetter);
+      checkFileSize(appLetter);
+   });
+   CV.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', CV);
+      checkFileSize(CV);
+   });
+   portfolio.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', portfolio);
+      checkFileSize(portfolio);
+   });
+   contract.addEventListener("change", function () {
+      checkFileType(this.files[0], pdfType, 'Its Not PDF', contract);
+      checkFileSize(contract);
+   });
+
+   // Memeriksa ukuran file inputan
+   function checkFileSize(fileInput) {
+      const maxFileSizeInBytes = 200 * 1024; // 200KB sebagai batas maksimum
+
+      if (fileInput.files.length > 0) {
+            const fileSize = fileInput.files[0].size; // Ukuran file dalam byte
+
+            if (fileSize > maxFileSizeInBytes) {
+               // Tampilkan pesan kesalahan menggunakan SweetAlert
+               Swal.fire({
+                  icon: 'error',
+                  title: 'Oversized Files!',
+                  text: 'The file size exceeds the maximum allowed limit (200KB).',
+               });
+
+               // Kosongkan input file untuk menghindari pengiriman file yang melebihi batas
+               fileInput.value = '';
+            }
+      }
+   }
+   
+   
+   // Mengupload Files: Penjelasan di controllers/employee.js
+   
+   const inputImage = document.querySelector(".input-image")
+   const buttonDeleteImage = document.querySelector(".button-delete-image");
+   const imageFileName = document.querySelector("#image-file-name");
+   
+   // Photo
+   photo.addEventListener("change", (event) => {
+      if (photo.files[0]) {
+         // Kemudian mengirimkan ke server di direktori `uploads/images/`
+         uploadFile({
+            file: photo.files[0],
+            dataName: "image",
+            path: "/upload/image"
+         });   
+         // Dan merubah button input menjadi button delete
+         inputImage.style.display = "none";
+         buttonDeleteImage.style.display = "inline";  
+         imageFileName.textContent = photo.files[0]["name"]
+      }
+   
+      // if (selectedFile !== undefined) {
+      // }
+   });
+   // Delete buttons
+   buttonDeleteImage.addEventListener("click", () => {
+      try {
+         toastr.success("File Deleted.", "Success");
+         deletePdfFromServer(photo.files[0]["name"]);
+         inputImage.style.display = "inline";
+         buttonDeleteImage.style.display = "none"; 
+         imageFileName.textContent = null;
+         photo.value = '';
+
+         
+         photoProfileUploader.src = defaultProfileSrc;
+         
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+   
+   // Application Letter
+   const inputAppletter = document.querySelector(".input-appletter");
+   const buttonDeleteAppletter = document.querySelector(".button-delete-appletter");
+   const appletterFileName = document.querySelector("#appletter-file-name");
+   appLetter.addEventListener("change", (event) => {
+      try {
+         if (appLetter.files[0]) {
+               uploadFile({
+               file: appLetter.files[0],
+               dataName:"pdf",
+               path: "/upload/pdf"
+            });
+            inputAppletter.style.display = "none";
+            buttonDeleteAppletter.style.display = "inline";
+            appletterFileName.textContent = appLetter.files[0]["name"];
+         }
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+   
+   buttonDeleteAppletter.addEventListener("click", () => {
+      try {
+         toastr.success("File Deleted.", "Success");
+         deletePdfFromServer(appLetter.files[0]["name"]);
+         inputAppletter.style.display = "inline";
+         buttonDeleteAppletter.style.display = "none";
+         appletterFileName.textContent = null;
+         appLetter.value = null;
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+
+   const inputCV = document.querySelector(".input-cv");
+   const buttonDeleteCV = document.querySelector(".button-delete-cv");
+   const cvFileName = document.querySelector("#cv-file-name");
+
+   CV.addEventListener("change", () => {
+      try {
+         if (CV.files[0]) {
+               uploadFile({
+               file: CV.files[0],
+               dataName: "pdf",
+               path: "/upload/pdf"
+            });
+            inputCV.style.display = "none";
+            buttonDeleteCV.style.display = "inline";
+            cvFileName.textContent = CV.files[0]["name"];
+         }
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+
+   buttonDeleteCV.addEventListener('click', () => {
+      try {
+         toastr.success("File Deleted.", "Success");
+         deletePdfFromServer(CV.files[0]["name"]);
+         inputCV.style.display = "inline";
+         buttonDeleteCV.style.display = "none";
+         cvFileName.textContent = null;
+         CV.value = null;
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+
+   const inputPortfolio = document.querySelector(".input-portfolio");
+   const buttonDeletePortfolio = document.querySelector(".button-delete-portfolio");
+   const portfolioFileName = document.querySelector("#portfolio-file-name");
+
+   portfolio.addEventListener("change", () => {
+      try {
+         if (portfolio.files[0]) {
+         uploadFile({
+            file: portfolio.files[0],
+            dataName: "pdf",
+            path: "/upload/pdf"
+         });
+         inputPortfolio.style.display = "none";
+         buttonDeletePortfolio.style.display = "inline";
+         portfolioFileName.textContent = portfolio.files[0]["name"];
+      }
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   })
+
+   buttonDeletePortfolio.addEventListener('click', () => {
+      try {
+         toastr.success("File Deleted.", "Success");
+         deletePdfFromServer(portfolio.files[0]["name"]);
+         inputPortfolio.style.display = "inline";
+         buttonDeletePortfolio.style.display = "none";
+         portfolioFileName.textContent = null;
+         portfolio.value = null;
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+
+   const inputContract = document.querySelector(".input-contract");
+   const buttonDeleteContract = document.querySelector(".button-delete-contract");
+   const contractFileName = document.getElementById('contract-file-name');
+
+   contract.addEventListener("change", () => {
+      try {
+         if (contract.files[0]) {
+               uploadFile({
+                  file: contract.files[0],
+                  dataName: "pdf",
+                  path: "/upload/pdf"
+               });
+               inputContract.style.display = "none";
+               buttonDeleteContract.style.display = "inline";
+               contractFileName.textContent = contract.files[0]["name"];
+            }
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   });
+
+   buttonDeleteContract.addEventListener("click", () => {
+      try {
+         toastr.success("File Deleted.", "Success");
+         deletePdfFromServer(contract.files[0]["name"]);
+         inputContract.style.display = "inline";
+         buttonDeleteContract.style.display = "none";
+         contractFileName.textContent = null;
+         contract.value = null;
+      } catch (error) {
+         toastr.error(error, "Error");
+      }
+   })
+   
+   
+   // Fungsi Upload Image
+   const uploadFile = ({
+      file, dataName, path
+   }) => {
+      // Inisialisasi form data
+      const formData = new FormData();
+      formData.append(dataName, file);
+
+
+   
+      try {
+         fetch(path, {
+            method: "POST",
+            body: formData
+         });
+      } catch (error) {
+         Swal.fire("Error", error.message, "error");
+         console.error(error);
+      }
+   }
+   
+   // Jika foto sudah dipilih dan halaman direload
+   window.addEventListener('beforeunload', () => {
+      // Maka hapus image yang diupload tadi diserver
+      if (photo.value !== "") {
+         deleteImageFromServer(photo.files[0]["name"]);
+      }
+      if (appLetter.value !== "") {
+         deletePdfFromServer(appLetter.files[0]['name'])
+      }
+      if (CV.value !== "") {
+         deletePdfFromServer(CV.files[0]["name"]);
+      }
+      if (portfolio.value !== "") {
+         deletePdfFromServer(portfolio.files[0]["name"]);
+      }
+      if (contract.value !== "") {
+         deletePdfFromServer(contract.files[0]["name"]);
+      }
+   });
+   
+   // Fix
+   const deleteImageFromServer = (name) => {
+      fetch(`/delete/image/${name}`)
+      .then(response => response.text())
+      .then(result => {
+         console.log(result); // Menampilkan pesan dari server
+      })
+      .catch(error => {
+         console.error("Error deleting image:", error);
+      });
+   }
+   
+   const deletePdfFromServer = (name) => {
+      fetch(`/delete/pdf/${name}`)
+      .then(response => response.text())
+      .then(results => {
+         console.log(results);
+      })
+      .catch(error => {
+         console.error("Error deleting pdf:", error);
+      });
+   }
+   
+   const editButtons = (id) => {
+      event.preventDefault(); // Menghentikan perilaku default tautan
+   
+      // Menampilkan Form edit data
+      employeeTable.style.display = 'none';
+      newButton.style.display = "none";
+      employeeForm.style.display = 'block';
+      employeeButton.style.display = "inline";
+      
+      // Membuat submit button untuk form edit data
+      createSubmitButton(`saveEdit(${parseInt(id)})`);
+      editData(id);
+   }
+   
+   // Mengisi Form dengan data yang ingin di edit
+   const editData = (id) => {
+     fetch(`/hr/employee/${id}`)
+     .then(response => response.json())
+     .then(data => {
+      //   document.getElementById("formPhoto").value = data.photo;  
+        document.getElementById("formName").value = data.name === null ? "" : data.name;  
+        document.getElementById("formAddress").value = data.address === null ? "" : data.address;
+        document.getElementById("formNumberPhone").value = data.number_phone === null ? "" : data.number_phone;
+        document.getElementById("formEmail").value = data.email === null ? "" : data.email;
+        document.getElementById("formLastEducation").value = data.last_education === null ? "" : data.last_education;
+        document.getElementById("formMajor").value = data.major === null ? "" : data.major;
+        document.getElementById("formTitle").value = data.title === null ? "" : data.title;
+        document.getElementById("formWorkExperience").value = data.work_experience === null ? "" : data.work_experience;
+        document.getElementById("formSkills").value = data.skills === null ? "" : data.skills;
+      //   document.getElementById("formApplicationLetter").value = data.application_letter ;
+      //   document.getElementById("formCV").value = data.CV;
+      //   document.getElementById("formPortfolio").value = data.portfolio;
+        document.getElementById("formMCU").value = data.mcu === null ? "0" : data.mcu;
+        document.getElementById("formCriminalHistory").value = data.criminal_history === null ? "0" : data.criminal_history;
+      //   document.getElementById("formEmploymentContract").value = data.employment_contract;  
+        const departmentId = data.department_id.toString();
+        const formDepartments = document.getElementById("formDepartments");
+        for (let index = 0; index < formDepartments.options.length; index++) {
+            if (formDepartments.options[index].value === departmentId) {
+                formDepartments.selectedIndex = index;
+                break;
+            } 
+        }
+    });
+   }
+   
+   // Sweet Alert
+   const submitSwal = (message) => {
+      Swal.fire({
+         title: "Success",
+         text: message,
+         icon: "success",
+         confirmButtonText: "OK"
+      }).then((result) => {
+         // Jika tombol OK ditekan
+         if (result.isConfirmed) {
+            // Reload halaman
+         }
+      });
+   }
+   
+   const saveData = () => {
+      const photoName = photo.files[0] == undefined ? undefined : photo.files[0]["name"];
+      const appLetterName = appLetter.files[0] === undefined ? undefined : appLetter.files[0]["name"];
+      const CVName = CV.files[0] === undefined ? undefined : CV.files[0]["name"];
+      const portfolioName = portfolio.files[0] === undefined ? undefined : portfolio.files[0]["name"];
+      const contractName = contract.files[0] === undefined ? undefined : contract.files[0]["name"];
+
+      const newData = {
+        name: name.value,
+        department_id: department.value,
+        address: address.value,
+        number_phone: numberPhone.value,
+        email: email.value,
+        last_education: lastEducation.value,
+        major: major.value,
+        title: title.value,
+        work_experience: workExperience.value,
+        skills: skilss.value,
+        mcu: mcu.value,
+        criminal_history: crimHistory.value,
+        photo: photoName,
+        application_letter: appLetterName,
+        CV: CVName,
+        portfolio: portfolioName,
+        employment_contract: contractName
+      };
+
+      const departValue = document.getElementById("formDepartments").value;
+      if (departValue === "Select First") {
+         Swal.fire({
+            title: "Warning",
+            text: "Please select department!",
+            icon: "warning",
+            confirmButtonText: "OK"
+         })
+         return;
+      }
+
+      Swal.fire({
+         title: "Is the data correct?",
+         text: `Add ${newData.name} to ${departValue}`,
+         icon: "warning",
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: "Yes, Update it!"
+      }).then((result) => {
+         if (result.isConfirmed) {
+            fetch("/hr/employee", {
+               method: "POST", 
+               body: JSON.stringify(newData),
+               headers: {
+                  'Content-Type': 'application/json'
+               }
+            }).then(response => response.json())
+            .then(results => {
+               Swal.fire({
+                  title: "Success",
+                  text: "Add new employee successfully",
+                  icon: "success",
+                  confirmButtonText: "OK"
+               }).then((result) => {
+                  // Jika tombol OK ditekan
+                  if (result.isConfirmed) {
+                     location.reload();
+                  }
+               });
+            })
+            .catch(error => Swal.fire("Error", error.message, "error"))
+         }
+      })
+      
+   }
+   
+   
+   const saveEdit = (id) => {
+      // Checking ketersedian file
+      const photoName = photo.files[0] == undefined ? undefined : photo.files[0]["name"];
+      const appLetterName = appLetter.files[0] === undefined ? undefined : appLetter.files[0]["name"];
+      const CVName = CV.files[0] === undefined ? undefined : CV.files[0]["name"];
+      const portfolioName = portfolio.files[0] === undefined ? undefined : portfolio.files[0]["name"];
+      const contractName = contract.files[0] === undefined ? undefined : contract.files[0]["name"];
+
+   
+      const editData = {
+        name: name.value,
+        department_id: department.value,
+        address: address.value,
+        number_phone: numberPhone.value,
+        email: email.value,
+        last_education: lastEducation.value,
+        major: major.value,
+        title: title.value,
+        work_experience: workExperience.value,
+        skills: skilss.value,
+        mcu: mcu.value,
+        criminal_history: crimHistory.value,
+        photo: photoName,
+        application_letter: appLetterName,
+        CV: CVName,
+        portfolio: portfolioName,
+        employment_contract: contractName
+    };
+   
+      fetch(`/hr/employee/${id}`, {
+         method: "PUT",
+         body: JSON.stringify(editData),
+         headers: {
+            'Content-Type': 'application/json'
+         }
+      }).then((response => response.json()))
+      .then((results) => {
+         // Menampilkan Tabel dan Button New
+         // employeeTable.style.display = 'block';
+         // newButton.style.display = "inline";
+      
+         // Menghilangkan form employee & button employee
+         Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Yes, Update it!"
+         }).then((result) => {
+            if (result.isConfirmed) {
+               // Setelah confirm button diklik halaman akan direload
+               // Yang juga menghapus file file yang dikirim tadi 
+               location.reload();
+               // Problem #3
+               // Sejauh ini server masih bisa mengirim file tersebut
+               // ke db, sebelum file dihapus
+            }
+         })
+      })
+      .catch((error) => {
+         console.log(error);
+         Swal.fire("Error", error.message, "error");
+      });
+   }
+   
+   // Menghapus data employee by id
+   const deleteData = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: "Yes, delete it!"
+    }). then(result => {
+      if (result.isConfirmed) {
+        fetch(`/hr/employee/${id}`, {
+          method: "DELETE"
+        }).then(response => response.json())
+        .then(result => {});
+        Swal.fire({
+          title: "Deleted!",
+          text: "Data deleted successfully!",
+          icon: "success",
+          confirmButtonText: "OK"
+      }).then((result) => {
+          // Jika tombol OK ditekan
+          if (result.isConfirmed) {
+              // Reload halaman
+              location.reload();
+          }
+      });
+      }
+    })
+   }
+   
+   const clearForm = () => {
+      document.getElementById("formName").value = "";  
+      document.getElementById("formAddress").value = "";
+      document.getElementById("formNumberPhone").value = "";
+      document.getElementById("formEmail").value = "";
+      document.getElementById("formLastEducation").value = "";
+      document.getElementById("formMajor").value = "";
+      document.getElementById("formTitle").value = "";
+      document.getElementById("formWorkExperience").value = "";
+      document.getElementById("formSkills").value = "";
+      document.getElementById("formPhoto").value = null;
+      document.getElementById("formApplicationLetter").value = null;
+      document.getElementById("formCV").value = null;
+      document.getElementById("formPortfolio").value = null;
+      document.getElementById("formMCU").value = "0";
+      document.getElementById("formCriminalHistory").value = "0";
+      document.getElementById("formEmploymentContract").value = null;
+      document.getElementById("formDepartments").options.selectedIndex = 0;
+    }
+   //  inactivityCheck();
+
+   // Menambahkan employee ke user
+   const addToBeUser = (id) => {
+      const data = {
+         is_request: 1
+      }
+      fetch(`/hr/employee/request/add-user/${id}`, {
+         method: "PUT",
+         body: JSON.stringify(data),
+         headers: {
+            'Content-Type': 'application/json'
+         }
+      })
+      .then(response => response.json())
+      .then((results) => {
+         toastr.success(`Employee ${id} Requested to be User.`, "Success");
+         const addUserElement = document.getElementById(`request-add-user_${id}`);
+         addUserElement.innerHTML = "";
+         addUserElement.innerHTML = `
+            <a type="button" class="mt-1 mr-1 badge badge-dark" onclick='toastr.info("${id} already requested to be user.", "Contact Administrator");'>
+               <i>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.63 14.1a6.998 6.998 0 0 1 9.27-3.47a6.998 6.998 0 0 1 3.47 9.27A6.98 6.98 0 0 1 17 24c-2.7 0-5.17-1.56-6.33-4H1v-2c.06-1.14.84-2.07 2.34-2.82S6.72 14.04 9 14c.57 0 1.11.05 1.63.1M9 4c1.12.03 2.06.42 2.81 1.17S12.93 6.86 12.93 8c0 1.14-.37 2.08-1.12 2.83c-.75.75-1.69 1.12-2.81 1.12s-2.06-.37-2.81-1.12C5.44 10.08 5.07 9.14 5.07 8c0-1.14.37-2.08 1.12-2.83C6.94 4.42 7.88 4.03 9 4m8 18a5 5 0 0 0 5-5a5 5 0 0 0-5-5a5 5 0 0 0-5 5a5 5 0 0 0 5 5m-1-8h1.5v2.82l2.44 1.41l-.75 1.3L16 17.69V14Z"/></svg>
+               </i>
+            </a>`;
+      }) 
+      .catch(error => toastr.error(error, "Error"));
+   }
+</script>

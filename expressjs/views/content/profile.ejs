@@ -1,0 +1,117 @@
+<style>
+    .warning {
+    color: red;
+    }
+ </style>
+ <section class="content">
+    <div class="container-fluid">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="card">
+                <div class="card-header">
+                   <h3 class="card-title">Profile</h3>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <div class="card-body row">
+                        <div class="form-group col-md-6">
+                           <label>Employee ID</label>
+                           <p><%= data.id %></p>
+                           <label>Username</label>
+                           <p><%= user.username %></p>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label>Name</label>
+                           <p><%= data.name %></p>
+                           <label>Department</label>
+                           <p><%= data.department_name %></p>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                     <div class="card-body">
+                        <div class="form-group">
+                           <label for="new-username">New Username</label>
+                           <input type="text" class="form-control" id="new-username" placeholder="Enter new username">
+                        </div>
+                        <div class="form-group">
+                           <label for="new-username">New Password</label>
+                           <input type="password" class="form-control" id="new-password" placeholder="Enter new password">
+                        </div>
+                        <p class="warning">
+                         *If you forget your password, please contact the administrator.
+                        </p>
+                        <button type="button" class="btn btn-primary" onClick="saveEdit(parseInt('<%= data.id %>'))">Save Changes</button>
+                     </div>
+                  </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+ <script>
+   if ('<%= photo.data  %>' === '') {
+      document.getElementById("photo").src = "../img/profile.jpg"
+   }
+
+    const saveEdit = (id) => {
+        const newUsername = document.getElementById('new-username').value;
+        const newPassword = document.getElementById('new-password').value;
+    
+        const data = {
+           username: newUsername,
+            password: newPassword
+        };
+        
+        if (newPassword === "" && newUsername === "") {
+            Swal.fire({
+                title: "Password is Empty!",
+                text: "it will be canceled.",
+                icon: "warning",
+                confirmButtonText: "OK",
+            }).then(() => {
+               // Menghilangkan modal dan backdrop
+                $("#editModal").modal('hide');
+            });
+            return;
+        }
+    
+         Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Yes, Update it!"
+         }).then(result => {
+            if (result.isConfirmed) {
+               fetch(`/user/profile/${id}`, {
+                  method: "PUT",
+                  headers: {
+                        "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify(data)}
+                  ).then(response => response.json())
+                  .then(result => {
+                     Swal.fire({
+                        title: "Data Updated!",
+                        text: "Please, Relogin",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                     }).then((result) => {
+                        // Jika tombol OK ditekan
+                        if (result.isConfirmed) {
+                           // Reload halaman
+                           location.reload();
+                        }
+                     });
+                  });
+            }
+         }).catch(error => {
+            console.error("Error updating data:", error);
+         });
+   }
+ </script>

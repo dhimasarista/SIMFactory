@@ -1,0 +1,186 @@
+<style>
+   .spinner-border.text-warning {
+      width: 20px; /* Ubah lebar sesuai kebutuhan */
+      height: 20px; /* Ubah tinggi sesuai kebutuhan */
+   }
+   .spinner-border.text-danger {
+      width: 20px; /* Ubah lebar sesuai kebutuhan */
+      height: 20px; /* Ubah tinggi sesuai kebutuhan */
+   }
+
+</style>
+<div class="row">
+   <div class="col-12">
+      <div class="card">
+         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="card-title">Production Control</h3>
+            <span style="margin-left: auto;">Today's Date: <span id="realTime"></span></span> <!-- Example Date -->
+         </div>
+         <!-- /.card-header -->
+         <div class="card-body card-prod-control">
+            <table id="example2" class="table m-0 border-lr table-striped">
+               <thead>
+                  <tr>
+                     <th>Team</th>
+                     <th>Line</th>
+                     <th>Model</th>
+                     <th>Shift</th>
+                     <th>Status</th>
+                     <th>Control</th>
+                  </tr>
+               </thead>
+
+               <tbody id="body-table-prodcontrol">
+                  <% lines.forEach((data) => { %>
+                     <tr>
+                        <td><%- data.team_name %></td>
+                        <td><%- data.production_line_name %></td>
+                        <td><%- data.models_name %></td>
+                        <td><% if (data.shift == 1) { %>
+                           <span class="badge badge-success"><%= data.shift %>st</span>
+                         <% } else { %>
+                           <span class="badge badge-warning"><%= data.shift %>nd</span>
+                         <% } %>
+                        </td>
+                        <td id="line-status-<%- data.teams_id %>">
+                           <% if (data.status === "processing") { %>
+                              <span class="badge badge-info">Processing</span>
+                           <% } else if (data.status === "finished") { %>
+                               <span class="badge badge-success">Finished</span>
+                           <% } else if (data.status === "notproduction") { %>
+                               <span class="badge badge-dark">Not-Production</span>
+                           <% } else if (data.status === "finished-not-target") { %>
+                               <span class="badge badge-warning">Finished</span>
+                           <% } else if (data.status === "stopped") { %>
+                               <span class="badge badge-danger">Stopped</span>
+                           <% } else if (data.status === "waiting") { %>
+                               <span class="badge badge-warning">Waiting</span>
+                           <% } else if (data.status === "finished-not-confirmed") { %>
+                               <span class="badge badge-warning">Finished Not Confirmed</span>
+                           <% } else { %>
+                               <span class="badge badge-danger">Error</span>
+                           <% } %>
+                        </td>
+                        <td id="control-<%- data.teams_id %>">
+                           <a type="button" id="button-line-stop-<%- data.teams_id %>" class="mt-1 mr-1 badge badge-danger" onclick="buttonLineStop(`<%- data.teams_id %>`)">
+                              <i>
+                                 STOP
+                              </i>
+                           </a>
+                           <a type="button" id="button-line-continue-<%- data.teams_id %>" class="mt-1 mr-1 badge badge-success" onclick="buttonLineContinue(`<%- data.teams_id %>`)">
+                              <i>
+                                 CONTINUE
+                              </i>
+                           </a>
+                           
+                        </td>
+                     </tr>   
+                     <script>
+                        "<% if (data.status === 'processing') { %>"
+                           document.getElementById("button-line-continue-<%- data.teams_id %>").setAttribute("hidden", "true")
+                        "<% } else if (data.status === 'stopped') { %>"
+                           document.getElementById("button-line-stop-<%- data.teams_id %>").setAttribute("hidden", "true")
+                        "<% } else { %>"
+                           document.getElementById("button-line-continue-<%- data.teams_id %>").setAttribute("hidden", "true")
+                           document.getElementById("button-line-stop-<%- data.teams_id %>").setAttribute("hidden", "true")
+                        "<% } %>"
+                     </script>
+                  <% }) %>
+                  </tfoot>
+            </table>
+         </div>
+         <script>
+            const buttonLineStop = (id) => {
+               const lineStatus = document.getElementById(`line-status-${id}`);
+               if (lineStatus.innerText === "Finished") {
+                  toastr.info(`The production line has finished`, "Notice");
+                  return;
+               }
+               lineStatus.innerHTML = null;
+               lineStatus.innerHTML = `<div class="spinner-border text-warning"></div>`;
+               const data = {
+                  id: id,
+                  status: "stopped"
+               }
+
+               fetch("/production/control/line-status", {
+                  method: "PUT",
+                  body: JSON.stringify(data),
+                  headers: {
+                     'Content-Type': 'application/json'
+                  }
+               })
+               .then(response => response.json())
+               .then(results => {
+                  toastr.error(`The production line stopped`, "Notice");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-danger">Stopped</span>`;
+                  document.getElementById(`button-line-continue-${id}`).removeAttribute("hidden");
+                  document.getElementById(`button-line-stop-${id}`).setAttribute("hidden", "true");
+               })
+               .catch(error => {
+                  toastr.error(error, "Error");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-danger">Error</span>`;
+               })
+            }
+
+            const buttonLineContinue = (id) => {
+               const lineStatus = document.getElementById(`line-status-${id}`);
+               if (lineStatus.innerText === "Finished") {
+                  toastr.info(`The production line has finished`, "Notice");
+                  return;
+               }
+               lineStatus.innerHTML = null;
+               lineStatus.innerHTML = `<div class="spinner-border text-danger"></div>`;
+
+               const data = {
+                  id: id,
+                  status: "processing"
+               };
+
+               fetch("/production/control/line-status", {
+                  method: "PUT",
+                  body: JSON.stringify(data),
+                  headers: {
+                     'Content-Type': 'application/json'
+                  }
+               })
+               .then(response => response.json())
+               .then(results => {
+                  toastr.success(`The production line continue`, "Notice");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-info">Processing</span>`;
+                  document.getElementById(`button-line-stop-${id}`).removeAttribute("hidden")
+                  document.getElementById(`button-line-continue-${id}`).setAttribute("hidden", "true");
+               })
+               .catch(error => {
+                  toastr.error(error, "Error");
+                  lineStatus.innerHTML = null;
+                  lineStatus.innerHTML = `<td><span class="badge badge-danger">Error</span>`;
+               });
+
+
+            }
+         </script>
+         <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+   </div>
+   <!-- /.col -->
+</div>
+<script>
+   function updateRealTime() {
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'};
+    const formattedDateTime = now.toLocaleDateString('id-ID', options); // Sesuaikan dengan locale yang Anda inginkan
+    
+    document.getElementById('realTime').textContent = formattedDateTime;
+   }
+   
+   // Update real-time setiap detik
+   setInterval(updateRealTime, 1000);
+   
+   // Panggil update pertama kali saat halaman dimuat
+   updateRealTime();
+</script>

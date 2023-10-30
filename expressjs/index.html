@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Item yang Bisa Dipilih Banyak</title>
+</head>
+<body>
+    <h2>Daftar Item yang Bisa Dipilih Banyak</h2>
+
+    <form>
+        <label for="item1"><input type="checkbox" id="item1" name="items" value="item1"> Item 1</label><br>
+        <label for="item2"><input type="checkbox" id="item2" name="items" value="item2"> Item 2</label><br>
+        <label for="item3"><input type="checkbox" id="item3" name="items" value="item3"> Item 3</label><br>
+        <label for="item4"><input type="checkbox" id="item4" name="items" value="item4"> Item 4</label><br>
+        <label for="item5"><input type="checkbox" id="item5" name="items" value="item5"> Item 5</label><br>
+    </form>
+
+    <button onclick="showSelectedItems()">Tampilkan Item Terpilih</button>
+
+    <div id="selectedItems"></div>
+
+    <script>
+        function showSelectedItems() {
+            var checkboxes = document.querySelectorAll('input[name="items"]:checked');
+            var selectedItems = [];
+            for (var i = 0; i < checkboxes.length; i++) {
+                selectedItems.push(checkboxes[i].value);
+            }
+            var selectedItemsDiv = document.getElementById("selectedItems");
+            selectedItemsDiv.innerHTML = "Item terpilih: " + selectedItems.join(", ");
+        }
+    </script>
+</body>
+</html>

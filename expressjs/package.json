@@ -1,0 +1,42 @@
+{
+  "name": "sistem_informasi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha",
+    "check_db": "node database/createDatabase && node database/createModels",
+    "dev": "nodemon app",
+    "start": "node app"
+  },
+  "author": "dhimasarista",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.1",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "chai-http": "^4.4.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-flash": "^0.0.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "memory-cache": "^0.2.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.5.2",
+    "readline-sync": "^1.4.10",
+    "sequelize": "^6.33.0",
+    "sequelize-cli": "^6.6.1",
+    "socket.io": "^4.7.2",
+    "supertest": "^6.3.3"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7"
+  }
+}
