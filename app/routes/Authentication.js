@@ -34,14 +34,13 @@ class Login{
             if (!user) {
                 // Jika cookies kosong, tambahkan cookies untuk pengguna tamu
                 res.cookie("user", {
-                    id: 99,
+                    id: 98,
                     username: "guest",
                     role: "notUser",
                     department: null // Sesuaikan jika diperlukan
                 });
-            }
-            // Selanjutnya, arahkan pengguna ke "/"
-            res.redirect("/monitoring");
+            } 
+            res.redirect("/monitoring/production");
         });
 
         this.app.route("/login")
