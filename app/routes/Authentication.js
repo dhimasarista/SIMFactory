@@ -38,7 +38,7 @@ class Login{
                     username: "guest",
                     role: "notUser",
                     department: null // Sesuaikan jika diperlukan
-                });
+                }, { httpOnly: true });
             } 
             res.redirect("/monitoring/production");
         });
@@ -82,7 +82,7 @@ class Login{
                             // jika iya, akan disimpan di cookie
                             res.cookie(
                                 "user", {id: user.id, username: user.username, role: "admin"}, 
-                                { maxAge: 3600000 }
+                                { maxAge: 3600000, httpOnly: true, secure: true, signed: true }
                             ); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
                             // Lalu di alihkan ke halaman utama
@@ -93,7 +93,12 @@ class Login{
                             if (stayLoggedIn !== undefined) {
                                 maxAge = undefined;
                             }
-                            res.cookie("user", {id: user.id, username: user.username, role: "employee", department: user.department_id}, { maxAge: maxAge }); // 1 Jam
+                            res.cookie("user", {id: user.id, username: user.username, role: "employee", department: user.department_id}, { 
+                                maxAge: maxAge,
+                                httpOnly: true,
+                                secure: true,
+                                signed: true
+                            }); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
 
                             // Lalu di alihkan ke halaman utama
