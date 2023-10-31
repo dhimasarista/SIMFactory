@@ -8,8 +8,13 @@ class EmployeeTable {
         this.id = id;
     }
 
-    async findAll(){
-        const query = "SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id";
+    async findAll(isRequest = false){
+        const query = `
+            SELECT employees.*, departments.name AS department_name
+            FROM employees
+            JOIN departments ON employees.department_id = departments.id
+            ${isRequest ? 'WHERE is_request' : ''}
+        `;
         let employees = await batchingData({
             batchSize: 100,
             queryAsync: queryAsync,

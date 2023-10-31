@@ -12,7 +12,7 @@ class UserTable {
 
   // Private Methods
   async #findById(){
-    const query = getDataEmployee() + " WHERE employees.id = ?";
+    const query = "SELECT employees.*, departments.name AS department_name FROM employees JOIN departments ON employees.department_id = departments.id WHERE employees.id = ?";
     return await queryAsync(query, this.id); // Array of Object
   }
 
