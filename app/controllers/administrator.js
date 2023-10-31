@@ -3,8 +3,7 @@ const pool = require("../../config/database");
 const queryAsync = promisify(pool.query).bind(pool);
 const bcrypt = require('bcrypt');
 const { errorHandling, errorLogging} = require('../utils/errorHandling');
-const batchingData = require('../utils/batchingData');
-const getDataEmployee = require('../models/query/getDataEmployee');
+const EmployeeTable = require('../models/Employee');
 
 const administrator = {
     render: async (req, res) => {
@@ -80,14 +79,8 @@ const administrator = {
         }
     },
     userListReq: async (req, res) => {
-        const query = getDataEmployee() + " WHERE is_request";
         try {
-            const results = await batchingData({
-                queryAsync: queryAsync,
-                query: query,
-                batchSize: 10,
-            });
-
+            const results = await new EmployeeTable().findAll(true)
             res.json(results);
         } catch (error) {
             errorLogging(error); 
