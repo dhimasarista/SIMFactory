@@ -2,7 +2,6 @@
 
 ## Running the Application
 | <strong>Node/ExpressJS</strong> | Backend Framework |
-| <strong>Golang</strong> | RestFul-API |
 | <strong>MySQL</strong> | Database MS |
 
 1. Start MySQL:
@@ -14,9 +13,7 @@
 2. Install all the required modules by running ```npm install``` & ```go mod tidy```
 3. Create/Checking DB and Tables: ```npm run check_db```
 3. Run the application with the command ```npm start``` or ```npm run dev``` with nodemon.
-4. Access the application through the browser by opening http://localhost:3000.
-
-
+4. Access the application through the browser by opening http://localhost:port  .
 
 ### File Naming Rules, Variable/Function, and Class/Struct
 > HTML/EJS: nama-elemen
