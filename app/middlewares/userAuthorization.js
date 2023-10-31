@@ -30,7 +30,7 @@ const userAuthorization = (app) => {
 
           // Path /monitoring akan dialihkan ke /monitoring/production
           if (currentPath === "/monitoring") {
-            res.redirect("/monitoring/production");
+            return res.redirect("/monitoring/production");
           }
 
           // Jika tidak ada user atau belum login
