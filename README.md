@@ -1,8 +1,11 @@
 # SIMFactory | Sistem Informasi & Manajemen Produksi
 
+## Requirement
+| Backend Framework | Database MS |
+| -------- | -------- |
+| <strong>Node/ExpressJS</strong> | <strong>MySQL</strong> |
+
 ## Running the Application
-| <strong>Node/ExpressJS</strong> | Backend Framework |
-| <strong>MySQL</strong> | Database MS |
 
 1. Start MySQL:
    - <b>Windows</b>: If you are using XAMPP, start it as usual, or use PowerShell/CMD and type ```net start mysql```
