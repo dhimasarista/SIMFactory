@@ -19,5 +19,7 @@
 
 ### File Naming Rules, Variable/Function, and Class/Struct
 > HTML/EJS: nama-elemen
+
 > JS/GOLANG: namaVarFunc, NamaClass, NamaStruct
+
 > SQL: nama_table, nama_kolom
