@@ -4,11 +4,8 @@ const secretCode = require("../utils/secretCode");
 const sessionSetup = (app) => {
     app.use(session({
         secret: secretCode,
-        resave: false,
+        resave: true,
         saveUninitialized: true,
-        cookie: {
-          maxAge: 5000, // Waktu kedaluwarsa sesi dalam milidetik (contoh: 1 jam)
-        },
       }));
 
     app.use((req, res, next) => {

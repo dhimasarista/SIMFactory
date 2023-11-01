@@ -4,7 +4,7 @@ const userAuthorization = (app) => {
     app.use((req, res, next) => {
         try {
           // Mengambil user dari cookies
-          const user = req.cookies.user;
+          const user = req.session;
           const currentPath = req.originalUrl;
 
           const isAdmin = user && user.role === "admin";
@@ -34,7 +34,7 @@ const userAuthorization = (app) => {
           }
 
           // Jika tidak ada user atau belum login
-          if (!user && currentPath !== "/login") {
+          if (user.loggedIn === undefined && currentPath !== "/login") {
             // Maka semua path yang diakses akan dialihkan ke /login
             return res.redirect("/login");  
           }

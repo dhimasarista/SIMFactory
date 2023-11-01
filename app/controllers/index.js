@@ -8,7 +8,7 @@ const lineTeam = new LineTeam();
 module.exports = {
     render: async (req, res) => {
         // Mengambil user dari cookie
-        const user = req.cookies.user;
+        const user = req.session;
         const path = req.path;
         
         const queryModels = 'SELECT * FROM models';

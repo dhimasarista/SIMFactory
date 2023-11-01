@@ -7,7 +7,7 @@ const departmentsModel = new Department();
 const departmentHandler = {
     render: async (req, res) => {
         
-        const user = req.cookies.user;
+        const user = req.session;
         const path = req.path;
         try {
             const data = await departmentsModel.findAll();

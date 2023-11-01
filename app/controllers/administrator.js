@@ -7,9 +7,9 @@ const EmployeeTable = require('../models/Employee');
 
 const administrator = {
     render: async (req, res) => {
-        const user = req.cookies.user;
+        const user = req.session;
         const path = req.path;
-
+        
         try {
             const query = "SELECT users.*, departments.name AS department_name FROM users JOIN departments ON users.department_id = departments.id WHERE username != 'admin' ORDER BY created_at ASC";
 

@@ -18,7 +18,7 @@ class Monitoring{
     setupRoutes(){
         this.app.route("/monitoring/production")
         .get(async (req, res) => {
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
             try {
                 const results = await lineTeam.findAll();
@@ -35,7 +35,7 @@ class Monitoring{
         this.app.route("/monitoring/materials")
         .get(async (req, res) => {
             const path = req.path;
-            const user = req.cookies.user;
+            const user = req.session;
             const apiKey = "210401010174";
 
             try {
@@ -58,7 +58,7 @@ class Monitoring{
 
         this.app.route("/monitoring/schedules")
         .get(async (req, res) => {
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
 
             res.render("monitoring_schedules", {

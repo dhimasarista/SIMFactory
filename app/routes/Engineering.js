@@ -13,7 +13,7 @@ class Engineering {
     setupRoutes(){
         this.app.route("/engineering/model")
         .get(async (req, res) => {
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
             const queryModels = `SELECT
             models.id AS model_id,
@@ -93,7 +93,7 @@ class Engineering {
 
         this.app.route("/engineering/material")
         .get(async (req, res) => {
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
             const query = `SELECT * FROM materials`;
             try {

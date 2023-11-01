@@ -12,14 +12,11 @@
                 **** users tabel untuk mengakses halaman-halaman aplikasi dan tidak bisa mengakses halaman administrator
             *** department_id, digunankan untuk path mana saja yang bisa diakses sesuai departemen-nya
 */
-
 const { validationResult, check } = require("express-validator");
 const { yellow, red, qm, symbol } = require("../utils/logging");
 const bcrypt = require("bcrypt");
 const pool = require("../../config/database");;
 const promisePool = pool.promise();
-const jwt = require('jsonwebtoken');
-const secretCode = require("../utils/secretCode");
 
 class Login{
     constructor(app){
@@ -30,15 +27,25 @@ class Login{
     setupRoutes(){
         this.app.get("/guest", (req, res) => {
             // Cek apakah cookies pengguna sudah ada
-            const user = req.cookies.user;
-            if (!user) {
+            const user = req.session;
+            if (user.loggedIn === undefined) {
+                req.session.userId = 98;
+                req.session.username = "guest";
+                req.session.role = "notUser";
+                req.session.department = null;
+                req.session.loggedIn = true;
+                req.session.cookie = {
+                    secure: true, // Hanya kirim cookie melalui HTTPS
+                    httpOnly: true, // Lindungi cookie dari akses JavaScript di sisi klien
+                    signed: true
+                };
                 // Jika cookies kosong, tambahkan cookies untuk pengguna tamu
-                res.cookie("user", {
-                    id: 98,
-                    username: "guest",
-                    role: "notUser",
-                    department: null // Sesuaikan jika diperlukan
-                }, { httpOnly: true });
+                // res.cookie("user", {
+                //     id: 98,
+                //     username: "guest",
+                //     role: "notUser",
+                //     department: null // Sesuaikan jika diperlukan
+                // }, { httpOnly: true });
             } 
             res.redirect("/monitoring/production");
         });
@@ -75,40 +82,33 @@ class Login{
                         });
                     }
                     const passwordMatch = await bcrypt.compare(password, user.password); // Memeriksa password apakah cocok dengan username dari tabel
-                    // Jika passowrd benar | passwordMatch = true
+                    // Jika passowrd benar
                     if (passwordMatch) {
-                        // Apakah admin tidak undefined
+                        req.session.userId = user.id;
+                        req.session.username = user.username;
+                        req.session.loggedIn = true;
+                        req.session.cookie = {
+                            originalMaxAge: 60 * 60 * 1000, // Waktu kedaluwarsa sesi dalam milidetik (contoh: 1 jam)
+                            secure: true, // Hanya kirim cookie melalui HTTPS
+                            httpOnly: true, // Lindungi cookie dari akses JavaScript di sisi klien
+                            signed: true
+                        };
                         if (user.username === "admin") {
-                            // jika iya, akan disimpan di cookie
-                            res.cookie(
-                                "user", {id: user.id, username: user.username, role: "admin"}, 
-                                { maxAge: 3600000, httpOnly: true, secure: true, signed: true }
-                            ); // 1 Jam
+                            data.role = "admin";
+                            req.session.role = "admin";
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
-                            // Lalu di alihkan ke halaman utama
                             return res.redirect("/administrator");
                         } else {
-                            let maxAge = 3600000;
-                            // jika users akan disimpan di cookise
+                            req.session.role = "employee";
+                            req.session.department = user.department_id;
                             if (stayLoggedIn !== undefined) {
                                 maxAge = undefined;
                             }
-                            res.cookie("user", {id: user.id, username: user.username, role: "employee", department: user.department_id}, { 
-                                maxAge: maxAge,
-                                httpOnly: true,
-                                secure: true,
-                                signed: true
-                            }); // 1 Jam
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
-
-                            // Lalu di alihkan ke halaman utama
                             return res.redirect("/dashboard");
                         }
-                    // Jika password salah
                     } else {
-                        // Akan tetap berada di halaman login
                         return res.render("login", {
-                            // Dan menampilkan pesan berikut
                             errors: [{message: "Password salah!"}]
                         });
                     }
@@ -135,7 +135,12 @@ class Logout{
     // Method Logout: Menghapus cookie user dan mengalihkan ke /login
     clearAndRedirect(){
       this.app.get("/logout", (req, res) => {
-        res.clearCookie('user');
+        // res.clearCookie('user');
+        req.session.destroy((err) => {
+            if (err) {
+                console.error(err);
+            }
+        });
         res.redirect('/login');
       })  
     }

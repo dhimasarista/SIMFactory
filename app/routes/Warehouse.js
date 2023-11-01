@@ -13,7 +13,7 @@ class Material{
     setupRoutes(){
         this.app.route("/warehouse/material")
         .get(async (req, res) => {
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
             const query = `
             SELECT
@@ -46,7 +46,7 @@ class Material{
         })
         .put(async (req, res) => {
             const { id, stocks } = req.body;
-            const user = req.cookies.user;
+            const user = req.session;
             const query = `UPDATE materials SET stocks = ?, updated_by = ? WHERE id = ?`;
             try {
                 const results = await queryAsync(query, [stocks, user.username, id]);
@@ -58,7 +58,7 @@ class Material{
 
         this.app.route("/warehouse/inventory")
         .get(async (req, res) => {
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
 
             const query = 'SELECT * FROM models';
@@ -75,7 +75,7 @@ class Material{
         })
         .put(async (req, res) => {
             const { id, stocks } = req.body;
-            const user = req.cookies.user;
+            const user = req.session;
 
             const data = {
                 stocks  : stocks,

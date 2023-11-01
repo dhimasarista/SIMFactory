@@ -8,7 +8,7 @@ const userData = new UserModel();
 
 const user = {
     render: async (req, res) => {
-        const user = req.cookies.user;
+        const user = req.session;
         const path = req.path;
         const id = user.id;
 
@@ -52,7 +52,7 @@ const user = {
         }
     },
     employeeData: async (req, res) => {
-        const user = req.cookies.user;
+        const user = req.session;
         const path = req.path;
         const id = req.params.id;
 

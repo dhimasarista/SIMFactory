@@ -10,7 +10,7 @@ const DepartmentTable = require('../models/Department');
 
 const employee = {
     renderPage: async (req, res) => {
-        const user = req.cookies.user;
+        const user = req.session;
         const path = req.path;
         try {
             const employees = await new EmployeeTable().findAll();
