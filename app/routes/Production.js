@@ -16,7 +16,7 @@ class Production{
     prodControlRoutes(){
         this.app.get("/production/control", async (req, res) => {
             // Mengambil user dari cookie
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
 
             const data = await lineTeam.findAll();
@@ -50,7 +50,7 @@ class Production{
         this.app.route("/production/plan")
         .get(async (req, res) => {
             // Mengambil user dari cookie
-            const user = req.cookies.user;
+            const user = req.session;
             const path = req.path;
             const queryModels = `SELECT * FROM models WHERE NOT EXISTS(
                 SELECT 1 FROM models_materials WHERE models_materials.model_id = models.id

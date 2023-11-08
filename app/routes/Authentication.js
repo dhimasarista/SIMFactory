@@ -94,7 +94,6 @@ class Login{
                             signed: true
                         };
                         if (user.username === "admin") {
-                            data.role = "admin";
                             req.session.role = "admin";
                             console.log(yellow, `${symbol} ${username} ${new Date().toLocaleString().toUpperCase()}`);
                             return res.redirect("/administrator");

@@ -6,6 +6,12 @@ const sessionSetup = (app) => {
         secret: secretCode,
         resave: true,
         saveUninitialized: true,
+        cookie: {
+          maxAge: 60 * 60 * 1000, // Waktu kedaluwarsa sesi dalam milidetik (contoh: 1 jam)
+          // secure: true, // Hanya kirim cookie melalui HTTPS
+          // httpOnly: true, // Lindungi cookie dari akses JavaScript di sisi klien
+          // signed: true
+        },
       }));
 
     app.use((req, res, next) => {
