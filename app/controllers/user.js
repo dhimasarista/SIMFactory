@@ -10,7 +10,7 @@ const user = {
     render: async (req, res) => {
         const user = req.session;
         const path = req.path;
-        const id = user.id;
+        const id = user.userId;
 
         userData.id = id;
 
